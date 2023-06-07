@@ -15,10 +15,11 @@ const userSlice = createSlice({
 		createUser(_, action) {
 			// immer makes it inmutable under the hood no needed {...state, bla bla bla}
 			return action.payload;
-		}
+		},
+		resetUser: () => initialUserState
 	}
 });
 
-export const { createUser } = userSlice.actions;
+export const { createUser, resetUser } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,36 +1,43 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { HiOutlineEye, HiOutlineEyeOff, HiOutlineKey, HiOutlineMail } from 'react-icons/hi';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
+import { ChangeEvent, useState } from 'react';
+import {
+	HiOutlineEye,
+	HiOutlineEyeOff,
+	HiOutlineKey,
+	HiOutlineMail,
+	HiOutlineUserCircle
+} from 'react-icons/hi';
+import { NavLink } from 'react-router-dom';
 import Button from '../../components/form/Button';
 import InputText from '../../components/form/InputText';
-import { PrivateRoutes, PublicRoutes } from '../../constants/routes';
+import { PublicRoutes } from '../../constants/routes';
 
-export interface LoginType {
-	email: string;
-	password: string;
-}
-
-const Login = () => {
-	const navigate = useNavigate();
-	const user = useAppSelector(state => state.user);
-
-	const [formData, setFormData] = useState<LoginType>({ email: '', password: '' });
+const Signup = () => {
+	const [formSignupData, setFormSignupData] = useState({ username: '', email: '', password: '' });
 	const [isVisible, setIsVisible] = useState(false);
 
-	const handleChangeInputs = (evt: ChangeEvent<HTMLInputElement>) =>
-		setFormData({ ...formData, [evt.target.name]: evt.target.value });
-
-	useEffect(() => {
-		if (user.token) navigate(`/${PrivateRoutes.Home}`);
-	}, []);
+	const handleChangeInputs = (evt: ChangeEvent<HTMLInputElement>) => {
+		setFormSignupData({ ...formSignupData, [evt.target.name]: evt.target.value });
+	};
 
 	return (
 		<form className='flex max-w-xs flex-col gap-12 rounded-2xl bg-white p-6'>
 			<h2 className='text-2xl font-semibold'>
-				<span className='underline underline-offset-4'>Lo</span>gin
+				<span className='underline underline-offset-4'>Si</span>gnup
 			</h2>
 			<div className='flex flex-col gap-12'>
+				<div className='relative'>
+					<span className='absolute left-2 top-1/2 -translate-y-1/2'>
+						<HiOutlineUserCircle size='1.4rem' strokeWidth={1.5} />
+					</span>
+					<InputText
+						onChange={handleChangeInputs}
+						error={false}
+						type='text'
+						label='username'
+						placeholder='Username'
+						className='focus:border-b-blue-500'
+					/>
+				</div>
 				<div className='relative'>
 					<span className='absolute left-2 top-1/2 -translate-y-1/2'>
 						<HiOutlineMail size='1.4rem' strokeWidth={1.5} />
@@ -70,13 +77,13 @@ const Login = () => {
 			</div>
 			<div>
 				<Button type='submit' className='w-full bg-blue-500 text-white'>
-					Login
+					Signup
 				</Button>
 				<div className='mt-2 text-center'>
 					<span className='text-sm'>
-						Dont have an account?{' '}
-						<NavLink to={`/${PublicRoutes.Signup}`} className='text-blue-500'>
-							Signup
+						Already have an account?{' '}
+						<NavLink to={`/${PublicRoutes.Login}`} className='text-blue-500'>
+							Login
 						</NavLink>
 					</span>
 				</div>
@@ -84,4 +91,4 @@ const Login = () => {
 		</form>
 	);
 };
-export default Login;
+export default Signup;
