@@ -7,6 +7,7 @@ import InputText from '../../components/form/InputText';
 import { PrivateRoutes, PublicRoutes } from '../../constants/routes';
 import { createUser } from '../../features/user/user-slice';
 import { loginCall } from '../../lib/auth/api-auth';
+import useLogSignUp from '../../lib/hooks/useLogSignUp';
 
 export interface LoginType {
 	email: string;
@@ -20,23 +21,23 @@ const Login = () => {
 
 	const [formData, setFormData] = useState<LoginType>({ email: '', password: '' });
 	const [isVisible, setIsVisible] = useState(false);
-	const [loginState, setLoginState] = useState({ loading: false, error: '' });
+	const { logSignUp, loadingLogSign, errorLogSign, resetLogSign } = useLogSignUp();
 
 	const handleChangeInputs = (evt: ChangeEvent<HTMLInputElement>) =>
 		setFormData({ ...formData, [evt.target.name]: evt.target.value });
 
 	const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
-		setLoginState({ error: '', loading: true });
+		loadingLogSign();
 
 		const loginUp = async () => {
 			const { success, email, error, token, username } = await loginCall(formData);
 			if (!success) {
-				setLoginState({ loading: false, error });
+				errorLogSign(error);
 				return;
 			}
 			dispatchUserAuth(createUser({ username, email, token }));
-			setLoginState({ loading: false, error: '' });
+			resetLogSign();
 			navigate(`/${PrivateRoutes.Home}`);
 		};
 		loginUp();
@@ -91,15 +92,15 @@ const Login = () => {
 						className='focus:border-b-blue-500'
 					/>
 				</div>
-				{!!loginState.error && (
+				{!!logSignUp.error && (
 					<span className='absolute -bottom-5 text-sm font-semibold italic text-red-500'>
-						{loginState.error}
+						{logSignUp.error}
 					</span>
 				)}
 			</div>
 			<div>
 				<Button
-					disabled={loginState.loading}
+					disabled={logSignUp.loading}
 					type='submit'
 					className='w-full bg-blue-500 text-white disabled:opacity-50'
 				>
