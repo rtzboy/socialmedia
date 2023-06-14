@@ -12,7 +12,8 @@ const USER_KEY = 'user';
 
 const userSlice = createSlice({
 	name: 'user',
-	initialState: JSON.parse(localStorage.getItem(USER_KEY)!) || initialUserState,
+	initialState:
+		(JSON.parse(localStorage.getItem(USER_KEY)!) as UserInfo) || initialUserState,
 	reducers: {
 		// actions
 		createUser(_, action) {

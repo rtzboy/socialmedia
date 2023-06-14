@@ -1,12 +1,10 @@
-import axios from 'axios';
 import { LoginType } from '../../pages/Login/Login';
 import { SignupType } from '../../pages/Signup/Signup';
-
-const BASE_URL = 'http://localhost:4002/api';
+import httpAxiosService from '../helpers/axiosService';
 
 const loginCall = async (userForm: LoginType) => {
 	try {
-		const response = await axios.post(BASE_URL + '/user/login', userForm);
+		const response = await httpAxiosService().post('/users/login', userForm);
 		const { success, email, token, username } = response.data;
 		if (response.status === 200) {
 			return { success, email, token, username };
@@ -19,7 +17,7 @@ const loginCall = async (userForm: LoginType) => {
 
 const signupCall = async (userForm: SignupType) => {
 	try {
-		const response = await axios.post(BASE_URL + '/user/signup', userForm);
+		const response = await httpAxiosService().post('/users/signup', userForm);
 		const { success, email, token, username } = response.data;
 		if (response.status === 200) {
 			return { success, email, token, username };
