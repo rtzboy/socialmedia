@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { store } from './app/store';
 import { PrivateRoutes, PublicRoutes } from './constants/routes';
 import { AuthGuard } from './guards/auth.guard';
+import HomeScreen from './pages/Home/HomeScreen';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 
@@ -16,7 +17,7 @@ const App = () => {
 					<Route path={`/${PublicRoutes.Signup}`} element={<Signup />} />
 					<Route path='*' element={<div>NotFound</div>} />
 					<Route element={<AuthGuard />}>
-						<Route path={`/${PrivateRoutes.Home}`} element={<div>Home</div>} />
+						<Route path={`/${PrivateRoutes.Home}`} element={<HomeScreen />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>
