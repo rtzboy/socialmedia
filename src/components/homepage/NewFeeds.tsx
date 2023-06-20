@@ -8,13 +8,13 @@ export interface UserFeeds {
 	_id: string;
 	content: string;
 	author: AuthorInterface;
+	createdAt: string;
+	updatedAt: string;
 }
 
 export interface AuthorInterface {
 	_id: string;
 	username: string;
-	createdAt: string;
-	updatedAt: string;
 }
 
 const NewFeeds = () => {
@@ -25,8 +25,12 @@ const NewFeeds = () => {
 	useEffect(() => {
 		const callUserFeeds = async () => {
 			const { success, feeds, msg } = await getNewFeeds(token);
-			if (success) return setFeeds(feeds);
-			setMessage(msg);
+			if (success) {
+				setFeeds(feeds);
+				setMessage('');
+			} else {
+				setMessage(msg);
+			}
 		};
 		callUserFeeds();
 	}, []);

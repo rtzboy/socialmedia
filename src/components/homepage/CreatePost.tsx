@@ -1,33 +1,84 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
+import { BsCheck2 } from 'react-icons/bs';
+import { FiLoader } from 'react-icons/fi';
+import { useAppSelector } from '../../app/hooks';
 import { profileTest } from '../../assets';
+import { makePost } from '../../lib/api/posts/post.api';
 import Wrapper from '../Wrapper';
 import Button from '../form/Button';
 
 const CreatePost = () => {
-	const [content, setContent] = useState('');
+	const token = useAppSelector(state => state.user.token);
+	const [postState, setPostState] = useState({
+		content: '',
+		loading: false,
+		check: false,
+		msgPost: ''
+	});
+
+	const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+		evt.preventDefault();
+		setPostState(prevState => ({ ...prevState, loading: true }));
+		makingPost();
+	};
+
+	const makingPost = async () => {
+		const { success, message } = await makePost(postState.content, token);
+		if (success) {
+			setPostState(prevState => ({
+				...prevState,
+				loading: false,
+				check: true,
+				content: '',
+				msgPost: ''
+			}));
+			setTimeout(() => {
+				setPostState(prevState => ({ ...prevState, check: false }));
+			}, 1500);
+		} else {
+			setPostState(prevState => ({ ...prevState, loading: false, msgPost: message }));
+		}
+	};
 
 	return (
 		<>
 			<h2 className='mb-4 text-lg'>Create Post</h2>
-			<form className='flex w-full flex-col items-end gap-4'>
+			<form onSubmit={handleSubmit} className='flex w-full flex-col items-end gap-4'>
 				<div className='flex w-full items-center justify-center gap-4 overflow-hidden rounded-lg border bg-white pl-4'>
 					<img
 						src={profileTest}
 						alt=''
 						className={`rounded-full transition-all duration-300 ${
-							!!content ? 'h-[60px] w-[60px]' : 'h-[30px] w-[30px]'
+							!!postState.content ? 'h-[60px] w-[60px]' : 'h-[30px] w-[30px]'
 						}`}
 					/>
 					<textarea
-						value={content}
-						onChange={evt => setContent(evt.target.value)}
+						value={postState.content}
+						onChange={evt =>
+							setPostState(prevState => ({ ...prevState, content: evt.target.value }))
+						}
 						className={`w-full resize-none bg-transparent py-2 outline-none transition-all duration-300 ${
-							!!content ? 'h-[110px]' : 'h-[50px]'
+							!!postState.content ? 'h-[110px]' : 'h-[50px]'
 						}`}
 						placeholder='Write somenthing here...'
 					></textarea>
 				</div>
-				<Button type='submit' className='bg-sky-600 font-semibold text-white'>
+				<div className='italic text-red-500'>{postState.msgPost}</div>
+				<Button
+					disabled={postState.loading || !postState.content}
+					type='submit'
+					className='flex items-center gap-2 bg-sky-600 font-semibold text-white disabled:opacity-50'
+				>
+					{postState.loading && (
+						<span className='animate-spin text-white'>
+							<FiLoader size='1.5rem' className='stroke-1' />
+						</span>
+					)}
+					{postState.check && (
+						<span className='text-green-300'>
+							<BsCheck2 size='1.5rem' className='stroke-1' />
+						</span>
+					)}
 					Post
 				</Button>
 			</form>

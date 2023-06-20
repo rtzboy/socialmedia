@@ -5,7 +5,7 @@ import { UserFeeds } from './NewFeeds';
 
 interface RowFeedsType extends UserFeeds {}
 
-const RowFeeds = ({ author, content }: RowFeedsType) => {
+const RowFeeds = ({ author, content, createdAt }: RowFeedsType) => {
 	return (
 		<div className='flex flex-col gap-4'>
 			<div className='flex items-center gap-4'>
@@ -13,7 +13,7 @@ const RowFeeds = ({ author, content }: RowFeedsType) => {
 				<div className='flex flex-col'>
 					<span className='font-semibold'>{author.username}</span>
 					<span className='text-sm italic text-slate-700'>
-						{formatDistanceToNowStrict(new Date(author.createdAt))}
+						{formatDistanceToNowStrict(new Date(createdAt))}
 					</span>
 				</div>
 			</div>

@@ -8,7 +8,7 @@ const Navbar = () => {
 
 	return (
 		<div className='h-[70px]'>
-			<nav className='fixed h-[70px] w-full bg-slate-100 shadow-lg shadow-slate-300'>
+			<nav className='fixed z-50 h-[70px] w-full bg-slate-100 shadow-lg shadow-slate-300'>
 				<ul className='flex h-full items-center justify-center gap-16'>
 					<li>SOCIAL</li>
 					<li>
