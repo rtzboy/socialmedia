@@ -3,6 +3,7 @@ import { removeAuthLocale, saveAuthLocale } from '../../lib/helpers/localstorage
 import { UserInfo } from '../../types/user.model';
 
 const initialUserState: UserInfo = {
+	id: '',
 	username: '',
 	email: '',
 	token: ''
@@ -12,8 +13,7 @@ const USER_KEY = 'user';
 
 const userSlice = createSlice({
 	name: 'user',
-	initialState:
-		(JSON.parse(localStorage.getItem(USER_KEY)!) as UserInfo) || initialUserState,
+	initialState: (JSON.parse(localStorage.getItem(USER_KEY)!) as UserInfo) || initialUserState,
 	reducers: {
 		// actions
 		createUser(_, action) {

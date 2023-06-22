@@ -35,18 +35,18 @@ const Signup = () => {
 	const handleSignupSubmit = (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		loadingLogSign();
-
-		const csignUp = async () => {
-			const { success, email, error, token, username } = await signupCall(formSignupData);
-			if (!success) {
-				errorLogSign(error);
-				return;
-			}
-			dispatchUserAuth(createUser({ username, email, token }));
-			resetLogSign();
-			navigate(`/${PrivateRoutes.Home}`);
-		};
 		csignUp();
+	};
+
+	const csignUp = async () => {
+		const { success, id, email, error, token, username } = await signupCall(formSignupData);
+		if (!success) {
+			errorLogSign(error);
+			return;
+		}
+		dispatchUserAuth(createUser({ id, username, email, token }));
+		resetLogSign();
+		navigate(`/${PrivateRoutes.Home}`);
 	};
 
 	return (

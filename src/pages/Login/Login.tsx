@@ -29,18 +29,18 @@ const Login = () => {
 	const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		loadingLogSign();
-
-		const loginUp = async () => {
-			const { success, email, error, token, username } = await loginCall(formData);
-			if (!success) {
-				errorLogSign(error);
-				return;
-			}
-			dispatchUserAuth(createUser({ username, email, token }));
-			resetLogSign();
-			navigate(`/${PrivateRoutes.Home}`);
-		};
 		loginUp();
+	};
+
+	const loginUp = async () => {
+		const { success, id, email, error, token, username } = await loginCall(formData);
+		if (!success) {
+			errorLogSign(error);
+			return;
+		}
+		dispatchUserAuth(createUser({ id, username, email, token }));
+		resetLogSign();
+		navigate(`/${PrivateRoutes.Home}`);
 	};
 
 	useEffect(() => {
