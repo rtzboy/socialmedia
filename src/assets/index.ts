@@ -1,3 +1,4 @@
+import landscapeTest from './landscape.webp';
 import profileTest from './profile.webp';
 
-export { profileTest };
+export { landscapeTest, profileTest };
