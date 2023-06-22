@@ -5,13 +5,9 @@ const makePost = async (
 	token: string
 ): Promise<{ success: boolean; message: string }> => {
 	try {
-		const response = await httpAxiosService().post(
-			'/posts/create',
-			{
-				content: postStr
-			},
-			{ headers: { Authorization: `Bearer ${token}` } }
-		);
+		const response = await httpAxiosService(token).post('/posts/create', {
+			content: postStr
+		});
 		return { success: response.data.success, message: response.data.message };
 	} catch (err: any) {
 		let errMsg = '';
@@ -22,9 +18,7 @@ const makePost = async (
 
 const getNewFeeds = async (token: string) => {
 	try {
-		const response = await httpAxiosService().get('/posts/feed', {
-			headers: { Authorization: `Bearer ${token}` }
-		});
+		const response = await httpAxiosService(token).get('/posts/feed');
 		if (response.status === 200) {
 			return { success: true, feeds: response.data.feeds };
 		}
