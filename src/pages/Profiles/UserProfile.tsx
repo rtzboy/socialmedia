@@ -84,11 +84,12 @@ const UserProfile = () => {
 					<div className='text-lg font-semibold'>About</div>
 				</div>
 				<div className='flex w-[70%] flex-col gap-4'>
-					{allowCreatePost && userProfileInfo?.posts.length === 0 ? (
+					{allowCreatePost && !userProfileInfo?.posts.length ? (
 						<div className='rounded-lg bg-slate-100 p-4 text-center italic'>Post Something!</div>
-					) : (
-						''
-					)}
+					) : null}
+					{allowCreatePost ? null : !userProfileInfo?.posts.length ? (
+						<div className='rounded-lg bg-slate-100 p-4 text-center italic'>Nothing to show</div>
+					) : null}
 					{userProfileInfo?.posts.map(post => (
 						<RowFeeds key={post._id} {...post} />
 					))}
