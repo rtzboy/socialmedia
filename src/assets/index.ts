@@ -1,4 +1,5 @@
+import female from './female.webp';
 import landscapeTest from './landscape.webp';
-import profileTest from './profile.webp';
+import male from './male.webp';
 
-export { landscapeTest, profileTest };
+export { female, landscapeTest, male };

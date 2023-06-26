@@ -1,7 +1,7 @@
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
-import { profileTest } from '../../assets';
+import { male } from '../../assets';
 import Dropdown from '../Dropdown';
 import Wrapper from '../Wrapper';
 import { UserFeeds } from './NewFeeds';
@@ -15,7 +15,7 @@ const RowFeeds = ({ author, content, createdAt }: RowFeedsType) => {
 	return (
 		<div className='flex flex-col gap-4'>
 			<div className='relative flex items-center gap-4'>
-				<img src={profileTest} alt='' className='h-11 w-11 rounded-full' />
+				<img src={male} alt='' className='h-11 w-11 rounded-full' />
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
 						<NavLink to={`/profile/${author._id}`}>{author.username}</NavLink>
