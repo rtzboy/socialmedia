@@ -1,18 +1,25 @@
+// import { UserFeeds } from '../../../components/homepage/NewFeeds';
+import { UserFeeds } from '../../../components/homepage/NewFeeds';
 import httpAxiosService from '../../helpers/axiosService';
 
-const makePost = async (
-	postStr: string,
-	token: string
-): Promise<{ success: boolean; message: string }> => {
+const makePost = async (postStr: string, token: string) => {
 	try {
 		const response = await httpAxiosService(token).post('/posts/create', {
 			content: postStr
 		});
-		return { success: response.data.success, message: response.data.message };
+		if (response.status === 200) {
+			const newPost: UserFeeds = {
+				_id: response.data.success._id,
+				content: response.data.success.content,
+				author: response.data.success.author,
+				createdAt: response.data.success.createdAt,
+				updatedAt: response.data.success.updatedAt
+			};
+			return { success: true, newPost, message: response.data.message };
+		}
+		return { success: false, newPost: null, message: 'error ' };
 	} catch (err: any) {
-		let errMsg = '';
-		if (err.message === 'timeout of 1500ms exceeded') errMsg = 'Network error try again later';
-		return { success: false, message: errMsg || err.message };
+		return { success: false, newPost: null, message: err.message };
 	}
 };
 

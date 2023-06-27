@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
-import { landscapeTest, profileTest } from '../../assets';
+import { landscapeTest, male } from '../../assets';
 import CreatePost from '../../components/homepage/CreatePost';
 import { UserFeeds } from '../../components/homepage/NewFeeds';
 import RowFeeds from '../../components/homepage/RowFeeds';
 import { userInformation } from '../../lib/api/user/user.api';
 
-interface UserProfileType {
+export interface UserProfileType {
 	userInfo: {
 		followers: Array<string>;
 		following: Array<string>;
@@ -50,7 +50,7 @@ const UserProfile = () => {
 				/>
 				<div className='relative mt-8 rounded-lg p-4'>
 					<div className='flex justify-center'>
-						<img src={profileTest} alt='' className='h-[150px] w-[150px] rounded-full' />
+						<img src={male} alt='' className='h-[150px] w-[150px] rounded-full' />
 					</div>
 					<div className='py-2 text-center text-2xl font-semibold'>
 						{userProfileInfo?.userInfo.username}
@@ -78,7 +78,7 @@ const UserProfile = () => {
 					</div>
 				</div>
 			</div>
-			{allowCreatePost && <CreatePost />}
+			{allowCreatePost && <CreatePost addPost={setUserProfileInfo} userInfo={userProfileInfo} />}
 			<div className='flex items-start gap-4'>
 				<div className='w-[30%] rounded-lg bg-slate-100 p-4'>
 					<div className='text-lg font-semibold'>About</div>

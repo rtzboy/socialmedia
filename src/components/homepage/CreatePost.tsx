@@ -1,13 +1,19 @@
-import { FormEvent, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { BsCheck2 } from 'react-icons/bs';
 import { FiLoader } from 'react-icons/fi';
 import { useAppSelector } from '../../app/hooks';
-import { profileTest } from '../../assets';
+import { male } from '../../assets';
 import { makePost } from '../../lib/api/posts/post.api';
+import { UserProfileType } from '../../pages/Profiles/UserProfile';
 import Wrapper from '../Wrapper';
 import Button from '../form/Button';
 
-const CreatePost = () => {
+type CreatePostType = {
+	addPost: Dispatch<SetStateAction<UserProfileType | null>>;
+	userInfo: any;
+};
+
+const CreatePost = ({ addPost, userInfo }: CreatePostType) => {
 	const token = useAppSelector(state => state.user.token);
 	const [postState, setPostState] = useState({
 		content: '',
@@ -23,7 +29,7 @@ const CreatePost = () => {
 	};
 
 	const makingPost = async () => {
-		const { success, message } = await makePost(postState.content, token);
+		const { newPost, message, success } = await makePost(postState.content, token);
 		if (success) {
 			setPostState(prevState => ({
 				...prevState,
@@ -32,6 +38,7 @@ const CreatePost = () => {
 				content: '',
 				msgPost: ''
 			}));
+			addPost({ ...userInfo, posts: [newPost, ...userInfo?.posts] });
 			setTimeout(() => {
 				setPostState(prevState => ({ ...prevState, check: false }));
 			}, 1500);
@@ -46,7 +53,7 @@ const CreatePost = () => {
 			<form onSubmit={handleSubmit} className='flex w-full flex-col items-end gap-4'>
 				<div className='flex w-full items-center justify-center gap-4 overflow-hidden rounded-lg border bg-white pl-4'>
 					<img
-						src={profileTest}
+						src={male}
 						alt=''
 						className={`rounded-full transition-all duration-300 ${
 							!!postState.content ? 'h-[60px] w-[60px]' : 'h-[30px] w-[30px]'
