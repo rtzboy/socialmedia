@@ -4,6 +4,7 @@ import { HiXMark } from 'react-icons/hi2';
 import useDropdown from '../lib/hooks/useDropdown';
 import useModal from '../lib/hooks/useModal';
 import { RowFeedsType } from './homepage/RowFeeds';
+import StyledIcon from './icons/StyledIcon';
 import Modal from './modals/Modal';
 
 const Dropdown = ({ postInfo }: RowFeedsType) => {
@@ -13,39 +14,32 @@ const Dropdown = ({ postInfo }: RowFeedsType) => {
 	return (
 		<div className='absolute right-0 top-0 h-[20px] w-[20px] p-1'>
 			<Modal closeModal={closeModal}>{contentModal}</Modal>
-			<span
+			<StyledIcon
 				onClick={openDropDown}
+				icon={BsThreeDotsVertical}
 				className='absolute -right-2 -top-1 cursor-pointer rounded-full p-1 text-slate-600 hover:bg-slate-300'
-			>
-				<BsThreeDotsVertical size='1.3rem' />
-			</span>
+			/>
 			<div
 				ref={dropDownRef}
 				onClick={closeDropDown}
-				className={`absolute bottom-4 right-4 overflow-hidden rounded-lg bg-slate-100 shadow-out transition-all duration-500 ${
+				className={`absolute bottom-4 right-4 overflow-hidden rounded-lg bg-slate-100 shadow-out transition-all duration-300 ${
 					dropDown ? 'h-32 w-36 p-2' : 'h-0 w-0'
 				}`}
 			>
 				<ul className='flex h-full flex-col justify-between gap-1'>
 					<li className='flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'>
-						<span>
-							<HiOutlinePencil size='1.3rem' className='stroke-1' />
-						</span>
+						<StyledIcon icon={HiOutlinePencil} stroke='stroke-1' />
 						<span>Edit</span>
 					</li>
 					<li
 						onClick={openDeleteModal}
 						className='flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'
 					>
-						<span>
-							<HiXMark size='1.3rem' />
-						</span>
+						<StyledIcon icon={HiXMark} />
 						<span>Delete</span>
 					</li>
 					<li className='flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'>
-						<span>
-							<HiOutlineEye size='1.3rem' />
-						</span>
+						<StyledIcon icon={HiOutlineEye} />
 						<span>Visibility</span>
 					</li>
 				</ul>

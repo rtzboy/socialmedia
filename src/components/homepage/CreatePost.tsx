@@ -7,6 +7,7 @@ import { makePost } from '../../lib/api/posts/post.api';
 import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 import Wrapper from '../Wrapper';
 import Button from '../form/Button';
+import StyledIcon from '../icons/StyledIcon';
 
 const CreatePost = () => {
 	const { userProfileInfo, setUserProfileInfo } = useUserPostsContext();
@@ -77,14 +78,20 @@ const CreatePost = () => {
 					className='flex items-center gap-2 bg-sky-600 font-semibold text-white disabled:opacity-50'
 				>
 					{postState.loading && (
-						<span className='animate-spin text-white'>
-							<FiLoader size='1.5rem' className='stroke-1' />
-						</span>
+						<StyledIcon
+							icon={FiLoader}
+							stroke='stroke-1'
+							size='1.5rem'
+							className='animate-spin text-white'
+						/>
 					)}
 					{postState.check && (
-						<span className='text-green-300'>
-							<BsCheck2 size='1.5rem' className='stroke-1' />
-						</span>
+						<StyledIcon
+							icon={BsCheck2}
+							size='1.5rem'
+							stroke='stroke-1'
+							className='text-green-300'
+						/>
 					)}
 					Post
 				</Button>
