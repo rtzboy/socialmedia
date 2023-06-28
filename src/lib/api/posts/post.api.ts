@@ -23,6 +23,16 @@ const makePost = async (postStr: string, token: string) => {
 	}
 };
 
+const deletePost = async (token: string, idPost: string) => {
+	try {
+		const response = await httpAxiosService(token).delete(`/posts/delete/${idPost}`);
+		if (response.status === 200) return true;
+		return false;
+	} catch (error: any) {
+		return false;
+	}
+};
+
 const getNewFeeds = async (token: string) => {
 	try {
 		const response = await httpAxiosService(token).get('/posts/feed');
@@ -38,4 +48,4 @@ const getNewFeeds = async (token: string) => {
 	}
 };
 
-export { getNewFeeds, makePost };
+export { deletePost, getNewFeeds, makePost };

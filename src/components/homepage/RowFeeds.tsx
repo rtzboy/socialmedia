@@ -6,11 +6,13 @@ import Dropdown from '../Dropdown';
 import Wrapper from '../Wrapper';
 import { UserFeeds } from './NewFeeds';
 
-interface RowFeedsType extends UserFeeds {}
+export interface RowFeedsType {
+	postInfo: UserFeeds;
+}
 
-const RowFeeds = ({ author, content, createdAt }: RowFeedsType) => {
+const RowFeeds = ({ postInfo }: RowFeedsType) => {
 	const { id } = useAppSelector(state => state.user);
-	let allowOpts = id === author._id;
+	let allowOpts = id === postInfo.author._id;
 
 	return (
 		<div className='flex flex-col gap-4'>
@@ -18,15 +20,15 @@ const RowFeeds = ({ author, content, createdAt }: RowFeedsType) => {
 				<img src={male} alt='' className='h-11 w-11 rounded-full' />
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
-						<NavLink to={`/profile/${author._id}`}>{author.username}</NavLink>
+						<NavLink to={`/profile/${postInfo.author._id}`}>{postInfo.author.username}</NavLink>
 					</span>
 					<span className='text-sm italic text-slate-700'>
-						{formatDistanceToNowStrict(new Date(createdAt))}
+						{formatDistanceToNowStrict(new Date(postInfo.createdAt))}
 					</span>
 				</div>
-				{allowOpts && <Dropdown />}
+				{allowOpts && <Dropdown postInfo={postInfo} />}
 			</div>
-			<div>{content}</div>
+			<div>{postInfo.content}</div>
 			<div className='flex'>
 				<span className='flex-grow cursor-pointer rounded-lg py-1 text-center transition-all hover:bg-slate-200'>
 					like

@@ -6,6 +6,7 @@ import CreatePost from '../../components/homepage/CreatePost';
 import { UserFeeds } from '../../components/homepage/NewFeeds';
 import RowFeeds from '../../components/homepage/RowFeeds';
 import { userInformation } from '../../lib/api/user/user.api';
+import { UserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 
 export interface UserProfileType {
 	userInfo: {
@@ -78,23 +79,25 @@ const UserProfile = () => {
 					</div>
 				</div>
 			</div>
-			{allowCreatePost && <CreatePost addPost={setUserProfileInfo} userInfo={userProfileInfo} />}
-			<div className='flex items-start gap-4'>
-				<div className='w-[30%] rounded-lg bg-slate-100 p-4'>
-					<div className='text-lg font-semibold'>About</div>
+			<UserPostsContext.Provider value={{ userProfileInfo, setUserProfileInfo, token }}>
+				{allowCreatePost && <CreatePost />}
+				<div className='flex items-start gap-4'>
+					<div className='w-[30%] rounded-lg bg-slate-100 p-4'>
+						<div className='text-lg font-semibold'>About</div>
+					</div>
+					<div className='flex w-[70%] flex-col gap-4'>
+						{allowCreatePost && !userProfileInfo?.posts.length ? (
+							<div className='rounded-lg bg-slate-100 p-4 text-center italic'>Post Something!</div>
+						) : null}
+						{allowCreatePost ? null : !userProfileInfo?.posts.length ? (
+							<div className='rounded-lg bg-slate-100 p-4 text-center italic'>Nothing to show</div>
+						) : null}
+						{userProfileInfo?.posts.map(post => (
+							<RowFeeds key={post._id} postInfo={post} />
+						))}
+					</div>
 				</div>
-				<div className='flex w-[70%] flex-col gap-4'>
-					{allowCreatePost && !userProfileInfo?.posts.length ? (
-						<div className='rounded-lg bg-slate-100 p-4 text-center italic'>Post Something!</div>
-					) : null}
-					{allowCreatePost ? null : !userProfileInfo?.posts.length ? (
-						<div className='rounded-lg bg-slate-100 p-4 text-center italic'>Nothing to show</div>
-					) : null}
-					{userProfileInfo?.posts.map(post => (
-						<RowFeeds key={post._id} {...post} />
-					))}
-				</div>
-			</div>
+			</UserPostsContext.Provider>
 		</div>
 	);
 };

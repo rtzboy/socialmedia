@@ -39,7 +39,7 @@ const NewFeeds = () => {
 		<div className='flex flex-col gap-4'>
 			{message && <div>{message}</div>}
 			{feeds?.map(feed => (
-				<RowFeeds key={feed._id} {...feed} />
+				<RowFeeds key={feed._id} postInfo={feed} />
 			))}
 		</div>
 	);

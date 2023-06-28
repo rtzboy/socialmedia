@@ -2,12 +2,17 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { HiOutlineEye, HiOutlinePencil } from 'react-icons/hi';
 import { HiXMark } from 'react-icons/hi2';
 import useDropdown from '../lib/hooks/useDropdown';
+import useModal from '../lib/hooks/useModal';
+import { RowFeedsType } from './homepage/RowFeeds';
+import Modal from './modals/Modal';
 
-const Dropdown = () => {
+const Dropdown = ({ postInfo }: RowFeedsType) => {
 	const { dropDown, dropDownRef, openDropDown, closeDropDown } = useDropdown();
+	const { contentModal, openDeleteModal, closeModal } = useModal(postInfo);
 
 	return (
 		<div className='absolute right-0 top-0 h-[20px] w-[20px] p-1'>
+			<Modal closeModal={closeModal}>{contentModal}</Modal>
 			<span
 				onClick={openDropDown}
 				className='absolute -right-2 -top-1 cursor-pointer rounded-full p-1 text-slate-600 hover:bg-slate-300'
@@ -28,7 +33,10 @@ const Dropdown = () => {
 						</span>
 						<span>Edit</span>
 					</li>
-					<li className='flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'>
+					<li
+						onClick={openDeleteModal}
+						className='flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'
+					>
 						<span>
 							<HiXMark size='1.3rem' />
 						</span>

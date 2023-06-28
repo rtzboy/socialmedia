@@ -1,20 +1,16 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { BsCheck2 } from 'react-icons/bs';
 import { FiLoader } from 'react-icons/fi';
 import { useAppSelector } from '../../app/hooks';
 import { male } from '../../assets';
 import { makePost } from '../../lib/api/posts/post.api';
-import { UserProfileType } from '../../pages/Profiles/UserProfile';
+import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 import Wrapper from '../Wrapper';
 import Button from '../form/Button';
 
-type CreatePostType = {
-	addPost: Dispatch<SetStateAction<UserProfileType | null>>;
-	userInfo: any;
-};
-
-const CreatePost = ({ addPost, userInfo }: CreatePostType) => {
-	const token = useAppSelector(state => state.user.token);
+const CreatePost = () => {
+	const { userProfileInfo, setUserProfileInfo } = useUserPostsContext();
+	const { token } = useAppSelector(state => state.user);
 	const [postState, setPostState] = useState({
 		content: '',
 		loading: false,
@@ -30,7 +26,7 @@ const CreatePost = ({ addPost, userInfo }: CreatePostType) => {
 
 	const makingPost = async () => {
 		const { newPost, message, success } = await makePost(postState.content, token);
-		if (success) {
+		if (success && newPost !== null) {
 			setPostState(prevState => ({
 				...prevState,
 				loading: false,
@@ -38,10 +34,14 @@ const CreatePost = ({ addPost, userInfo }: CreatePostType) => {
 				content: '',
 				msgPost: ''
 			}));
-			addPost({ ...userInfo, posts: [newPost, ...userInfo?.posts] });
 			setTimeout(() => {
 				setPostState(prevState => ({ ...prevState, check: false }));
 			}, 1500);
+			if (!userProfileInfo) return;
+			setUserProfileInfo({
+				...userProfileInfo,
+				posts: [newPost, ...(userProfileInfo?.posts ?? [])]
+			});
 		} else {
 			setPostState(prevState => ({ ...prevState, loading: false, msgPost: message }));
 		}
