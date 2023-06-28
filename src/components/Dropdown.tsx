@@ -9,7 +9,7 @@ import Modal from './modals/Modal';
 
 const Dropdown = ({ postInfo }: RowFeedsType) => {
 	const { dropDown, dropDownRef, openDropDown, closeDropDown } = useDropdown();
-	const { contentModal, openDeleteModal, closeModal } = useModal(postInfo);
+	const { contentModal, openEditModal, openDeleteModal, closeModal } = useModal(postInfo);
 
 	return (
 		<div className='absolute right-0 top-0 h-[20px] w-[20px] p-1'>
@@ -27,7 +27,10 @@ const Dropdown = ({ postInfo }: RowFeedsType) => {
 				}`}
 			>
 				<ul className='flex h-full flex-col justify-between gap-1'>
-					<li className='flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'>
+					<li
+						onClick={openEditModal}
+						className='flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'
+					>
 						<StyledIcon icon={HiOutlinePencil} stroke='stroke-1' />
 						<span>Edit</span>
 					</li>

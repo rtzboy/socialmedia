@@ -13,6 +13,7 @@ export interface RowFeedsType {
 const RowFeeds = ({ postInfo }: RowFeedsType) => {
 	const { id } = useAppSelector(state => state.user);
 	let allowOpts = id === postInfo.author._id;
+	let isEdited = postInfo.createdAt === postInfo.updatedAt;
 
 	return (
 		<div className='flex flex-col gap-4'>
@@ -24,6 +25,7 @@ const RowFeeds = ({ postInfo }: RowFeedsType) => {
 					</span>
 					<span className='text-sm italic text-slate-700'>
 						{formatDistanceToNowStrict(new Date(postInfo.createdAt))}
+						{!isEdited && <span> &#x2027; Edited</span>}
 					</span>
 				</div>
 				{allowOpts && <Dropdown postInfo={postInfo} />}

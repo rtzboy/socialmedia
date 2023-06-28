@@ -39,7 +39,9 @@ const PostDeleteForm = ({ closeModal, currentPost }: PostDeleteFormProps) => {
 				size='1.5rem'
 				className='absolute right-3 top-3 cursor-pointer rounded-full bg-slate-200 p-1 hover:bg-slate-300'
 			/>
-			<div>Are you sure you want to delete this post. This action cannot be undone</div>
+			<div className='text-center'>
+				Are you sure you want to delete this post. This action cannot be undone
+			</div>
 			<div className='flex justify-end gap-4'>
 				<Button onClick={closeModal} className='cursor-pointer hover:bg-slate-300'>
 					Cancel
