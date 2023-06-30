@@ -10,7 +10,7 @@ import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
 
 const CreatePost = () => {
-	const { userProfileInfo, setUserProfileInfo } = useUserPostsContext();
+	const { dispatchUserProfile } = useUserPostsContext();
 	const { token } = useAppSelector(state => state.user);
 	const [postState, setPostState] = useState({
 		content: '',
@@ -38,11 +38,7 @@ const CreatePost = () => {
 			setTimeout(() => {
 				setPostState(prevState => ({ ...prevState, check: false }));
 			}, 1500);
-			if (!userProfileInfo) return;
-			setUserProfileInfo({
-				...userProfileInfo,
-				posts: [newPost, ...(userProfileInfo?.posts ?? [])]
-			});
+			dispatchUserProfile({ type: 'CREATE_POST', payload: newPost });
 		} else {
 			setPostState(prevState => ({ ...prevState, loading: false, msgPost: message }));
 		}

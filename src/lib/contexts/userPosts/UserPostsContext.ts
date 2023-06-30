@@ -1,9 +1,8 @@
-import { Dispatch, SetStateAction, createContext, useContext } from 'react';
-import { UserProfileType } from '../../../pages/Profiles/UserProfile';
+import { Dispatch, createContext, useContext } from 'react';
+import { UserProfileAction } from '../../reducers/userProfileReducer';
 
 interface UserPostsContextValue {
-	userProfileInfo: UserProfileType | null;
-	setUserProfileInfo: Dispatch<SetStateAction<UserProfileType | null>>;
+	dispatchUserProfile: Dispatch<UserProfileAction>;
 	token: string;
 }
 

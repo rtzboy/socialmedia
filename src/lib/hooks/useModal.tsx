@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { UserFeeds } from '../../components/homepage/NewFeeds';
 import PostDeleteForm from '../../components/post-form/PostDeleteForm';
 import PostEditForm from '../../components/post-form/PostEditForm';
+import { UserFeeds } from '../../types/user.model';
 
 const useModal = (postInfo: UserFeeds) => {
 	const [contentModal, setContentModal] = useState<JSX.Element | undefined>();

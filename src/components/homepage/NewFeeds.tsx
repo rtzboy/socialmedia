@@ -1,21 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
-
 import { getNewFeeds } from '../../lib/api/posts/post.api';
+import { UserFeeds } from '../../types/user.model';
 import RowFeeds from './RowFeeds';
-
-export interface UserFeeds {
-	_id: string;
-	content: string;
-	author: AuthorInterface;
-	createdAt: string;
-	updatedAt: string;
-}
-
-export interface AuthorInterface {
-	_id: string;
-	username: string;
-}
 
 const NewFeeds = () => {
 	const token = useAppSelector(state => state.user.token);

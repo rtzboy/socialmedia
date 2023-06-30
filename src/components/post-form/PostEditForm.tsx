@@ -4,8 +4,8 @@ import { HiXMark } from 'react-icons/hi2';
 import { male } from '../../assets';
 import { editPost } from '../../lib/api/posts/post.api';
 import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
+import { UserFeeds } from '../../types/user.model';
 import Button from '../form/Button';
-import { UserFeeds } from '../homepage/NewFeeds';
 import StyledIcon from '../icons/StyledIcon';
 
 type PostEditFormProps = {
@@ -14,7 +14,7 @@ type PostEditFormProps = {
 };
 
 const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
-	const { userProfileInfo, setUserProfileInfo, token } = useUserPostsContext();
+	const { dispatchUserProfile, token } = useUserPostsContext();
 	const [value, setValue] = useState(currentPost.content);
 	const refTextArea = useRef<HTMLTextAreaElement>(null);
 	const [isSaving, setIsSaving] = useState(false);
@@ -23,19 +23,11 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 
 	const handleEditPost = async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
-		if (userProfileInfo === null) return;
 		setIsSaving(true);
 
 		const success = await editPost(token, value, currentPost._id);
 		if (success) {
-			let indexUpdatePost = userProfileInfo.posts.findIndex(({ _id }) => _id === currentPost._id);
-			if (indexUpdatePost !== -1) {
-				userProfileInfo.posts[indexUpdatePost] = {
-					...userProfileInfo.posts[indexUpdatePost],
-					content: value
-				};
-				setUserProfileInfo({ ...userProfileInfo });
-			}
+			dispatchUserProfile({ type: 'EDIT_POST', payload: { id: currentPost._id, content: value } });
 			setIsSaving(false);
 			closeModal();
 		}

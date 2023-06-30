@@ -2,9 +2,9 @@ import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { male } from '../../assets';
+import { UserFeeds } from '../../types/user.model';
 import Dropdown from '../Dropdown';
 import Wrapper from '../Wrapper';
-import { UserFeeds } from './NewFeeds';
 
 export interface RowFeedsType {
 	postInfo: UserFeeds;

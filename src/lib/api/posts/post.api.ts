@@ -1,5 +1,4 @@
-// import { UserFeeds } from '../../../components/homepage/NewFeeds';
-import { UserFeeds } from '../../../components/homepage/NewFeeds';
+import { UserFeeds } from '../../../types/user.model';
 import httpAxiosService from '../../helpers/axiosService';
 
 const makePost = async (postStr: string, token: string) => {

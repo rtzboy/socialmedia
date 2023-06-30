@@ -4,3 +4,26 @@ export interface UserInfo {
 	email: string;
 	token: string;
 }
+
+export interface UserProfileType {
+	userInfo: {
+		_id: string;
+		username: string;
+		followers: Array<string>;
+		following: Array<string>;
+	};
+	posts: UserFeeds[];
+}
+
+export interface UserFeeds {
+	_id: string;
+	content: string;
+	author: AuthorInterface;
+	createdAt: string;
+	updatedAt: string;
+}
+
+interface AuthorInterface {
+	_id: string;
+	username: string;
+}
