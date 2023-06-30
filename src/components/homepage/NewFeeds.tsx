@@ -9,22 +9,24 @@ const NewFeeds = () => {
 	const [feeds, setFeeds] = useState<Array<UserFeeds> | null>(null);
 	const [message, setMessage] = useState('');
 
+	const callUserFeeds = async () => {
+		const { success, feeds, msg } = await getNewFeeds(token);
+		if (success) {
+			setFeeds(feeds);
+			setMessage('');
+		} else {
+			setMessage(msg);
+		}
+	};
+
 	useEffect(() => {
-		const callUserFeeds = async () => {
-			const { success, feeds, msg } = await getNewFeeds(token);
-			if (success) {
-				setFeeds(feeds);
-				setMessage('');
-			} else {
-				setMessage(msg);
-			}
-		};
 		callUserFeeds();
 	}, []);
 
 	return (
 		<div className='flex flex-col gap-4'>
-			{message && <div>{message}</div>}
+			{message && <div className='rounded-lg bg-slate-100 p-4'>{message}</div>}
+			{!feeds?.length && <div className='rounded-lg bg-slate-100 p-4'>Nothing to show!!</div>}
 			{feeds?.map(feed => (
 				<RowFeeds key={feed._id} postInfo={feed} />
 			))}

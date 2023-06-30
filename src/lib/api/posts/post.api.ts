@@ -11,6 +11,8 @@ const makePost = async (postStr: string, token: string) => {
 				_id: response.data.success._id,
 				content: response.data.success.content,
 				author: response.data.success.author,
+				likeCount: response.data.success.likeCount,
+				likes: response.data.success.likes,
 				createdAt: response.data.success.createdAt,
 				updatedAt: response.data.success.updatedAt
 			};
@@ -53,7 +55,7 @@ const getNewFeeds = async (token: string) => {
 		if (response.status === 204) {
 			return { success: false, feeds: null, msg: 'Not following anyone' };
 		}
-		return { success: false, feeds: null, msg: 'Someting wrong happened!' };
+		return { success: false, feeds: null, msg: 'Something wrong happened!' };
 	} catch (err: any) {
 		return { success: false, msg: err.message };
 	}
