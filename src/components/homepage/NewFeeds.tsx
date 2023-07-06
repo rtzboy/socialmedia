@@ -28,7 +28,7 @@ const NewFeeds = () => {
 			{message && <div className='rounded-lg bg-slate-100 p-4'>{message}</div>}
 			{!feeds?.length && <div className='rounded-lg bg-slate-100 p-4'>Nothing to show!!</div>}
 			{feeds?.map(feed => (
-				<RowFeeds key={feed._id} postInfo={feed} />
+				<RowFeeds key={feed._id} postInfo={feed} feeds={feeds} setFeeds={setFeeds} />
 			))}
 		</div>
 	);

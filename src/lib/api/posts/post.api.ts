@@ -46,6 +46,18 @@ const deletePost = async (token: string, idPost: string) => {
 	}
 };
 
+const updatelikeCount = async (token: string, idPost: string, likeStatus: boolean) => {
+	try {
+		const res = await httpAxiosService(token).patch(`/posts/toggleLikePost/${idPost}`, {
+			toggleStatus: likeStatus
+		});
+		if (res.status === 200) return true;
+		return false;
+	} catch (error) {
+		return false;
+	}
+};
+
 const getNewFeeds = async (token: string) => {
 	try {
 		const response = await httpAxiosService(token).get('/posts/feed');
@@ -61,4 +73,4 @@ const getNewFeeds = async (token: string) => {
 	}
 };
 
-export { deletePost, editPost, getNewFeeds, makePost };
+export { deletePost, editPost, getNewFeeds, makePost, updatelikeCount };

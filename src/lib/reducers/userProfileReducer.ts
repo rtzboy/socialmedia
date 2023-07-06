@@ -32,6 +32,25 @@ const userProfileReducer = (state: UserProfileType, action: UserProfileAction) =
 			};
 			return { ...state };
 		}
+		case 'TOGGLE_LIKE': {
+			let indexToggleLike = state.posts.findIndex(({ _id }) => _id === action.payload.postId);
+			let likeCount = action.payload.toggleStatus
+				? --state.posts[indexToggleLike].likeCount
+				: ++state.posts[indexToggleLike].likeCount;
+
+			let likes = [...state.posts[indexToggleLike].likes];
+			if (action.payload.toggleStatus) {
+				likes = likes.filter(userId => userId !== action.payload.userId);
+			} else {
+				likes.push(action.payload.userId);
+			}
+			state.posts[indexToggleLike] = {
+				...state.posts[indexToggleLike],
+				likeCount,
+				likes
+			};
+			return { ...state };
+		}
 		case 'DELETE_POST': {
 			const removePost = state.posts.filter(({ _id }) => _id !== action.payload);
 			return { ...state, posts: removePost };
@@ -56,11 +75,21 @@ interface UserEditPost {
 	payload: { id: string; content: string };
 }
 
+interface UserLikeTogglePost {
+	type: 'TOGGLE_LIKE';
+	payload: { postId: string; likeCount: number; toggleStatus: boolean; userId: string };
+}
+
 interface UserDeletePost {
 	type: 'DELETE_POST';
 	payload: string;
 }
 
-export type UserProfileAction = UserSuccessInfo | UserCreatePost | UserEditPost | UserDeletePost;
+export type UserProfileAction =
+	| UserSuccessInfo
+	| UserCreatePost
+	| UserEditPost
+	| UserDeletePost
+	| UserLikeTogglePost;
 
 export default userProfileReducer;

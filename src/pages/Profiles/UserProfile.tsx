@@ -84,7 +84,7 @@ const UserProfile = () => {
 							<div className='rounded-lg bg-slate-100 p-4 text-center italic'>Nothing to show</div>
 						) : null}
 						{userProfile.posts.map(post => (
-							<RowFeeds key={post._id} postInfo={post} />
+							<RowFeeds key={post._id} postInfo={post} dispatchUserProfile={dispatchUserProfile} />
 						))}
 					</div>
 				</div>
