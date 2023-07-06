@@ -8,6 +8,7 @@ import { updatelikeCount } from '../../lib/api/posts/post.api';
 import { UserProfileAction } from '../../lib/reducers/userProfileReducer';
 import { UserFeeds } from '../../types/user.model';
 import Dropdown from '../Dropdown';
+import LikeCount from '../LikeCount';
 import Wrapper from '../Wrapper';
 import StyledIcon from '../icons/StyledIcon';
 
@@ -64,9 +65,9 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 			</div>
 			<div>{postInfo.content}</div>
 			{!!postInfo.likeCount && (
-				<div className='flex select-none items-center gap-1'>
+				<div className='relative flex select-none items-center gap-1'>
 					<StyledIcon icon={AiFillLike} size='1rem' className='text-blue-500' />
-					<span>{postInfo.likeCount}</span>
+					<LikeCount count={postInfo.likeCount} likeStatus={likeStatus} />
 				</div>
 			)}
 			<hr />
