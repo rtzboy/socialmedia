@@ -23,7 +23,7 @@ const LikeCount = ({ count, likeStatus }: LikeCountProps) => {
 				key={count}
 				transition={{
 					y: {
-						type: 'spring'
+						type: 'just'
 					}
 				}}
 			>
