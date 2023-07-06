@@ -74,7 +74,9 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 			<div className='flex'>
 				<span
 					onClick={() => handleLikeToggle()}
-					className='flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-90'
+					className={`flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-90 ${
+						likeStatus ? 'text-blue-600' : ''
+					}`}
 				>
 					{likeStatus ? <StyledIcon icon={AiFillLike} /> : <StyledIcon icon={AiOutlineLike} />}
 					<span>Like</span>
