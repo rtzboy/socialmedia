@@ -13,6 +13,7 @@ const makePost = async (postStr: string, token: string) => {
 				author: response.data.success.author,
 				likeCount: response.data.success.likeCount,
 				likes: response.data.success.likes,
+				comments: response.data.success.comments,
 				createdAt: response.data.success.createdAt,
 				updatedAt: response.data.success.updatedAt
 			};

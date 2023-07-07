@@ -21,6 +21,7 @@ export interface UserFeeds {
 	author: AuthorInterface;
 	likes: Array<String>;
 	likeCount: number;
+	comments: { user: string; comment: string }[];
 	createdAt: string;
 	updatedAt: string;
 }

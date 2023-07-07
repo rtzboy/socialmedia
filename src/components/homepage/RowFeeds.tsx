@@ -64,12 +64,7 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 				{allowOpts && <Dropdown postInfo={postInfo} />}
 			</div>
 			<div>{postInfo.content}</div>
-			{!!postInfo.likeCount && (
-				<div className='relative flex select-none items-center gap-1'>
-					<StyledIcon icon={AiFillLike} size='1rem' className='text-blue-500' />
-					<LikeCount count={postInfo.likeCount} likeStatus={likeStatus} />
-				</div>
-			)}
+			{likeAndComment(postInfo.likeCount, postInfo.comments.length, likeStatus)}
 			<hr />
 			<div className='flex'>
 				<span
@@ -86,6 +81,25 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 					<span>Comment</span>
 				</span>
 			</div>
+		</div>
+	);
+};
+
+const likeAndComment = (likeCount: number, commentCount: number, likeStatus: boolean) => {
+	if (!likeCount && !commentCount) return null;
+	return (
+		<div className='flex select-none items-center justify-between gap-1'>
+			{!!likeCount ? (
+				<div className='relative flex items-center gap-1'>
+					<StyledIcon icon={AiFillLike} size='1rem' className='text-blue-500' />
+					<LikeCount count={likeCount} likeStatus={likeStatus} />
+				</div>
+			) : (
+				<span></span>
+			)}
+			{!!commentCount && (
+				<div>{`${commentCount} ${commentCount > 1 ? 'comments' : 'comment'}`}</div>
+			)}
 		</div>
 	);
 };
