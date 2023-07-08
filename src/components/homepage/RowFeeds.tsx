@@ -7,6 +7,7 @@ import { male } from '../../assets';
 import { updatelikeCount } from '../../lib/api/posts/post.api';
 import { UserProfileAction } from '../../lib/reducers/userProfileReducer';
 import { UserFeeds } from '../../types/user.model';
+import Comments from '../Comments';
 import Dropdown from '../Dropdown';
 import LikeCount from '../LikeCount';
 import Wrapper from '../Wrapper';
@@ -81,6 +82,7 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 					<span>Comment</span>
 				</span>
 			</div>
+			<Comments />
 		</div>
 	);
 };

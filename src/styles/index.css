@@ -5,3 +5,19 @@
 body {
 	@apply bg-slate-300;
 }
+
+.EmojiPickerReact li.epr-emoji-category > .epr-emoji-category-label {
+	@apply text-sm font-normal;
+}
+
+.EmojiPickerReact {
+	--epr-emoji-size: 25px;
+	--epr-horizontal-padding: 1px;
+	--epr-header-padding: 5px var(--epr-horizontal-padding);
+	--epr-category-label-height: 20px;
+	--epr-text-color: #475569;
+}
+
+.epr-body {
+	@apply overscroll-contain;
+}
