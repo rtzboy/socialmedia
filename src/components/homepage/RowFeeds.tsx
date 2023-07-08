@@ -12,6 +12,7 @@ import Dropdown from '../Dropdown';
 import LikeCount from '../LikeCount';
 import Wrapper from '../Wrapper';
 import StyledIcon from '../icons/StyledIcon';
+import PostContent from './PostContent';
 
 export interface RowFeedsType {
 	postInfo: UserFeeds;
@@ -64,7 +65,9 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 				</div>
 				{allowOpts && <Dropdown postInfo={postInfo} />}
 			</div>
-			<div>{postInfo.content}</div>
+			<div className='flex items-center'>
+				<PostContent content={postInfo.content} />
+			</div>
 			{likeAndComment(postInfo.likeCount, postInfo.comments.length, likeStatus)}
 			<hr />
 			<div className='flex'>

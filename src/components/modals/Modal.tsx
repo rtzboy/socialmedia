@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ModalType {
-	closeModal: () => void;
+	closeModal?: () => void;
 	children?: JSX.Element;
 }
 
-const Modal = ({ closeModal, children }: ModalType) => {
+const Modal = ({ children }: ModalType) => {
 	useEffect(() => {
 		if (!children) return;
 		document.body.classList.add('overflow-y-hidden');
