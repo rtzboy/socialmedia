@@ -4,11 +4,11 @@ import { BsEmojiSmile } from 'react-icons/bs';
 import StyledIcon from './icons/StyledIcon';
 
 type PickerEmojisProps = {
-	contWithEmoji: string;
-	setContWithEmoji: (str: string) => void;
+	contWithEmoji?: string;
+	setContWithEmoji: (params: { emoji: string; unified: string }) => void;
 };
 
-const PickerEmojis = ({ contWithEmoji, setContWithEmoji }: PickerEmojisProps) => {
+const PickerEmojis = ({ setContWithEmoji }: PickerEmojisProps) => {
 	const [openChooseEmoji, setOpenChooseEmoji] = useState(false);
 	const [selectedEmoji, setSelectedEmoji] = useState<{ emoji: string; unified: string }>();
 	const refContainer = useRef<HTMLDivElement>(null);
@@ -26,9 +26,9 @@ const PickerEmojis = ({ contWithEmoji, setContWithEmoji }: PickerEmojisProps) =>
 
 	useEffect(() => {
 		if (!selectedEmoji) return;
-		setContWithEmoji(contWithEmoji?.concat(' ', selectedEmoji.emoji));
+		setContWithEmoji(selectedEmoji);
 		setSelectedEmoji(undefined);
-	}, [selectedEmoji]);
+	}, [selectedEmoji?.emoji]);
 
 	return (
 		<div ref={refContainer} className='relative h-8 w-8'>

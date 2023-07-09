@@ -82,8 +82,12 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 			</div>
 			<div>
 				<PickerEmojis
-					contWithEmoji={postState.content}
-					setContWithEmoji={val => setPostState({ ...postState, content: val })}
+					setContWithEmoji={posParams => {
+						setPostState({
+							...postState,
+							content: postState.content.concat(` ${posParams.emoji}`)
+						});
+					}}
 				/>
 			</div>
 			<div className='italic text-red-500'>{postState.msgPost}</div>
