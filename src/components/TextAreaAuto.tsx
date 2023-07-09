@@ -4,9 +4,10 @@ type TextAreaAutoProps = {
 	setContentTxt: (str: string) => void;
 	contentTxt: string;
 	className?: string;
+	placeholder?: string;
 };
 
-const TextAreaAuto = ({ contentTxt, setContentTxt, className }: TextAreaAutoProps) => {
+const TextAreaAuto = ({ contentTxt, setContentTxt, className, placeholder }: TextAreaAutoProps) => {
 	const refTextArea = useRef<HTMLTextAreaElement>(null);
 
 	const handleChangeTextArea = (evt: ChangeEvent<HTMLTextAreaElement>) =>
@@ -26,7 +27,7 @@ const TextAreaAuto = ({ contentTxt, setContentTxt, className }: TextAreaAutoProp
 			value={contentTxt}
 			ref={refTextArea}
 			className={`max-h-[50vh] w-full resize-none bg-transparent outline-none ${className || ''}`}
-			placeholder='Write somenthing here...'
+			placeholder={placeholder}
 			onChange={handleChangeTextArea}
 		></textarea>
 	);
