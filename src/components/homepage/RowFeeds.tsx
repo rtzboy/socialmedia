@@ -51,7 +51,7 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 	};
 
 	return (
-		<div className='flex flex-col gap-4'>
+		<div className='flex flex-col gap-2'>
 			<div className='relative flex items-center gap-4'>
 				<img src={male} alt='' className='h-11 w-11 rounded-full' />
 				<div className='flex flex-col'>
@@ -69,7 +69,6 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 				<PostContent content={postInfo.content} />
 			</div>
 			{likeAndComment(postInfo.likeCount, postInfo.comments.length, likeStatus)}
-			<hr />
 			<div className='flex'>
 				<span
 					onClick={() => handleLikeToggle()}
