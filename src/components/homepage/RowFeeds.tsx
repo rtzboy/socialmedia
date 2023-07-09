@@ -85,7 +85,7 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 					<span>Comment</span>
 				</span>
 			</div>
-			<Comments />
+			{allowOpts && <Comments />}
 		</div>
 	);
 };

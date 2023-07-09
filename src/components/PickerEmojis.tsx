@@ -1,6 +1,7 @@
 import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 import { useEffect, useRef, useState } from 'react';
 import { BsEmojiSmile } from 'react-icons/bs';
+import useContainNode from '../lib/hooks/useContainNode';
 import StyledIcon from './icons/StyledIcon';
 
 type PickerEmojisProps = {
@@ -15,14 +16,7 @@ const PickerEmojis = ({ setContWithEmoji }: PickerEmojisProps) => {
 
 	const handlerEmoji = (emojiData: EmojiClickData) => setSelectedEmoji(emojiData);
 
-	useEffect(() => {
-		if (!openChooseEmoji) return;
-		const handleClickOutside = (evt: MouseEvent) => {
-			if (!refContainer.current?.contains(evt.target as Node)) setOpenChooseEmoji(false);
-		};
-		document.addEventListener('click', handleClickOutside, true);
-		return () => document.removeEventListener('click', handleClickOutside, true);
-	}, [openChooseEmoji]);
+	useContainNode(refContainer.current, openChooseEmoji, setOpenChooseEmoji);
 
 	useEffect(() => {
 		if (!selectedEmoji) return;
@@ -35,7 +29,7 @@ const PickerEmojis = ({ setContWithEmoji }: PickerEmojisProps) => {
 			<StyledIcon
 				onClick={() => setOpenChooseEmoji(!openChooseEmoji)}
 				icon={BsEmojiSmile}
-				size='1.2rem'
+				size='1.1rem'
 				className='flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-1 text-slate-800 hover:bg-slate-200'
 			/>
 			<span className='absolute bottom-8 right-0'>

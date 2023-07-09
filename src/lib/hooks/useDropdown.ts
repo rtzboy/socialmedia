@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import useContainNode from './useContainNode';
 
 const useDropdown = () => {
 	const [dropDown, setDropDown] = useState(false);
@@ -6,15 +7,7 @@ const useDropdown = () => {
 	const openDropDown = () => setDropDown(true);
 	const closeDropDown = () => setDropDown(false);
 
-	useEffect(() => {
-		if (!dropDown) return;
-		const handleClickOutside = (evt: MouseEvent) => {
-			if (!dropDownRef.current?.contains(evt.target as Node)) closeDropDown();
-		};
-		document.addEventListener('click', handleClickOutside, true);
-
-		return () => document.removeEventListener('click', handleClickOutside, true);
-	}, [dropDown]);
+	useContainNode(dropDownRef.current, dropDown, setDropDown);
 
 	return { dropDown, dropDownRef, openDropDown, closeDropDown };
 };

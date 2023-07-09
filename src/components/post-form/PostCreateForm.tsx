@@ -77,7 +77,8 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 				<TextAreaAuto
 					contentTxt={postState.content}
 					setContentTxt={val => setPostState({ ...postState, content: val })}
-					className='text-lg'
+					className='bg-transparent text-lg'
+					stateAdd
 				/>
 			</div>
 			<div>

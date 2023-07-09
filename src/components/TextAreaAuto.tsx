@@ -5,16 +5,23 @@ type TextAreaAutoProps = {
 	contentTxt: string;
 	className?: string;
 	placeholder?: string;
+	stateAdd?: boolean;
 };
 
-const TextAreaAuto = ({ contentTxt, setContentTxt, className, placeholder }: TextAreaAutoProps) => {
+const TextAreaAuto = ({
+	contentTxt,
+	stateAdd,
+	setContentTxt,
+	className,
+	placeholder
+}: TextAreaAutoProps) => {
 	const refTextArea = useRef<HTMLTextAreaElement>(null);
 
 	const handleChangeTextArea = (evt: ChangeEvent<HTMLTextAreaElement>) =>
 		setContentTxt(evt.target?.value);
 
 	useEffect(() => {
-		refTextArea.current?.focus();
+		if (stateAdd) refTextArea.current?.focus();
 		if (refTextArea.current) {
 			refTextArea.current.style.height = '0px';
 			const scrollHeight = refTextArea.current?.scrollHeight;
@@ -26,7 +33,7 @@ const TextAreaAuto = ({ contentTxt, setContentTxt, className, placeholder }: Tex
 		<textarea
 			value={contentTxt}
 			ref={refTextArea}
-			className={`max-h-[50vh] w-full resize-none bg-transparent outline-none ${className || ''}`}
+			className={`max-h-[50vh] w-full resize-none outline-none ${className || ''}`}
 			placeholder={placeholder}
 			onChange={handleChangeTextArea}
 		></textarea>
