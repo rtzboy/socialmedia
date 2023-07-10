@@ -1,38 +1,40 @@
-import { ChangeEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, RefObject, useEffect } from 'react';
 
 type TextAreaAutoProps = {
 	setContentTxt: (str: string) => void;
 	contentTxt: string;
+	textareaRef: RefObject<HTMLTextAreaElement>;
 	className?: string;
 	placeholder?: string;
 	stateAdd?: boolean;
 };
 
 const TextAreaAuto = ({
-	contentTxt,
-	stateAdd,
 	setContentTxt,
+	contentTxt,
+	textareaRef,
 	className,
-	placeholder
+	placeholder,
+	stateAdd
 }: TextAreaAutoProps) => {
-	const refTextArea = useRef<HTMLTextAreaElement>(null);
+	// const refTextArea = useRef<HTMLTextAreaElement>(null);
 
 	const handleChangeTextArea = (evt: ChangeEvent<HTMLTextAreaElement>) =>
 		setContentTxt(evt.target?.value);
 
 	useEffect(() => {
-		if (stateAdd) refTextArea.current?.focus();
-		if (refTextArea.current) {
-			refTextArea.current.style.height = '0px';
-			const scrollHeight = refTextArea.current?.scrollHeight;
-			refTextArea.current.style.height = scrollHeight + 'px';
+		if (stateAdd) textareaRef.current?.focus();
+		if (textareaRef.current) {
+			textareaRef.current.style.height = '0px';
+			const scrollHeight = textareaRef.current?.scrollHeight;
+			textareaRef.current.style.height = scrollHeight + 'px';
 		}
-	}, [refTextArea.current, contentTxt]);
+	}, [textareaRef.current, contentTxt]);
 
 	return (
 		<textarea
 			value={contentTxt}
-			ref={refTextArea}
+			ref={textareaRef}
 			className={`max-h-[50vh] w-full resize-none outline-none ${className || ''}`}
 			placeholder={placeholder}
 			onChange={handleChangeTextArea}

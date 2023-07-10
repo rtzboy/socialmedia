@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { BsCheck2 } from 'react-icons/bs';
 import { FiLoader } from 'react-icons/fi';
 import { HiXMark } from 'react-icons/hi2';
@@ -24,6 +24,7 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 		check: false,
 		msgPost: ''
 	});
+	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
 	const makingPost = async () => {
 		let filterText = removeExtraSpaces(postState.content);
@@ -80,6 +81,7 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 					setContentTxt={val => setPostState({ ...postState, content: val })}
 					className='bg-transparent text-lg'
 					stateAdd
+					textareaRef={textAreaRef}
 				/>
 			</div>
 			<div>

@@ -5,6 +5,7 @@ import { male } from '../../assets';
 import { editPost } from '../../lib/api/posts/post.api';
 import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 import { UserFeeds } from '../../types/user.model';
+import TextAreaAuto from '../TextAreaAuto';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
 import { removeExtraSpaces } from './PostCreateForm';
@@ -17,8 +18,8 @@ type PostEditFormProps = {
 const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 	const { dispatchUserProfile, token } = useUserPostsContext();
 	const [value, setValue] = useState(currentPost.content);
-	const refTextArea = useRef<HTMLTextAreaElement>(null);
 	const [isSaving, setIsSaving] = useState(false);
+	const refTextArea = useRef<HTMLTextAreaElement>(null);
 
 	let isDisabled = value === currentPost.content;
 
@@ -68,12 +69,12 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 				</div>
 			</div>
 			<div>
-				<textarea
-					ref={refTextArea}
-					onChange={evt => setValue(evt.target.value)}
-					value={value}
-					className='h-40 w-full resize-none overflow-y-auto bg-transparent outline-none'
-				></textarea>
+				<TextAreaAuto
+					contentTxt={value}
+					setContentTxt={val => setValue(val)}
+					className='bg-transparent'
+					textareaRef={refTextArea}
+				/>
 			</div>
 			<Button
 				disabled={isSaving || isDisabled}

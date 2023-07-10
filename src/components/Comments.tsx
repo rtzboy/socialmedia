@@ -8,11 +8,11 @@ import StyledIcon from './icons/StyledIcon';
 
 const Comments = () => {
 	const [textComment, setTextComment] = useState('');
-
 	const [openTest, setOpenTest] = useState(false);
-	const refTest = useRef<HTMLDivElement>(null);
+	const divRef = useRef<HTMLDivElement>(null);
+	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-	useContainNode(refTest.current, openTest, setOpenTest);
+	useContainNode(divRef.current, openTest, setOpenTest);
 
 	return (
 		<div className='flex gap-2'>
@@ -20,11 +20,12 @@ const Comments = () => {
 				<img src={male} alt='' className='h-8 w-8 rounded-full' />
 			</div>
 			<div
-				ref={refTest}
+				ref={divRef}
 				onClick={() => setOpenTest(true)}
 				className='flex-1 rounded-xl border bg-white'
 			>
 				<TextAreaAuto
+					textareaRef={textAreaRef}
 					placeholder='Write a comment...'
 					contentTxt={textComment}
 					setContentTxt={comment => setTextComment(comment)}
