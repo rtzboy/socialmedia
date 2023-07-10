@@ -9,9 +9,11 @@ import { UserProfileAction } from '../../lib/reducers/userProfileReducer';
 import { UserFeeds } from '../../types/user.model';
 import Comments from '../Comments';
 import Dropdown from '../Dropdown';
-import LikeCount from '../LikeCount';
 import Wrapper from '../Wrapper';
 import StyledIcon from '../icons/StyledIcon';
+import Modal from '../modals/Modal';
+import PostCommentsForm from '../post-form/PostCommentsForm';
+import LikeAndComments from './LikeAndComments';
 import PostContent from './PostContent';
 
 export interface RowFeedsType {
@@ -21,19 +23,25 @@ export interface RowFeedsType {
 	dispatchUserProfile?: Dispatch<UserProfileAction>;
 }
 
-const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsType) => {
+const RowFeeds = ({ postInfo, setFeeds, dispatchUserProfile }: RowFeedsType) => {
 	const { id, token } = useAppSelector(state => state.user);
+	const [contentPost, setContentPost] = useState<JSX.Element | undefined>();
 	const [likeStatus, setLikeStatus] = useState(postInfo.likes.includes(id));
+	const [postInfoFeed, setPostInfoFeed] = useState(postInfo);
+	const [likeDisable, setLikeDisable] = useState(false);
 
 	let allowOpts = id === postInfo.author._id;
 	let isEdited = postInfo.createdAt === postInfo.updatedAt;
 
 	const handleLikeToggle = async () => {
+		setLikeDisable(true);
 		const res = await updatelikeCount(token, postInfo._id, likeStatus);
 		if (res) {
-			setLikeStatus(!likeStatus);
-			if (dispatchUserProfile)
-				return dispatchUserProfile({
+			// TODO: is it correct updated based on previous state ? or just bring the value
+			setLikeStatus(prevLikeValue => !prevLikeValue);
+			setPostInfoFeed(prevpostInfo => updatePostInfoFeed(prevpostInfo));
+			if (dispatchUserProfile) {
+				dispatchUserProfile({
 					type: 'TOGGLE_LIKE',
 					payload: {
 						postId: postInfo._id,
@@ -42,44 +50,86 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 						userId: id
 					}
 				});
-			if (!setFeeds) return;
-			setFeeds(updatePostToggleLike(feeds, postInfo, likeStatus, id));
+			}
+			if (setFeeds) {
+				setFeeds(prevFeed =>
+					(prevFeed || []).map(feed => {
+						return feed._id === postInfoFeed._id ? updatePostInfoFeed(feed) : feed;
+					})
+				);
+			}
+			setLikeDisable(false);
 		} else {
-			// TODO: popup notification error
-			console.log(' - error like post');
+			// TODO: notification?
+			console.log('Error');
 		}
+	};
+
+	const updatePostInfoFeed = (feed: UserFeeds) => {
+		let likes = [...feed.likes];
+		let likeFilterRemove: Array<String> = [];
+		let likeCount = feed.likeCount;
+		if (likeStatus) {
+			likeFilterRemove = likes.filter(likeIdUser => likeIdUser !== id);
+			likeCount--;
+		} else {
+			likes.push(id);
+			likeCount++;
+		}
+		return {
+			...feed,
+			likes: likeStatus ? likeFilterRemove : likes,
+			likeCount
+		};
 	};
 
 	return (
 		<div className='flex flex-col gap-2'>
+			<Modal>{contentPost}</Modal>
 			<div className='relative flex items-center gap-4'>
 				<img src={male} alt='' className='h-11 w-11 rounded-full' />
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
-						<NavLink to={`/profile/${postInfo.author._id}`}>{postInfo.author.username}</NavLink>
+						<NavLink to={`/profile/${postInfoFeed.author._id}`}>
+							{postInfoFeed.author.username}
+						</NavLink>
 					</span>
 					<span className='text-sm italic text-slate-700'>
-						{formatDistanceToNowStrict(new Date(postInfo.createdAt))}
+						{formatDistanceToNowStrict(new Date(postInfoFeed.createdAt))}
 						{!isEdited && <span> &#x2027; Edited</span>}
 					</span>
 				</div>
-				{allowOpts && <Dropdown postInfo={postInfo} />}
+				{allowOpts && <Dropdown postInfo={postInfoFeed} />}
 			</div>
 			<div className='flex items-center'>
-				<PostContent content={postInfo.content} />
+				<PostContent content={postInfoFeed.content} />
 			</div>
-			{likeAndComment(postInfo.likeCount, postInfo.comments.length, likeStatus)}
+			<LikeAndComments
+				likeStatus={likeStatus}
+				likeCount={postInfoFeed.likeCount}
+				commentCount={postInfoFeed.comments.length}
+			/>
 			<div className='flex'>
-				<span
+				<button
+					disabled={likeDisable}
 					onClick={() => handleLikeToggle()}
-					className={`flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-90 ${
-						likeStatus ? 'text-blue-600' : ''
-					}`}
+					className='flex flex-grow cursor-pointer select-none items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-[.95]'
 				>
 					{likeStatus ? <StyledIcon icon={AiFillLike} /> : <StyledIcon icon={AiOutlineLike} />}
 					<span>Like</span>
-				</span>
-				<span className='flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200'>
+				</button>
+				<span
+					onClick={() =>
+						setContentPost(
+							<PostCommentsForm
+								closeModal={() => setContentPost(undefined)}
+								currentPost={postInfoFeed}
+								likeStatus={likeStatus}
+							/>
+						)
+					}
+					className='flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200'
+				>
 					<StyledIcon icon={AiOutlineComment} />
 					<span>Comment</span>
 				</span>
@@ -88,48 +138,5 @@ const RowFeeds = ({ postInfo, feeds, setFeeds, dispatchUserProfile }: RowFeedsTy
 		</div>
 	);
 };
-
-const likeAndComment = (likeCount: number, commentCount: number, likeStatus: boolean) => {
-	if (!likeCount && !commentCount) return null;
-	return (
-		<div className='flex select-none items-center justify-between gap-1'>
-			{!!likeCount ? (
-				<div className='relative flex items-center gap-1'>
-					<StyledIcon icon={AiFillLike} size='1rem' className='text-blue-500' />
-					<LikeCount count={likeCount} likeStatus={likeStatus} />
-				</div>
-			) : (
-				<span></span>
-			)}
-			{!!commentCount && (
-				<div>{`${commentCount} ${commentCount > 1 ? 'comments' : 'comment'}`}</div>
-			)}
-		</div>
-	);
-};
-
-const updatePostToggleLike = (
-	feeds: UserFeeds[] | null | undefined,
-	postInfo: UserFeeds,
-	likeStatus: boolean,
-	userId: string
-) =>
-	[...(feeds || [])].map(feed => {
-		if (feed._id === postInfo._id) {
-			let likeCount = likeStatus ? --postInfo.likeCount : ++postInfo.likeCount;
-			let likes = [...postInfo.likes];
-			if (likeStatus) {
-				likes = likes.filter(elm => elm !== userId);
-			} else {
-				likes.push(userId);
-			}
-			return {
-				...postInfo,
-				likeCount,
-				likes
-			};
-		}
-		return feed;
-	});
 
 export default Wrapper(RowFeeds);
