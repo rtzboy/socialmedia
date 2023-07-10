@@ -32,22 +32,23 @@ const userProfileReducer = (state: UserProfileType, action: UserProfileAction) =
 			};
 			return { ...state };
 		}
+		// Modified logic
 		case 'TOGGLE_LIKE': {
-			let indexToggleLike = state.posts.findIndex(({ _id }) => _id === action.payload.postId);
-			let likeCount = action.payload.toggleStatus
-				? --state.posts[indexToggleLike].likeCount
-				: ++state.posts[indexToggleLike].likeCount;
-
-			let likes = [...state.posts[indexToggleLike].likes];
+			let idxPost = state.posts.findIndex(({ _id }) => _id === action.payload.postId);
+			let likes = [...state.posts[idxPost].likes];
+			let likeCount = state.posts[idxPost].likeCount;
+			let userLikesFiltered: Array<String> = [];
 			if (action.payload.toggleStatus) {
-				likes = likes.filter(userId => userId !== action.payload.userId);
+				userLikesFiltered = likes.filter(userId => userId !== action.payload.userId);
+				likeCount--;
 			} else {
 				likes.push(action.payload.userId);
+				likeCount++;
 			}
-			state.posts[indexToggleLike] = {
-				...state.posts[indexToggleLike],
-				likeCount,
-				likes
+			state.posts[idxPost] = {
+				...state.posts[idxPost],
+				likes: action.payload.toggleStatus ? userLikesFiltered : likes,
+				likeCount
 			};
 			return { ...state };
 		}

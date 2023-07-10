@@ -27,7 +27,6 @@ const RowFeeds = ({ postInfo, setFeeds, dispatchUserProfile }: RowFeedsType) => 
 	const { id, token } = useAppSelector(state => state.user);
 	const [contentPost, setContentPost] = useState<JSX.Element | undefined>();
 	const [likeStatus, setLikeStatus] = useState(postInfo.likes.includes(id));
-	const [postInfoFeed, setPostInfoFeed] = useState(postInfo);
 	const [likeDisable, setLikeDisable] = useState(false);
 
 	let allowOpts = id === postInfo.author._id;
@@ -39,7 +38,6 @@ const RowFeeds = ({ postInfo, setFeeds, dispatchUserProfile }: RowFeedsType) => 
 		if (res) {
 			// TODO: is it correct updated based on previous state ? or just bring the value
 			setLikeStatus(prevLikeValue => !prevLikeValue);
-			setPostInfoFeed(prevpostInfo => updatePostInfoFeed(prevpostInfo));
 			if (dispatchUserProfile) {
 				dispatchUserProfile({
 					type: 'TOGGLE_LIKE',
@@ -54,7 +52,7 @@ const RowFeeds = ({ postInfo, setFeeds, dispatchUserProfile }: RowFeedsType) => 
 			if (setFeeds) {
 				setFeeds(prevFeed =>
 					(prevFeed || []).map(feed => {
-						return feed._id === postInfoFeed._id ? updatePostInfoFeed(feed) : feed;
+						return feed._id === postInfo._id ? updatePostInfoFeed(feed) : feed;
 					})
 				);
 			}
@@ -90,24 +88,22 @@ const RowFeeds = ({ postInfo, setFeeds, dispatchUserProfile }: RowFeedsType) => 
 				<img src={male} alt='' className='h-11 w-11 rounded-full' />
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
-						<NavLink to={`/profile/${postInfoFeed.author._id}`}>
-							{postInfoFeed.author.username}
-						</NavLink>
+						<NavLink to={`/profile/${postInfo.author._id}`}>{postInfo.author.username}</NavLink>
 					</span>
 					<span className='text-sm italic text-slate-700'>
-						{formatDistanceToNowStrict(new Date(postInfoFeed.createdAt))}
+						{formatDistanceToNowStrict(new Date(postInfo.createdAt))}
 						{!isEdited && <span> &#x2027; Edited</span>}
 					</span>
 				</div>
-				{allowOpts && <Dropdown postInfo={postInfoFeed} />}
+				{allowOpts && <Dropdown postInfo={postInfo} />}
 			</div>
 			<div className='flex items-center'>
-				<PostContent content={postInfoFeed.content} />
+				<PostContent content={postInfo.content} />
 			</div>
 			<LikeAndComments
 				likeStatus={likeStatus}
-				likeCount={postInfoFeed.likeCount}
-				commentCount={postInfoFeed.comments.length}
+				likeCount={postInfo.likeCount}
+				commentCount={postInfo.comments.length}
 			/>
 			<div className='flex'>
 				<button
@@ -123,7 +119,7 @@ const RowFeeds = ({ postInfo, setFeeds, dispatchUserProfile }: RowFeedsType) => 
 						setContentPost(
 							<PostCommentsForm
 								closeModal={() => setContentPost(undefined)}
-								currentPost={postInfoFeed}
+								currentPost={postInfo}
 								likeStatus={likeStatus}
 							/>
 						)
