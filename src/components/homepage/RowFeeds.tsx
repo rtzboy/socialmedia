@@ -97,7 +97,7 @@ const RowFeeds = ({ postInfo, setFeeds, dispatchUserProfile }: RowFeedsType) => 
 				</div>
 				{allowOpts && <Dropdown postInfo={postInfo} />}
 			</div>
-			<div className='flex items-center'>
+			<div className='flex items-center whitespace-pre-wrap'>
 				<PostContent content={postInfo.content} />
 			</div>
 			<LikeAndComments

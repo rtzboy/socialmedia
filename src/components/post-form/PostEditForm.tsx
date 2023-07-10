@@ -7,6 +7,7 @@ import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsConte
 import { UserFeeds } from '../../types/user.model';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
+import { removeExtraSpaces } from './PostCreateForm';
 
 type PostEditFormProps = {
 	closeModal: () => void;
@@ -24,10 +25,12 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 	const handleEditPost = async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		setIsSaving(true);
-
-		const success = await editPost(token, value, currentPost._id);
+		const success = await editPost(token, removeExtraSpaces(value), currentPost._id);
 		if (success) {
-			dispatchUserProfile({ type: 'EDIT_POST', payload: { id: currentPost._id, content: value } });
+			dispatchUserProfile({
+				type: 'EDIT_POST',
+				payload: { id: currentPost._id, content: removeExtraSpaces(value) }
+			});
 			setIsSaving(false);
 			closeModal();
 		}

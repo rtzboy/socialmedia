@@ -16,7 +16,6 @@ const PostContent = ({ content }: PostContentProps) => {
 		}
 		return word + ' ';
 	});
-
 	return commentWithEmojis;
 };
 

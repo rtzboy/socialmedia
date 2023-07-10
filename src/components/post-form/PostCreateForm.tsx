@@ -26,7 +26,8 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 	});
 
 	const makingPost = async () => {
-		const { newPost, message, success } = await makePost(postState.content, token);
+		let filterText = removeExtraSpaces(postState.content);
+		const { newPost, message, success } = await makePost(filterText, token);
 		if (success && newPost !== null) {
 			setPostState(prevState => ({
 				...prevState,
@@ -113,5 +114,8 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 		</form>
 	);
 };
+
+export const removeExtraSpaces = (str: string): string =>
+	str.replace(/  +/g, ' ').trim().replace(/\n+/g, '\n');
 
 export default PostCreateForm;
