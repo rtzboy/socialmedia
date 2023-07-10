@@ -41,7 +41,7 @@ const Dropdown = ({ postInfo }: RowFeedsType) => {
 						<StyledIcon icon={HiXMark} />
 						<span>Delete</span>
 					</li>
-					<li className='flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'>
+					<li className='flex cursor-default items-center gap-2 rounded-lg py-1 pl-2 text-center'>
 						<StyledIcon icon={HiOutlineEye} />
 						<span>Visibility</span>
 					</li>

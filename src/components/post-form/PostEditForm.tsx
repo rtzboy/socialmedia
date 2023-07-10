@@ -5,6 +5,7 @@ import { male } from '../../assets';
 import { editPost } from '../../lib/api/posts/post.api';
 import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 import { UserFeeds } from '../../types/user.model';
+import PickerEmojis from '../PickerEmojis';
 import TextAreaAuto from '../TextAreaAuto';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
@@ -76,8 +77,11 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 					textareaRef={refTextArea}
 				/>
 			</div>
+			<div>
+				<PickerEmojis setContWithEmoji={emojiObj => setValue(value.concat(` ${emojiObj.emoji}`))} />
+			</div>
 			<Button
-				disabled={isSaving || isDisabled}
+				disabled={!value || isSaving || isDisabled}
 				className='bg-blue-500 font-semibold text-white disabled:opacity-50'
 			>
 				Save
