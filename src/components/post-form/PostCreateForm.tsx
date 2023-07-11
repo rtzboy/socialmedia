@@ -24,6 +24,7 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 		check: false,
 		msgPost: ''
 	});
+	const [selectText, setSelectText] = useState({ start: 0, end: 0 });
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
 	const makingPost = async () => {
@@ -79,17 +80,21 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 				<TextAreaAuto
 					contentTxt={postState.content}
 					setContentTxt={val => setPostState({ ...postState, content: val })}
+					textareaRef={textAreaRef}
+					setSelectText={setSelectText}
 					className='bg-transparent text-lg'
 					stateAdd
-					textareaRef={textAreaRef}
 				/>
 			</div>
 			<div>
 				<PickerEmojis
-					setContWithEmoji={posParams => {
+					setContWithEmoji={emojiObj => {
 						setPostState({
 							...postState,
-							content: postState.content.concat(` ${posParams.emoji}`)
+							content:
+								postState.content.slice(0, selectText.start) +
+								` ${emojiObj.emoji} ` +
+								postState.content.slice(selectText.end!)
 						});
 					}}
 				/>

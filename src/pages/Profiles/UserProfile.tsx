@@ -21,6 +21,7 @@ const UserProfile = () => {
 		if (result !== null) {
 			dispatchUserProfile({ type: 'SUCCESS_INFO', payload: result });
 		} else {
+			// TODO: notification message
 			console.log(error);
 		}
 	};

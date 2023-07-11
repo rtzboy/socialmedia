@@ -20,6 +20,7 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 	const { dispatchUserProfile, token } = useUserPostsContext();
 	const [value, setValue] = useState(currentPost.content);
 	const [isSaving, setIsSaving] = useState(false);
+	const [selectText, setSelectText] = useState({ start: 0, end: 0 });
 	const refTextArea = useRef<HTMLTextAreaElement>(null);
 
 	let isDisabled = value === currentPost.content;
@@ -49,7 +50,7 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 	return (
 		<form
 			onSubmit={handleEditPost}
-			className='relative flex flex-col gap-4 rounded-lg bg-slate-100 p-4'
+			className='relative flex flex-col gap-2 rounded-lg bg-slate-100 p-4'
 		>
 			<div className='text-center text-lg font-semibold'>Edit post</div>
 			<StyledIcon
@@ -75,10 +76,19 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 					setContentTxt={val => setValue(val)}
 					className='bg-transparent'
 					textareaRef={refTextArea}
+					setSelectText={setSelectText}
 				/>
 			</div>
 			<div>
-				<PickerEmojis setContWithEmoji={emojiObj => setValue(value.concat(` ${emojiObj.emoji}`))} />
+				<PickerEmojis
+					setContWithEmoji={emojiObj =>
+						setValue(
+							value.slice(0, selectText.start) +
+								` ${emojiObj.emoji} ` +
+								value.slice(selectText.end!)
+						)
+					}
+				/>
 			</div>
 			<Button
 				disabled={!value || isSaving || isDisabled}
