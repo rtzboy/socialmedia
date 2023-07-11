@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { removeAuthLocale, saveAuthLocale } from '../../lib/helpers/localstorage';
 import { UserInfo } from '../../types/user.model';
 
@@ -16,8 +16,8 @@ const userSlice = createSlice({
 	initialState: (JSON.parse(localStorage.getItem(USER_KEY)!) as UserInfo) || initialUserState,
 	reducers: {
 		// actions
-		createUser(_, action) {
-			// immer makes it inmutable under the hood no needed {...state, bla bla bla}
+		createUser: (_, action: PayloadAction<UserInfo>) => {
+			// immer makes it inmutable under the hood no needed (copy)
 			saveAuthLocale(USER_KEY, action.payload);
 			return action.payload;
 		},
