@@ -6,6 +6,8 @@ import Button from '../../components/form/Button';
 import InputText from '../../components/form/InputText';
 import { PrivateRoutes, PublicRoutes } from '../../constants/routes';
 import { createUser } from '../../features/user/user-slice';
+import { createUserInfo } from '../../features/user/userInfo-slice';
+import { userInformation } from '../../lib/api/user/user.api';
 import { loginCall } from '../../lib/auth/api-auth';
 import useLogSignUp from '../../lib/hooks/useLogSignUp';
 
@@ -17,10 +19,11 @@ export interface LoginType {
 const Login = () => {
 	const navigate = useNavigate();
 	const user = useAppSelector(state => state.user);
-	const dispatchUserAuth = useAppDispatch();
+	const dispatchApp = useAppDispatch();
 
 	const [formData, setFormData] = useState<LoginType>({ email: '', password: '' });
 	const [isVisible, setIsVisible] = useState(false);
+	const [loginStatus, setLoginStatus] = useState(false);
 	const { logSignUp, loadingLogSign, errorLogSign, resetLogSign } = useLogSignUp();
 
 	const handleChangeInputs = (evt: ChangeEvent<HTMLInputElement>) =>
@@ -38,14 +41,25 @@ const Login = () => {
 			errorLogSign(error);
 			return;
 		}
-		dispatchUserAuth(createUser({ id, username, email, token }));
+		dispatchApp(createUser({ id, username, email, token }));
 		resetLogSign();
-		navigate(`/${PrivateRoutes.Home}`);
+		setLoginStatus(true);
+	};
+
+	const setUserInfoGlobal = async () => {
+		const { result, error: err } = await userInformation(user.token, user.id);
+		if (result !== null) {
+			dispatchApp(createUserInfo(result));
+			navigate(`/${PrivateRoutes.Home}`);
+		} else {
+			console.log(err);
+		}
 	};
 
 	useEffect(() => {
-		if (user.token) navigate(`/${PrivateRoutes.Home}`);
-	}, []);
+		if (!user.token) return;
+		setUserInfoGlobal();
+	}, [loginStatus]);
 
 	return (
 		<form

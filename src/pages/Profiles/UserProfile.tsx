@@ -2,6 +2,7 @@ import { useEffect, useReducer } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { landscapeTest, male } from '../../assets';
+import Button from '../../components/form/Button';
 import CreatePost from '../../components/homepage/CreatePost';
 import RowFeeds from '../../components/homepage/RowFeeds';
 import { userInformation } from '../../lib/api/user/user.api';
@@ -9,15 +10,19 @@ import { UserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext'
 import userProfileReducer, { INITIAL_PROFILE } from '../../lib/reducers/userProfileReducer';
 
 const UserProfile = () => {
-	const { token, id: idUser } = useAppSelector(state => state.user);
+	const { token } = useAppSelector(state => state.user);
+	const { userInfo } = useAppSelector(state => state.userGlobalInfo);
+
 	const [userProfile, dispatchUserProfile] = useReducer(userProfileReducer, INITIAL_PROFILE);
 
-	const { id } = useParams();
+	const { idUserParam } = useParams();
 
-	const allowCreatePost = idUser === id;
+	const allowCreatePost = userInfo._id === idUserParam;
+	let allowUserStuff = userInfo._id === idUserParam;
+	let allowFollow = userInfo.following.includes(idUserParam || userInfo._id);
 
-	const callUserProfile = async (token: string, idParam?: string) => {
-		const { result, error } = await userInformation(token, idParam);
+	const callUserProfile = async (token: string, idUserParam?: string) => {
+		const { result, error } = await userInformation(token, idUserParam);
 		if (result !== null) {
 			dispatchUserProfile({ type: 'SUCCESS_INFO', payload: result });
 		} else {
@@ -27,8 +32,8 @@ const UserProfile = () => {
 	};
 
 	useEffect(() => {
-		callUserProfile(token, id);
-	}, [id]);
+		callUserProfile(token, idUserParam);
+	}, [idUserParam]);
 
 	return (
 		<div className='mx-auto flex max-w-2xl flex-col gap-4 p-4'>
@@ -50,9 +55,6 @@ const UserProfile = () => {
 					</div>
 					<div className='relative flex w-full justify-between'>
 						<div>
-							<ul className='flex gap-4'>{/* basicInfouser */}</ul>
-						</div>
-						<div>
 							<ul className='flex gap-4 text-sm'>
 								<li className='flex flex-col items-center justify-center'>
 									<div>Followers</div>
@@ -67,6 +69,13 @@ const UserProfile = () => {
 									<div>{userProfile.posts.length}</div>
 								</li>
 							</ul>
+						</div>
+						<div>
+							{allowUserStuff || (
+								<Button className='bg-blue-500 text-white'>
+									{allowFollow ? 'Unfollow' : 'Follow'}
+								</Button>
+							)}
 						</div>
 					</div>
 				</div>

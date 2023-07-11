@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { resetUser } from '../features/user/user-slice';
+import { deleteUserInfo } from '../features/user/userInfo-slice';
 import { userSearch } from '../lib/api/user/user.api';
 import Button from './form/Button';
 
@@ -12,7 +13,7 @@ interface UsersResult {
 
 const Navbar = () => {
 	const { username, id, token } = useAppSelector(state => state.user);
-	const dispatchNav = useAppDispatch();
+	const dispatchApp = useAppDispatch();
 	const [searchUser, setSearchUser] = useState('');
 	const [resultUsers, setResultUsers] = useState<UsersResult[] | null>(null);
 	const [hasError, setHasError] = useState('');
@@ -104,7 +105,13 @@ const Navbar = () => {
 								<NavLink to={`/profile/${id}`}>{username}</NavLink>
 							</li>
 							<li>
-								<Button onClick={() => dispatchNav(resetUser())} className='bg-blue-300'>
+								<Button
+									onClick={() => {
+										dispatchApp(resetUser());
+										dispatchApp(deleteUserInfo());
+									}}
+									className='bg-blue-300'
+								>
 									Logout
 								</Button>
 							</li>

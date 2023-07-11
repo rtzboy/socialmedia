@@ -21,7 +21,7 @@ const App = () => {
 				<Route path='*' element={<div>NotFound</div>} />
 				<Route element={<AuthGuard />}>
 					<Route path={`/${PrivateRoutes.Home}`} element={<HomeScreen />} />
-					<Route path={`/${PrivateRoutes.Profile}/:id`} element={<UserProfile />} />
+					<Route path={`/${PrivateRoutes.Profile}/:idUserParam`} element={<UserProfile />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
