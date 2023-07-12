@@ -20,10 +20,10 @@ export interface RowFeedsType {
 	postInfo: UserFeeds;
 	feeds?: UserFeeds[] | null;
 	setFeeds?: Dispatch<SetStateAction<UserFeeds[] | null>>;
-	dispatchUserProfile?: Dispatch<UserProfileAction>;
+	dispatchPubProfile?: Dispatch<UserProfileAction>;
 }
 
-const RowFeeds = ({ postInfo, setFeeds, dispatchUserProfile }: RowFeedsType) => {
+const RowFeeds = ({ postInfo, setFeeds, dispatchPubProfile }: RowFeedsType) => {
 	const { id, token } = useAppSelector(state => state.user);
 	const [contentPost, setContentPost] = useState<JSX.Element | undefined>();
 	const [likeStatus, setLikeStatus] = useState(postInfo.likes.includes(id));
@@ -38,8 +38,8 @@ const RowFeeds = ({ postInfo, setFeeds, dispatchUserProfile }: RowFeedsType) => 
 		if (res) {
 			// TODO: is it correct updated based on previous state ? or just bring the value
 			setLikeStatus(prevLikeValue => !prevLikeValue);
-			if (dispatchUserProfile) {
-				dispatchUserProfile({
+			if (dispatchPubProfile) {
+				dispatchPubProfile({
 					type: 'TOGGLE_LIKE',
 					payload: {
 						postId: postInfo._id,
