@@ -87,6 +87,7 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 				/>
 			</div>
 			<div>
+				{/* TODO: error create leftside */}
 				<PickerEmojis
 					setContWithEmoji={emojiObj => {
 						setPostState({
