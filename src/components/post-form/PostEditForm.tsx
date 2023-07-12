@@ -80,6 +80,7 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 				/>
 			</div>
 			<div>
+				{/* TODO: error inserting leftside */}
 				<PickerEmojis
 					setContWithEmoji={emojiObj =>
 						setValue(
