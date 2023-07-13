@@ -27,8 +27,6 @@ const UserPrivProfile = ({}: Props) => {
 		callPrivatePosts(token, id);
 	}, []);
 
-	console.log(' - UserPrivProfile');
-
 	return (
 		<UserPostsContext.Provider value={{ dispatchUserProfile: dispatchPrivatePost, token }}>
 			<div className='mx-auto flex max-w-3xl flex-col gap-4 p-4'>
