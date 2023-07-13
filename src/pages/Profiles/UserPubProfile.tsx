@@ -38,10 +38,10 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 				followStatus={followStatus}
 			/>
 			<div className='flex items-start gap-4'>
-				<div className='w-[30%] rounded-lg bg-slate-100 p-4'>
+				<div className='w-[40%] rounded-lg bg-slate-100 p-4'>
 					<div className='text-lg font-semibold'>About</div>
 				</div>
-				<div className='flex w-[70%] flex-col gap-4'>
+				<div className='flex w-[60%] flex-col gap-4'>
 					{!userProfile.posts.length ? (
 						<div className='rounded-lg bg-slate-100 p-4 text-center italic'>Post Something!</div>
 					) : null}
