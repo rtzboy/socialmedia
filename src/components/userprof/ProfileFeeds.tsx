@@ -1,44 +1,49 @@
-import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { formatDistanceToNowStrict } from 'date-fns';
+import { Dispatch, useState } from 'react';
 import { AiFillLike, AiOutlineComment, AiOutlineLike } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
-import { male } from '../../assets';
 import { updatelikeCount } from '../../lib/api/posts/post.api';
+import { UserProfileAction } from '../../lib/reducers/userProfileReducer';
 import { UserFeeds } from '../../types/user.model';
+import Comments from '../Comments';
+import Dropdown from '../Dropdown';
 import Wrapper from '../Wrapper';
+import LikeAndComments from '../homepage/LikeAndComments';
+import PostContent from '../homepage/PostContent';
 import StyledIcon from '../icons/StyledIcon';
 import Modal from '../modals/Modal';
 import PostCommentsForm from '../post-form/PostCommentsForm';
-import LikeAndComments from './LikeAndComments';
-import PostContent from './PostContent';
 
-export interface RowFeedsType {
-	postInfo: UserFeeds;
-	feeds: UserFeeds[] | null;
-	setFeeds: Dispatch<SetStateAction<UserFeeds[] | null>>;
-}
+type Props = {
+	userPosts: UserFeeds;
+	dispatchPost: Dispatch<UserProfileAction>;
+};
 
-const RowFeeds = ({ postInfo, setFeeds }: RowFeedsType) => {
+const ProfileFeeds = ({ userPosts, dispatchPost }: Props) => {
 	const { id, token } = useAppSelector(state => state.user);
 	const [contentPost, setContentPost] = useState<JSX.Element | undefined>();
-	const [likeStatus, setLikeStatus] = useState(postInfo.likes.includes(id));
+	const [likeStatus, setLikeStatus] = useState(userPosts.likes.includes(id));
 	const [likeDisable, setLikeDisable] = useState(false);
 
-	let isEdited = postInfo.createdAt === postInfo.updatedAt;
+	let allowOpts = id === userPosts.author._id;
+	let isEdited = userPosts.createdAt === userPosts.updatedAt;
 
 	const handleLikeToggle = async () => {
 		setLikeDisable(true);
-		const res = await updatelikeCount(token, postInfo._id, likeStatus);
+		const res = await updatelikeCount(token, userPosts._id, likeStatus);
 		if (res) {
-			// TODO: is it correct updated based on previous state ? or just bring the value
 			setLikeStatus(prevLikeValue => !prevLikeValue);
-			if (setFeeds) {
-				setFeeds(prevFeed =>
-					(prevFeed || []).map(feed => {
-						return feed._id === postInfo._id ? updatePostInfoFeed(feed) : feed;
-					})
-				);
+			if (dispatchPost) {
+				dispatchPost({
+					type: 'TOGGLE_LIKE',
+					payload: {
+						postId: userPosts._id,
+						likeCount: userPosts.likeCount,
+						toggleStatus: likeStatus,
+						userId: id
+					}
+				});
 			}
 			setTimeout(() => {
 				setLikeDisable(false);
@@ -49,46 +54,29 @@ const RowFeeds = ({ postInfo, setFeeds }: RowFeedsType) => {
 		}
 	};
 
-	const updatePostInfoFeed = (feed: UserFeeds) => {
-		let likes = [...feed.likes];
-		let likeFilterRemove: Array<String> = [];
-		let likeCount = feed.likeCount;
-		if (likeStatus) {
-			likeFilterRemove = likes.filter(likeIdUser => likeIdUser !== id);
-			likeCount--;
-		} else {
-			likes.push(id);
-			likeCount++;
-		}
-		return {
-			...feed,
-			likes: likeStatus ? likeFilterRemove : likes,
-			likeCount
-		};
-	};
-
 	return (
 		<div className='flex flex-col gap-2'>
 			<Modal>{contentPost}</Modal>
 			<div className='relative flex items-center gap-4'>
-				<img src={male} alt='' className='h-11 w-11 rounded-full' />
+				<img src='https://i.ibb.co/1n16kyG/D2.png' alt='' className='h-11 w-11 rounded-full' />
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
-						<NavLink to={`/profile/${postInfo.author._id}`}>{postInfo.author.username}</NavLink>
+						<NavLink to={`/profile/${userPosts.author._id}`}>{userPosts.author.username}</NavLink>
 					</span>
 					<span className='text-sm italic text-slate-700'>
-						{formatDistanceToNowStrict(new Date(postInfo.createdAt))}
+						{formatDistanceToNowStrict(new Date(userPosts.createdAt))}
 						{!isEdited && <span> &#x2027; Edited</span>}
 					</span>
 				</div>
+				{allowOpts && <Dropdown postInfo={userPosts} />}
 			</div>
 			<div className='flex items-center whitespace-pre-wrap'>
-				<PostContent content={postInfo.content} />
+				<PostContent content={userPosts.content} />
 			</div>
 			<LikeAndComments
 				likeStatus={likeStatus}
-				likeCount={postInfo.likeCount}
-				commentCount={postInfo.comments.length}
+				likeCount={userPosts.likeCount}
+				commentCount={userPosts.comments.length}
 			/>
 			<div className='flex'>
 				<button
@@ -104,7 +92,7 @@ const RowFeeds = ({ postInfo, setFeeds }: RowFeedsType) => {
 						setContentPost(
 							<PostCommentsForm
 								closeModal={() => setContentPost(undefined)}
-								currentPost={postInfo}
+								currentPost={userPosts}
 								likeStatus={likeStatus}
 							/>
 						)
@@ -115,8 +103,9 @@ const RowFeeds = ({ postInfo, setFeeds }: RowFeedsType) => {
 					<span>Comment</span>
 				</span>
 			</div>
+			{allowOpts && <Comments />}
 		</div>
 	);
 };
 
-export default Wrapper(RowFeeds);
+export default Wrapper(ProfileFeeds);

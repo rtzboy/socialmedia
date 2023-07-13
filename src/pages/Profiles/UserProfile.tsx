@@ -7,7 +7,7 @@ const UserProfile = () => {
 	const { id, token } = useAppSelector(state => state.user);
 	const { idUserParam } = useParams();
 	return id === idUserParam ? (
-		<UserPrivProfile token={token} />
+		<UserPrivProfile />
 	) : (
 		<UserPubProfile idUrl={idUserParam} token={token} />
 	);

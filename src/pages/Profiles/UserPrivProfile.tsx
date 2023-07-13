@@ -1,17 +1,13 @@
 import { useEffect, useReducer } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import CreatePost from '../../components/homepage/CreatePost';
-import RowFeeds from '../../components/homepage/RowFeeds';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
+import ProfileFeeds from '../../components/userprof/ProfileFeeds';
 import { userInformation } from '../../lib/api/user/user.api';
 import { UserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 import userProfileReducer, { INITIAL_PROFILE } from '../../lib/reducers/userProfileReducer';
 
-type Props = {
-	token: string;
-};
-
-const UserPrivProfile = ({}: Props) => {
+const UserPrivProfile = () => {
 	const userPrivate = useAppSelector(state => state.userGlobalInfo);
 	const { token, id } = useAppSelector(state => state.user);
 	const [privatePost, dispatchPrivatePost] = useReducer(userProfileReducer, INITIAL_PROFILE);
@@ -38,7 +34,7 @@ const UserPrivProfile = ({}: Props) => {
 					</div>
 					<div className='flex w-[60%] flex-col gap-4'>
 						{privatePost.posts.map(post => (
-							<RowFeeds key={post._id} postInfo={post} />
+							<ProfileFeeds key={post._id} userPosts={post} dispatchPost={dispatchPrivatePost} />
 						))}
 					</div>
 				</div>

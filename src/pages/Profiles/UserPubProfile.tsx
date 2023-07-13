@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import { useAppSelector } from '../../app/hooks';
-import RowFeeds from '../../components/homepage/RowFeeds';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
+import ProfileFeeds from '../../components/userprof/ProfileFeeds';
 import { userInformation } from '../../lib/api/user/user.api';
 import userProfileReducer, { INITIAL_PROFILE } from '../../lib/reducers/userProfileReducer';
 
@@ -49,7 +49,7 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 						<div className='rounded-lg bg-slate-100 p-4 text-center italic'>Nothing to show</div>
 					) : null}
 					{userProfile.posts.map(post => (
-						<RowFeeds key={post._id} postInfo={post} dispatchPubProfile={dispatchPubProfile} />
+						<ProfileFeeds key={post._id} userPosts={post} dispatchPost={dispatchPubProfile} />
 					))}
 				</div>
 			</div>
