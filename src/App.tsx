@@ -13,17 +13,17 @@ import Signup from './pages/Signup/Signup';
 
 const App = () => {
 	const { token, id } = useAppSelector(state => state.user);
-	const { userInfo } = useAppSelector(state => state.userGlobalInfo);
+	const { _id } = useAppSelector(state => state.userGlobalInfo);
 	const dispatchApp = useAppDispatch();
 
 	const settingUserInfoGlobal = async () => {
 		const { result } = await userInformation(token, id);
 		if (result !== null) {
-			dispatchApp(createUserInfo(result));
+			dispatchApp(createUserInfo(result.userInfo));
 		}
 	};
 	useEffect(() => {
-		if (userInfo._id) return;
+		if (_id) return;
 		settingUserInfoGlobal();
 	}, []);
 

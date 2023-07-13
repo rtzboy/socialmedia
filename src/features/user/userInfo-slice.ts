@@ -1,29 +1,37 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { UserProfileType } from '../../types/user.model';
+import { UserPrivateInfo } from '../../types/user.model';
 
-const initalInfoUser: UserProfileType = {
-	userInfo: {
-		_id: '',
-		username: '',
-		followers: [],
-		following: []
-	},
-	posts: []
+const privateInfo: UserPrivateInfo = {
+	_id: '',
+	username: '',
+	followers: [],
+	following: []
 };
 
-const userInfoSlice = createSlice({
+const userPrivateSlice = createSlice({
 	name: 'userInformation',
-	initialState: initalInfoUser,
+	initialState: privateInfo,
 	reducers: {
-		createUserInfo: (_, action: PayloadAction<UserProfileType>) => {
+		createUserInfo: (_, action: PayloadAction<UserPrivateInfo>) => {
 			return action.payload;
 		},
+		followState: (state, action: PayloadAction<{ _id: string }>) => {
+			let followStatus = state.following.includes(action.payload._id);
+			let followingCopy = [...state.following];
+			let followingFilter: Array<string> = [];
+			if (followStatus) {
+				followingFilter = state.following.filter(elm => elm !== action.payload._id);
+			} else {
+				followingCopy.push(action.payload._id);
+			}
+			state.following = followStatus ? followingFilter : followingCopy;
+		},
 		deleteUserInfo: () => {
-			return initalInfoUser;
+			return privateInfo;
 		}
 	}
 });
 
-export const { createUserInfo, deleteUserInfo } = userInfoSlice.actions;
+export const { createUserInfo, deleteUserInfo, followState } = userPrivateSlice.actions;
 
-export default userInfoSlice.reducer;
+export default userPrivateSlice.reducer;

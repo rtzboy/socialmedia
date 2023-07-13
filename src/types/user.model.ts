@@ -1,3 +1,10 @@
+export interface UserPrivateInfo {
+	_id: string;
+	username: string;
+	followers: Array<string>;
+	following: Array<string>;
+}
+
 export interface UserInfo {
 	id: string;
 	username: string;

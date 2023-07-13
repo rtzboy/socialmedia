@@ -37,6 +37,7 @@ const RowFeeds = ({ postInfo, setFeeds, dispatchPubProfile }: RowFeedsType) => {
 		const res = await updatelikeCount(token, postInfo._id, likeStatus);
 		if (res) {
 			// TODO: is it correct updated based on previous state ? or just bring the value
+			// TODO: separe rows and rowsProfile
 			setLikeStatus(prevLikeValue => !prevLikeValue);
 			if (dispatchPubProfile) {
 				dispatchPubProfile({
@@ -56,7 +57,9 @@ const RowFeeds = ({ postInfo, setFeeds, dispatchPubProfile }: RowFeedsType) => {
 					})
 				);
 			}
-			setLikeDisable(false);
+			setTimeout(() => {
+				setLikeDisable(false);
+			}, 300);
 		} else {
 			// TODO: notification?
 			console.log('Error');
