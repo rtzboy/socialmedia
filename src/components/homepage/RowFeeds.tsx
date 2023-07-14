@@ -15,7 +15,7 @@ import PostContent from './PostContent';
 export interface RowFeedsType {
 	postInfo: UserFeeds;
 	feeds: UserFeeds[] | null;
-	setFeeds: Dispatch<SetStateAction<UserFeeds[] | null>>;
+	setFeeds: Dispatch<SetStateAction<UserFeeds[] | undefined>>;
 }
 
 const RowFeeds = ({ postInfo, setFeeds }: RowFeedsType) => {
