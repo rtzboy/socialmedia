@@ -37,7 +37,7 @@ const NewFeeds = () => {
 	);
 };
 
-const DivMessages = ({ ...props }) => {
+export const DivMessages = ({ ...props }) => {
 	return (
 		<div {...props} className='rounded-md bg-slate-100 p-4 italic tracking-wide text-slate-700' />
 	);
