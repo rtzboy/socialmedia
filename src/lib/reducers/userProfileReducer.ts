@@ -2,10 +2,12 @@ import { UserFeeds, UserProfileType } from '../../types/user.model';
 
 export const INITIAL_PROFILE = {
 	userInfo: {
-		followers: [],
-		following: [],
+		_id: '',
 		username: '',
-		_id: ''
+		profilePic: '',
+		gender: '',
+		followers: [],
+		following: []
 	},
 	posts: []
 };

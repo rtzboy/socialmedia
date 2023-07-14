@@ -1,6 +1,5 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 import { HiXMark } from 'react-icons/hi2';
-import { male } from '../../assets';
 import { UserFeeds } from '../../types/user.model';
 import LikeAndComments from '../homepage/LikeAndComments';
 import PostContent from '../homepage/PostContent';
@@ -23,7 +22,11 @@ const PostCommentsForm = ({ closeModal, currentPost, likeStatus }: CommentsForm)
 			/>
 			<div className='text-center text-lg font-semibold'>{`${currentPost.author.username}'s Post`}</div>
 			<div className='relative flex items-center gap-4'>
-				<img src={male} alt='' className='h-11 w-11 rounded-full' />
+				<img
+					src={currentPost.author.profilePic}
+					alt={currentPost.author.username}
+					className='h-11 w-11 rounded-full'
+				/>
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
 						<span>{currentPost.author.username}</span>

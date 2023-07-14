@@ -58,7 +58,11 @@ const ProfileFeeds = ({ userPosts, dispatchPost }: Props) => {
 		<div className='flex flex-col gap-2'>
 			<Modal>{contentPost}</Modal>
 			<div className='relative flex items-center gap-4'>
-				<img src='https://i.ibb.co/1n16kyG/D2.png' alt='' className='h-11 w-11 rounded-full' />
+				<img
+					src={userPosts.author.profilePic}
+					alt={userPosts.author.username}
+					className='h-11 w-11 rounded-full'
+				/>
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
 						<NavLink to={`/profile/${userPosts.author._id}`}>{userPosts.author.username}</NavLink>

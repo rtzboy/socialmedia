@@ -1,6 +1,8 @@
 export interface UserPrivateInfo {
 	_id: string;
 	username: string;
+	profilePic: string;
+	gender: string;
 	followers: Array<string>;
 	following: Array<string>;
 }
@@ -16,6 +18,8 @@ export interface UserProfileType {
 	userInfo: {
 		_id: string;
 		username: string;
+		profilePic: string;
+		gender: string;
 		followers: Array<string>;
 		following: Array<string>;
 	};
@@ -36,4 +40,5 @@ export interface UserFeeds {
 interface AuthorInterface {
 	_id: string;
 	username: string;
+	profilePic: string;
 }

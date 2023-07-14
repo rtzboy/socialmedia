@@ -4,6 +4,8 @@ import { UserPrivateInfo } from '../../types/user.model';
 const privateInfo: UserPrivateInfo = {
 	_id: '',
 	username: '',
+	profilePic: '',
+	gender: '',
 	followers: [],
 	following: []
 };

@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { AiFillLike, AiOutlineComment, AiOutlineLike } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
-import { male } from '../../assets';
 import { updatelikeCount } from '../../lib/api/posts/post.api';
 import { UserFeeds } from '../../types/user.model';
 import Wrapper from '../Wrapper';
@@ -71,7 +70,11 @@ const RowFeeds = ({ postInfo, setFeeds }: RowFeedsType) => {
 		<div className='flex flex-col gap-2'>
 			<Modal>{contentPost}</Modal>
 			<div className='relative flex items-center gap-4'>
-				<img src={male} alt='' className='h-11 w-11 rounded-full' />
+				<img
+					src={postInfo.author.profilePic}
+					alt={postInfo.author.username}
+					className='h-11 w-11 rounded-full'
+				/>
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
 						<NavLink to={`/profile/${postInfo.author._id}`}>{postInfo.author.username}</NavLink>

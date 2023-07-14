@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import { male } from '../../assets';
+import { useAppSelector } from '../../app/hooks';
 import Wrapper from '../Wrapper';
 import Modal from '../modals/Modal';
 import PostCreateForm from '../post-form/PostCreateForm';
 
 const CreatePost = () => {
+	const { profilePic } = useAppSelector(state => state.userGlobalInfo);
 	const [contentModal, setContentModal] = useState<JSX.Element | undefined>();
 
 	return (
 		<>
 			<div className='flex items-center gap-2'>
 				<Modal>{contentModal}</Modal>
-				<img src={male} alt='' className='h-10 w-10 rounded-full' />
+				<img src={profilePic} alt='Username' className='h-10 w-10 rounded-full' />
 				<span
 					onClick={() =>
 						setContentModal(<PostCreateForm closeModal={() => setContentModal(undefined)} />)

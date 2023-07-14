@@ -1,7 +1,6 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { HiXMark } from 'react-icons/hi2';
-import { male } from '../../assets';
 import { editPost } from '../../lib/api/posts/post.api';
 import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 import { UserFeeds } from '../../types/user.model';
@@ -60,7 +59,11 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 				className='absolute right-3 top-3 cursor-pointer rounded-full bg-slate-200 p-1 hover:bg-slate-300'
 			/>
 			<div className='relative flex items-center gap-4'>
-				<img src={male} alt='' className='h-11 w-11 rounded-full' />
+				<img
+					src={currentPost.author.profilePic}
+					alt={currentPost.author.username}
+					className='h-11 w-11 rounded-full'
+				/>
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
 						<span>{currentPost.author.username}</span>

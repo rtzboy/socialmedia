@@ -27,8 +27,8 @@ const HeaderProfile = ({ userHeader, postCount, followStatus, privProfile }: Pro
 			<div className='relative mt-8 rounded-lg p-4'>
 				<div className='flex justify-center'>
 					<img
-						src='https://i.ibb.co/1n16kyG/D2.png'
-						alt=''
+						src={userHeader.profilePic}
+						alt={userHeader.username}
 						className='h-[150px] w-[150px] rounded-full'
 					/>
 				</div>
