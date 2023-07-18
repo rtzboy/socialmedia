@@ -2,6 +2,7 @@ import { useEffect, useReducer } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import CreatePost from '../../components/homepage/CreatePost';
 import { DivMessages } from '../../components/homepage/NewFeeds';
+import SkeletonPost from '../../components/skeletons/SkeletonPost';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
 import ProfileFeeds from '../../components/userprof/ProfileFeeds';
 import { userInformation } from '../../lib/api/user/user.api';
@@ -34,7 +35,11 @@ const UserPrivProfile = () => {
 						<div className='text-lg font-semibold'>About</div>
 					</div>
 					<div className='flex w-[60%] flex-col gap-4'>
-						{!privatePost.posts.length && <DivMessages children='Nothing To Show...' />}
+						{!privatePost.userInfo.username ? (
+							<SkeletonPost />
+						) : !privatePost.posts.length ? (
+							<DivMessages children='Share something...' />
+						) : null}
 						{privatePost.posts.map(post => (
 							<ProfileFeeds key={post._id} userPosts={post} dispatchPost={dispatchPrivatePost} />
 						))}

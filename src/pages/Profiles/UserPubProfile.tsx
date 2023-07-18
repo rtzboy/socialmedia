@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { DivMessages } from '../../components/homepage/NewFeeds';
+import SkeletonPost from '../../components/skeletons/SkeletonPost';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
 import ProfileFeeds from '../../components/userprof/ProfileFeeds';
 import { userInformation } from '../../lib/api/user/user.api';
@@ -43,7 +44,11 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 					<div className='text-lg font-semibold'>About</div>
 				</div>
 				<div className='flex w-[60%] flex-col gap-4'>
-					{!userProfile.posts.length && <DivMessages children='Nothing To Show...' />}
+					{!userProfile.userInfo.username ? (
+						<SkeletonPost />
+					) : !userProfile.posts.length ? (
+						<DivMessages children='Nothing to show...!' />
+					) : null}
 					{userProfile.posts.map(post => (
 						<ProfileFeeds key={post._id} userPosts={post} dispatchPost={dispatchPubProfile} />
 					))}

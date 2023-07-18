@@ -3,10 +3,13 @@ import { useAppSelector } from '../../app/hooks';
 import Wrapper from '../Wrapper';
 import Modal from '../modals/Modal';
 import PostCreateForm from '../post-form/PostCreateForm';
+import SkeletonCreate from '../skeletons/SkeletonCreate';
 
 const CreatePost = () => {
 	const { profilePic } = useAppSelector(state => state.userGlobalInfo);
 	const [contentModal, setContentModal] = useState<JSX.Element | undefined>();
+
+	if (!profilePic) return <SkeletonCreate />;
 
 	return (
 		<>
