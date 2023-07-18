@@ -1,6 +1,9 @@
-import { useAppDispatch } from '../../app/hooks';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { landscapeTest } from '../../assets';
 import { followState } from '../../features/user/userInfo-slice';
+import { userFollow } from '../../lib/api/user/user.api';
 import { UserPrivateInfo } from '../../types/user.model';
 import Button from '../form/Button';
 
@@ -12,7 +15,20 @@ type Props = {
 };
 
 const HeaderProfile = ({ userHeader, postCount, followStatus, privProfile }: Props) => {
+	const { token } = useAppSelector(state => state.user);
 	const dispatchApp = useAppDispatch();
+	const [disabled, setDisabled] = useState(false);
+	const { idUserParam } = useParams();
+
+	const handleFollowUpdate = async () => {
+		if (!idUserParam || followStatus === undefined) return;
+		setDisabled(true);
+		const { success } = await userFollow(token, idUserParam, followStatus);
+		if (success) {
+			dispatchApp(followState({ _id: userHeader._id }));
+			setDisabled(false);
+		}
+	};
 
 	return (
 		<div className='relative overflow-hidden rounded-lg bg-slate-100'>
@@ -53,10 +69,11 @@ const HeaderProfile = ({ userHeader, postCount, followStatus, privProfile }: Pro
 					<div>
 						{!privProfile && (
 							<Button
+								disabled={disabled}
 								onClick={() => {
-									dispatchApp(followState({ _id: userHeader._id }));
+									handleFollowUpdate();
 								}}
-								className='bg-blue-500 text-white'
+								className='bg-blue-500 text-white hover:opacity-80 disabled:opacity-50'
 							>
 								{followStatus ? 'Unfollow' : 'Follow'}
 							</Button>

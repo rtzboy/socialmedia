@@ -25,4 +25,18 @@ const userSearch = async (token: string, searchUser: string) => {
 	}
 };
 
-export { userInformation, userSearch };
+const userFollow = async (token: string, idParam: string, followStatus: boolean) => {
+	try {
+		const response = await httpAxiosService(token).patch(`/userpriv/follow/${idParam}`, {
+			followStatus
+		});
+		if (response.status === 200) {
+			return { success: true, error: false };
+		}
+		return { success: false, error: true };
+	} catch (error) {
+		return { success: false, error: true };
+	}
+};
+
+export { userFollow, userInformation, userSearch };
