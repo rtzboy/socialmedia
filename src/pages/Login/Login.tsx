@@ -1,13 +1,11 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { HiOutlineEye, HiOutlineEyeOff, HiOutlineKey, HiOutlineMail } from 'react-icons/hi';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Button from '../../components/form/Button';
 import InputText from '../../components/form/InputText';
-import { PrivateRoutes, PublicRoutes } from '../../constants/routes';
+import { PrivateRoutes } from '../../constants/routes';
 import { createUser } from '../../features/user/user-slice';
-import { createUserInfo } from '../../features/user/userInfo-slice';
-import { userInformation } from '../../lib/api/user/user.api';
 import { loginCall } from '../../lib/auth/api-auth';
 import useLogSignUp from '../../lib/hooks/useLogSignUp';
 
@@ -16,55 +14,44 @@ export interface LoginType {
 	password: string;
 }
 
-const Login = () => {
-	const navigate = useNavigate();
+type LoginTypeProps = {
+	setSignStatus: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Login = ({ setSignStatus }: LoginTypeProps) => {
 	const user = useAppSelector(state => state.user);
 	const dispatchApp = useAppDispatch();
+	const navigate = useNavigate();
 
 	const [formData, setFormData] = useState<LoginType>({ email: '', password: '' });
 	const [isVisible, setIsVisible] = useState(false);
-	const [loginStatus, setLoginStatus] = useState(false);
 	const { logSignUp, loadingLogSign, errorLogSign, resetLogSign } = useLogSignUp();
 
 	const handleChangeInputs = (evt: ChangeEvent<HTMLInputElement>) =>
 		setFormData({ ...formData, [evt.target.name]: evt.target.value });
 
-	const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		loadingLogSign();
-		loginUp();
-	};
-
-	const loginUp = async () => {
 		const { success, id, email, error, token, username } = await loginCall(formData);
 		if (!success) {
 			errorLogSign(error);
 			return;
 		}
 		dispatchApp(createUser({ id, username, email, token }));
+		navigate(`/${PrivateRoutes.Home}`);
 		resetLogSign();
-		setLoginStatus(true);
-	};
-
-	const setUserInfoGlobal = async () => {
-		const { result, error: err } = await userInformation(user.token, user.id);
-		if (result !== null) {
-			dispatchApp(createUserInfo(result));
-			navigate(`/${PrivateRoutes.Home}`);
-		} else {
-			console.log(err);
-		}
 	};
 
 	useEffect(() => {
-		if (!user.token) return;
-		setUserInfoGlobal();
-	}, [loginStatus]);
+		if (!user.id) return;
+		navigate(`/${PrivateRoutes.Home}`);
+	}, []);
 
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className='flex max-w-xs flex-col gap-12 rounded-2xl bg-white p-6'
+			className='flex w-full max-w-md flex-col gap-12 bg-white p-8 md:p-12'
 		>
 			<h2 className='text-2xl font-semibold'>
 				<span className='underline underline-offset-4'>Lo</span>gin
@@ -123,9 +110,12 @@ const Login = () => {
 				<div className='mt-2 text-center'>
 					<span className='text-sm'>
 						Dont have an account?{' '}
-						<NavLink to={`/${PublicRoutes.Signup}`} className='text-blue-500'>
+						<span
+							className='cursor-pointer text-blue-500'
+							onClick={() => setSignStatus(prevState => !prevState)}
+						>
 							Signup
-						</NavLink>
+						</span>
 					</span>
 				</div>
 			</div>

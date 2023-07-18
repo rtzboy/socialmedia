@@ -1,5 +1,5 @@
-import female from './female.webp';
+import landing from './landing.webp';
+import landingtwo from './landingtwo.webp';
 import landscapeTest from './landscape.webp';
-import male from './male.webp';
 
-export { female, landscapeTest, male };
+export { landing, landingtwo, landscapeTest };

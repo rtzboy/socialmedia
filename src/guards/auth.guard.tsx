@@ -1,8 +1,9 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
 import { PublicRoutes } from '../constants/routes';
+import VerifiedScreen from '../pages/Home/VerifiedScreen';
 
 export const AuthGuard = () => {
 	const userState = useAppSelector(state => state.user);
-	return userState.token ? <Outlet /> : <Navigate replace to={PublicRoutes.Login} />;
+	return userState.token ? <VerifiedScreen /> : <Navigate replace to={PublicRoutes.Login} />;
 };
