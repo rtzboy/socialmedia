@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
-import { male } from '../assets';
+import { useAppSelector } from '../app/hooks';
 import useContainNode from '../lib/hooks/useContainNode';
 import PickerEmojis from './PickerEmojis';
 import TextAreaAuto from './TextAreaAuto';
 import StyledIcon from './icons/StyledIcon';
 
 const Comments = () => {
+	const { profilePic } = useAppSelector(state => state.userGlobalInfo);
 	const [textComment, setTextComment] = useState('');
 	const [openTest, setOpenTest] = useState(false);
 	const divRef = useRef<HTMLDivElement>(null);
@@ -17,7 +18,7 @@ const Comments = () => {
 	return (
 		<div className='flex gap-2'>
 			<div>
-				<img src={male} alt='' className='h-8 w-8 rounded-full' />
+				<img src={profilePic} alt='' className='h-8 w-8 rounded-full' />
 			</div>
 			<div
 				ref={divRef}

@@ -3,7 +3,6 @@ import { BsCheck2 } from 'react-icons/bs';
 import { FiLoader } from 'react-icons/fi';
 import { HiXMark } from 'react-icons/hi2';
 import { useAppSelector } from '../../app/hooks';
-import { male } from '../../assets';
 import { makePost } from '../../lib/api/posts/post.api';
 import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 import PickerEmojis from '../PickerEmojis';
@@ -17,6 +16,7 @@ type PostCreateFormProps = {
 
 const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 	const { token, username } = useAppSelector(state => state.user);
+	const { profilePic } = useAppSelector(state => state.userGlobalInfo);
 	const { dispatchUserProfile } = useUserPostsContext();
 	const [postState, setPostState] = useState({
 		content: '',
@@ -68,7 +68,7 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 			/>
 			<hr />
 			<div className='relative flex items-center gap-4'>
-				<img src={male} alt='' className='h-9 w-9 rounded-full' />
+				<img src={profilePic} alt='' className='h-9 w-9 rounded-full' />
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
 						<span>{username}</span>

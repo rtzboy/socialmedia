@@ -56,7 +56,7 @@ const Navbar = () => {
 					<div>
 						<ul className='flex items-center gap-4'>
 							<li>
-								<NavLink to='/'>InterAct</NavLink>
+								<NavLink to='/home'>InterAct</NavLink>
 							</li>
 							<li className='relative'>
 								<input
