@@ -1,4 +1,4 @@
-import { landing, landingtwo } from '../../assets';
+import { landing, landingtwo } from '../assets';
 
 export const arrImages = [
 	{

@@ -68,7 +68,7 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 			/>
 			<hr />
 			<div className='relative flex items-center gap-4'>
-				<img src={profilePic} alt='' className='h-9 w-9 rounded-full' />
+				<img src={profilePic} alt='' className='h-9 w-9 rounded-full object-cover' />
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
 						<span>{username}</span>

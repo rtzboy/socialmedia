@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Slider from '../../components/Slider';
 import BlobShape from '../../components/icons/BlobShape';
-import { arrImages } from '../../lib/constants/loginscreen';
+import { arrImages } from '../../constants/loginscreen';
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
 

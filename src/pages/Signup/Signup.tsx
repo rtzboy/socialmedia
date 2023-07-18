@@ -97,6 +97,7 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 						icon={HiOutlineKey}
 						size='1.4rem'
 						className='absolute left-2 top-1/2 -translate-y-1/2'
+						stroke='stroke-[1.5]'
 					/>
 					<span
 						onClick={() => setIsVisible(!isVisible)}

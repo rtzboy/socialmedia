@@ -73,7 +73,7 @@ const RowFeeds = ({ postInfo, setFeeds }: RowFeedsType) => {
 				<img
 					src={postInfo.author.profilePic}
 					alt={postInfo.author.username}
-					className='h-11 w-11 rounded-full'
+					className='h-11 w-11 rounded-full object-cover'
 				/>
 				<div className='flex flex-col'>
 					<span className='font-semibold'>

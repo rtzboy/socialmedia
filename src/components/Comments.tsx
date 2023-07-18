@@ -18,7 +18,7 @@ const Comments = () => {
 	return (
 		<div className='flex gap-2'>
 			<div>
-				<img src={profilePic} alt='' className='h-8 w-8 rounded-full' />
+				<img src={profilePic} alt='' className='h-8 w-8 rounded-full object-cover' />
 			</div>
 			<div
 				ref={divRef}

@@ -15,7 +15,7 @@ const CreatePost = () => {
 		<>
 			<div className='flex items-center gap-2'>
 				<Modal>{contentModal}</Modal>
-				<img src={profilePic} alt='Username' className='h-10 w-10 rounded-full' />
+				<img src={profilePic} alt='Username' className='h-10 w-10 rounded-full object-cover' />
 				<span
 					onClick={() =>
 						setContentModal(<PostCreateForm closeModal={() => setContentModal(undefined)} />)

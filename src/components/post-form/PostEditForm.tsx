@@ -62,7 +62,7 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 				<img
 					src={currentPost.author.profilePic}
 					alt={currentPost.author.username}
-					className='h-11 w-11 rounded-full'
+					className='h-11 w-11 rounded-full object-cover'
 				/>
 				<div className='flex flex-col'>
 					<span className='font-semibold'>
