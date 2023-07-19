@@ -17,6 +17,9 @@ const userPrivateSlice = createSlice({
 		createUserInfo: (_, action: PayloadAction<UserPrivateInfo>) => {
 			return action.payload;
 		},
+		updateProPic: (state, action) => {
+			state.profilePic = action.payload;
+		},
 		followState: (state, action: PayloadAction<{ _id: string }>) => {
 			let followStatus = state.following.includes(action.payload._id);
 			let followingCopy = [...state.following];
@@ -34,6 +37,7 @@ const userPrivateSlice = createSlice({
 	}
 });
 
-export const { createUserInfo, deleteUserInfo, followState } = userPrivateSlice.actions;
+export const { createUserInfo, updateProPic, deleteUserInfo, followState } =
+	userPrivateSlice.actions;
 
 export default userPrivateSlice.reducer;

@@ -1,6 +1,9 @@
 import { ChangeEvent, useRef, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { HiOutlineUserCircle, HiXMark } from 'react-icons/hi2';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { updateProPic } from '../../features/user/userInfo-slice';
+import httpAxiosService from '../../lib/helpers/axiosService';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
 
@@ -8,7 +11,7 @@ type Props = {
 	closeModal: () => void;
 };
 
-const MAX_SIZE = 1024 * 300;
+const MAX_SIZE = 1024 * 400;
 const FILE_TYPE = ['image/png', 'image/jpeg'];
 
 type PreviewType = {
@@ -18,7 +21,11 @@ type PreviewType = {
 };
 
 const UpdateProfilePic = ({ closeModal }: Props) => {
+	const { token } = useAppSelector(state => state.user);
+	const dispatchApp = useAppDispatch();
 	const [preview, setPreview] = useState<PreviewType | null>(null);
+	const [imgFile, setImgFile] = useState<File>();
+	const [isSubmiting, setIsSubmiting] = useState(false);
 	const inputFileRef = useRef<HTMLInputElement>(null);
 
 	const handlePreviewPic = async (evt: ChangeEvent<HTMLInputElement>) => {
@@ -27,13 +34,27 @@ const UpdateProfilePic = ({ closeModal }: Props) => {
 		if (!FILE_TYPE.includes(file.type))
 			return setPreview({ src: '', fileName: '', error: 'Only PNG/JPG' });
 		if (file.size > MAX_SIZE)
-			return setPreview({ src: '', fileName: '', error: 'IMG to large (max 200Kb)' });
-
+			return setPreview({ src: '', fileName: '', error: 'IMG to large (max 400Kb)' });
+		setImgFile(file);
 		try {
 			const resultImg = await imgReader(file);
 			setPreview({ src: resultImg, fileName: file.name, error: '' });
 		} catch (error: any) {
 			setPreview({ src: '', fileName: '', error });
+		}
+	};
+
+	const handleSavePic = async () => {
+		setIsSubmiting(true);
+		if (!imgFile) return;
+		const formdata = new FormData();
+		formdata.append('file', imgFile);
+		let formImg = true;
+		const response = await httpAxiosService(token, formImg).post('/userpriv/upload', formdata);
+		if (response.status === 200) {
+			dispatchApp(updateProPic(response.data.urlImg));
+			setImgFile(undefined);
+			setIsSubmiting(false);
 		}
 	};
 
@@ -64,8 +85,7 @@ const UpdateProfilePic = ({ closeModal }: Props) => {
 					ref={inputFileRef}
 					onChange={handlePreviewPic}
 					type='file'
-					name=''
-					id=''
+					name='file'
 					accept={FILE_TYPE.join(', ')}
 					className='invisible absolute appearance-none'
 				/>
@@ -79,7 +99,11 @@ const UpdateProfilePic = ({ closeModal }: Props) => {
 					<StyledIcon icon={AiOutlinePlus} />
 					<span>Upload photo</span>
 				</Button>
-				<Button disabled={!preview?.fileName} className='bg-slate-300 disabled:opacity-50'>
+				<Button
+					onClick={() => handleSavePic()}
+					disabled={isSubmiting || !preview?.fileName}
+					className='bg-slate-300 disabled:opacity-50'
+				>
 					Save
 				</Button>
 			</div>
@@ -100,7 +124,7 @@ const imgPreview = (preview: PreviewType | null) => {
 };
 
 const msgAndName = (preview: PreviewType | null) => {
-	if (!preview) return <div className='text-center font-semibold italic'>JPG/PNG | Max. 200Kb</div>;
+	if (!preview) return <div className='text-center font-semibold italic'>JPG/PNG | Max. 400Kb</div>;
 	if (preview.error)
 		return <div className='text-center font-semibold italic text-red-500'>{preview.error}</div>;
 	return <div className='text-center font-semibold italic text-green-700'>{preview.fileName}</div>;

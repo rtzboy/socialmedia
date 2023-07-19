@@ -23,7 +23,7 @@ const UserPrivProfile = () => {
 
 	useEffect(() => {
 		callPrivatePosts(token, id);
-	}, []);
+	}, [userPrivate.profilePic]);
 
 	return (
 		<UserPostsContext.Provider value={{ dispatchUserProfile: dispatchPrivatePost, token }}>
