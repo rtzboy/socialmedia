@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
-import { useAppSelector } from '../app/hooks';
-import useContainNode from '../lib/hooks/useContainNode';
-import PickerEmojis from './PickerEmojis';
-import TextAreaAuto from './TextAreaAuto';
-import StyledIcon from './icons/StyledIcon';
+import { useAppSelector } from '../../app/hooks';
+import useContainNode from '../../lib/hooks/useContainNode';
+import PickerEmojis from '../PickerEmojis';
+import TextAreaAuto from '../TextAreaAuto';
+import StyledIcon from '../icons/StyledIcon';
 
-const Comments = () => {
+const CommentBox = () => {
 	const { profilePic } = useAppSelector(state => state.userGlobalInfo);
 	const [textComment, setTextComment] = useState('');
 	const [openTest, setOpenTest] = useState(false);
@@ -50,4 +50,4 @@ const Comments = () => {
 	);
 };
 
-export default Comments;
+export default CommentBox;

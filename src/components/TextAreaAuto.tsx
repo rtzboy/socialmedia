@@ -43,7 +43,7 @@ const TextAreaAuto = ({
 		<textarea
 			value={contentTxt}
 			ref={textareaRef}
-			className={`max-h-[50vh] w-full resize-none outline-none ${className || ''}`}
+			className={`w-full resize-none outline-none ${className || ''}`}
 			placeholder={placeholder}
 			onChange={handleChangeTextArea}
 			onClick={handlerClickTextArea}

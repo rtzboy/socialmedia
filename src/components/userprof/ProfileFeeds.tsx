@@ -6,7 +6,6 @@ import { useAppSelector } from '../../app/hooks';
 import { updatelikeCount } from '../../lib/api/posts/post.api';
 import { UserProfileAction } from '../../lib/reducers/userProfileReducer';
 import { UserFeeds } from '../../types/user.model';
-import Comments from '../Comments';
 import Dropdown from '../Dropdown';
 import Wrapper from '../Wrapper';
 import LikeAndComments from '../homepage/LikeAndComments';
@@ -14,6 +13,7 @@ import PostContent from '../homepage/PostContent';
 import StyledIcon from '../icons/StyledIcon';
 import Modal from '../modals/Modal';
 import PostCommentsForm from '../post-form/PostCommentsForm';
+import CommentBox from '../usercomment/CommentBox';
 
 type Props = {
 	userPosts: UserFeeds;
@@ -109,7 +109,7 @@ const ProfileFeeds = ({ userPosts, dispatchPost }: Props) => {
 					<span>Comment</span>
 				</span>
 			</div>
-			{allowOpts && <Comments />}
+			{allowOpts && <CommentBox />}
 		</div>
 	);
 };

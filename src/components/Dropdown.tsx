@@ -14,7 +14,7 @@ const Dropdown = ({ postInfo }: DropdownType) => {
 	const { contentModal, openEditModal, openDeleteModal, closeModal } = useModal(postInfo);
 
 	return (
-		<div className='absolute right-0 top-0 h-[20px] w-[20px] p-1'>
+		<div ref={dropDownRef} className='absolute right-0 top-0 h-[20px] w-[20px] select-none p-1'>
 			<Modal closeModal={closeModal}>{contentModal}</Modal>
 			<StyledIcon
 				onClick={openDropDown}
@@ -22,7 +22,6 @@ const Dropdown = ({ postInfo }: DropdownType) => {
 				className='absolute -right-2 -top-1 cursor-pointer rounded-full p-1 text-slate-600 hover:bg-slate-300'
 			/>
 			<div
-				ref={dropDownRef}
 				onClick={closeDropDown}
 				className={`absolute bottom-4 right-4 overflow-hidden rounded-lg bg-slate-100 shadow-out transition-all duration-300 ${
 					dropDown ? 'h-32 w-36 p-2' : 'h-0 w-0'
