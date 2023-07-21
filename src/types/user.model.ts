@@ -32,7 +32,17 @@ export interface UserFeeds {
 	author: AuthorInterface;
 	likes: Array<String>;
 	likeCount: number;
-	comments: { user: string; comment: string }[];
+	comments: {
+		_id: string;
+		user: {
+			_id: string;
+			username: string;
+			profilePic: string;
+		};
+		comment: string;
+		createdAt: string;
+		updatedAt: string;
+	}[];
 	createdAt: string;
 	updatedAt: string;
 }
