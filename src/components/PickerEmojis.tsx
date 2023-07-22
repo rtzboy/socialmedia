@@ -7,9 +7,13 @@ import StyledIcon from './icons/StyledIcon';
 type PickerEmojisProps = {
 	contWithEmoji?: string;
 	setContWithEmoji: (params: { emoji: string; unified: string }) => void;
+	top?: boolean;
+	bottom?: boolean;
+	left?: boolean;
+	right?: boolean;
 };
 
-const PickerEmojis = ({ setContWithEmoji }: PickerEmojisProps) => {
+const PickerEmojis = ({ setContWithEmoji, top, bottom, left, right }: PickerEmojisProps) => {
 	const [openChooseEmoji, setOpenChooseEmoji] = useState(false);
 	const [selectedEmoji, setSelectedEmoji] = useState<{ emoji: string; unified: string }>();
 	const refContainer = useRef<HTMLDivElement>(null);
@@ -32,7 +36,11 @@ const PickerEmojis = ({ setContWithEmoji }: PickerEmojisProps) => {
 				size='1.1rem'
 				className='flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-1 text-slate-800 hover:bg-slate-200'
 			/>
-			<span className='absolute bottom-8 right-0'>
+			<span
+				className={`absolute ${top ? 'top-8' : ''} ${bottom ? 'bottom-8' : ''} ${
+					right ? 'right-8' : ''
+				} ${left ? 'left-8' : ''} `}
+			>
 				{openChooseEmoji && (
 					<EmojiPicker
 						onEmojiClick={handlerEmoji}
