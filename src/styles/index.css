@@ -30,3 +30,24 @@ body {
 		background-position-x: -200%;
 	}
 }
+
+*::-webkit-scrollbar {
+	width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+	@apply bg-transparent;
+	@apply rounded-xl;
+}
+
+*::-webkit-scrollbar-thumb {
+	@apply bg-slate-300;
+	@apply rounded-xl;
+	@apply border-4 border-slate-400;
+}
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+}

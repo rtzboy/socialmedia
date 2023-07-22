@@ -4,6 +4,8 @@ import { UserFeeds } from '../../types/user.model';
 import LikeAndComments from '../homepage/LikeAndComments';
 import PostContent from '../homepage/PostContent';
 import StyledIcon from '../icons/StyledIcon';
+import CommentBox from '../usercomment/CommentBox';
+import UserComment from '../usercomment/UserComment';
 
 type CommentsForm = {
 	closeModal: () => void;
@@ -13,7 +15,7 @@ type CommentsForm = {
 
 const PostCommentsForm = ({ closeModal, currentPost, likeStatus }: CommentsForm) => {
 	return (
-		<div className='relative flex flex-col gap-3 rounded-lg bg-slate-100 p-4'>
+		<div className='relative flex h-[90vh] flex-col gap-2 rounded-lg bg-slate-100 p-4'>
 			<StyledIcon
 				icon={HiXMark}
 				onClick={closeModal}
@@ -45,6 +47,16 @@ const PostCommentsForm = ({ closeModal, currentPost, likeStatus }: CommentsForm)
 				commentCount={currentPost.comments.length}
 			/>
 			<hr />
+			<div className='invisible h-full overflow-auto transition-all hover:visible focus:visible'>
+				<div className='visible flex flex-col gap-2'>
+					{currentPost.comments.map(comment => (
+						<UserComment key={comment._id} {...comment} />
+					))}
+				</div>
+			</div>
+			<div className='w-full bg-slate-100'>
+				<CommentBox maxHeight='max-h-[350px]' />
+			</div>
 		</div>
 	);
 };

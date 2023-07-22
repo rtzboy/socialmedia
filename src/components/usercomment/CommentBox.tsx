@@ -6,7 +6,11 @@ import PickerEmojis from '../PickerEmojis';
 import TextAreaAuto from '../TextAreaAuto';
 import StyledIcon from '../icons/StyledIcon';
 
-const CommentBox = () => {
+type CommentBoxProps = {
+	maxHeight?: string;
+};
+
+const CommentBox = ({ maxHeight }: CommentBoxProps) => {
 	const { profilePic } = useAppSelector(state => state.userGlobalInfo);
 	const [textComment, setTextComment] = useState('');
 	const [openTest, setOpenTest] = useState(false);
@@ -30,7 +34,7 @@ const CommentBox = () => {
 					placeholder='Write a comment...'
 					contentTxt={textComment}
 					setContentTxt={comment => setTextComment(comment)}
-					className='overflow-hidden bg-transparent px-2 pt-1'
+					className={`${maxHeight} overflow-auto bg-transparent px-2 pt-1`}
 					stateAdd={!!textComment}
 				/>
 				<div
