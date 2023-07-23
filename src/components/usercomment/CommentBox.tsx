@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { insertCommentToPost } from '../../features/post/user-posts-slice';
 import httpAxiosService from '../../lib/helpers/axiosService';
 import useContainNode from '../../lib/hooks/useContainNode';
 import { UserFeedsComment } from '../../types/user.model';
@@ -26,12 +27,14 @@ const initCommentForm = (profilePic: string, _id: string, username: string): Use
 });
 
 const CommentBox = ({ maxHeight, idPost }: CommentBoxProps) => {
-	// TODO: setFeeds removed (fix...)
+	// TODO: works only from calling <PostCommentsForm />
 	const { profilePic, _id, username } = useAppSelector(state => state.userGlobalInfo);
 	const { token } = useAppSelector(state => state.user);
 	const initComment = initCommentForm(profilePic, _id, username);
 	const [userComment, setUserComment] = useState(initComment);
 	const [openTest, setOpenTest] = useState(false);
+	const dispatchApp = useAppDispatch();
+
 	const divRef = useRef<HTMLDivElement>(null);
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -42,17 +45,14 @@ const CommentBox = ({ maxHeight, idPost }: CommentBoxProps) => {
 			comment: userComment.comment
 		});
 		if (response.status === 200) {
-			// if (!setFeeds) return;
-			// const { _id, comment, createdAt, updatedAt } = response.data.insertedComment;
-			// setFeeds(prevState => {
-			// 	if (!prevState) return;
-			// 	const postWithTheComment = prevState.findIndex(({ _id }) => _id === idPost);
-			// 	prevState[postWithTheComment].comments = [
-			// 		{ _id, comment, createdAt, updatedAt, user: userComment.user },
-			// 		...prevState[postWithTheComment].comments
-			// 	];
-			// 	return [...prevState];
-			// });
+			if (!idPost) return;
+			const { _id, comment, createdAt, updatedAt } = response.data.insertedComment;
+			dispatchApp(
+				insertCommentToPost({
+					userComment: { _id, comment, createdAt, updatedAt, user: userComment.user },
+					idPost
+				})
+			);
 			setUserComment(initComment);
 		}
 	};

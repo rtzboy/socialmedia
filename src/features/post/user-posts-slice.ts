@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { UserPostsShape } from '../../types/posts.model';
+import { UserPostsComment, UserPostsShape } from '../../types/posts.model';
 
 type InitialSafe = UserPostsShape[] | null;
 
@@ -12,6 +12,14 @@ export const userPostsSlice = createSlice({
 		},
 		createUserPost: (state, action: PayloadAction<UserPostsShape>) => {
 			return [action.payload, ...(state || [])];
+		},
+		insertCommentToPost: (
+			state,
+			action: PayloadAction<{ userComment: UserPostsComment; idPost: string }>
+		) => {
+			if (!state) return;
+			const idxPost = state.findIndex(({ _id }) => _id === action.payload.idPost);
+			state[idxPost].comments = [action.payload.userComment, ...state[idxPost].comments];
 		},
 		toggleLikeUserPost: (
 			state,
@@ -32,6 +40,7 @@ export const userPostsSlice = createSlice({
 	}
 });
 
-export const { setUserPosts, createUserPost, toggleLikeUserPost } = userPostsSlice.actions;
+export const { setUserPosts, createUserPost, toggleLikeUserPost, insertCommentToPost } =
+	userPostsSlice.actions;
 
 export default userPostsSlice.reducer;
