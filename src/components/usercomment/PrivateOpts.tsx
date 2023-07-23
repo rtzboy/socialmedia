@@ -1,11 +1,13 @@
+import { Dispatch, SetStateAction } from 'react';
 import { HiOutlinePencil, HiXMark } from 'react-icons/hi2';
 import StyledIcon from '../icons/StyledIcon';
 
-const PrivateOpts = () => {
+const PrivateOpts = ({ setIsEditing }: { setIsEditing: Dispatch<SetStateAction<boolean>> }) => {
 	return (
 		<ul className='flex h-full flex-col justify-between gap-1'>
 			<li
 				// onClick={openEditModal}
+				onClick={() => setIsEditing(true)}
 				className='flex cursor-pointer items-center gap-1 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'
 			>
 				<StyledIcon icon={HiOutlinePencil} stroke='stroke-1' />

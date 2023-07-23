@@ -109,7 +109,7 @@ const ProfileFeeds = ({ userPosts, dispatchPost }: Props) => {
 					<span>Comment</span>
 				</span>
 			</div>
-			{allowOpts && <CommentBox />}
+			{allowOpts && <CommentBox idPost={userPosts._id} />}
 		</div>
 	);
 };

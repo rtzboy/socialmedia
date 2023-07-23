@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { getNewFeeds } from '../../lib/api/posts/post.api';
+import { UserCommentContext } from '../../lib/contexts/UserCommentContext';
 import { UserFeeds } from '../../types/user.model';
 import SkeletonPost from '../skeletons/SkeletonPost';
 import RowFeeds from './RowFeeds';
@@ -29,10 +30,12 @@ const NewFeeds = () => {
 
 	return (
 		<div className='flex flex-col gap-4'>
-			{!feeds.length && <DivMessages children='Nothing To Show...' />}
-			{feeds.map(feed => (
-				<RowFeeds key={feed._id} postInfo={feed} feeds={feeds} setFeeds={setFeeds} />
-			))}
+			<UserCommentContext.Provider value={{ setFeeds, feeds }}>
+				{!feeds.length && <DivMessages children='Nothing To Show...' />}
+				{feeds.map(feed => (
+					<RowFeeds key={feed._id} postInfo={feed} feeds={feeds} setFeeds={setFeeds} />
+				))}
+			</UserCommentContext.Provider>
 		</div>
 	);
 };
