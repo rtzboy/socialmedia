@@ -1,13 +1,22 @@
+import { useRef, useState } from 'react';
+import { BiLogOut, BiMoon } from 'react-icons/bi';
+import { CgProfile } from 'react-icons/cg';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { resetUser } from '../../features/user/user-slice';
 import { deleteUserInfo } from '../../features/user/userInfo-slice';
-import Button from '../form/Button';
+import useContainNode from '../../lib/hooks/useContainNode';
+import StyledIcon from '../icons/StyledIcon';
 import BoxSearch from './BoxSearch';
 
 const Navbar = () => {
-	const { username, id } = useAppSelector(state => state.user);
+	// const { username, id } = useAppSelector(state => state.user);
+	const { _id, username, profilePic } = useAppSelector(state => state.userGlobalInfo);
 	const dispatchApp = useAppDispatch();
+	const [isOpen, setIsOpen] = useState(false);
+	const liContainerRef = useRef<HTMLLIElement>(null);
+
+	useContainNode(liContainerRef.current, isOpen, setIsOpen);
 
 	return (
 		<div className='h-[70px] w-full'>
@@ -25,19 +34,51 @@ const Navbar = () => {
 					</div>
 					<div>
 						<ul className='flex items-center gap-4'>
-							<li>
-								<NavLink to={`/profile/${id}`}>{username}</NavLink>
-							</li>
-							<li>
-								<Button
-									onClick={() => {
-										dispatchApp(resetUser());
-										dispatchApp(deleteUserInfo());
-									}}
-									className='bg-blue-300'
+							<li ref={liContainerRef} className='relative'>
+								<div
+									onClick={() => setIsOpen(!isOpen)}
+									className='flex cursor-pointer select-none items-center gap-4'
 								>
-									Logout
-								</Button>
+									<img
+										src={profilePic}
+										alt={username}
+										className='inline-block h-10 w-10 rounded-full object-cover'
+									/>
+									<span className='inline-block'>{username}</span>
+								</div>
+								<div
+									className={`absolute right-0 top-12 w-[250px] rounded-xl bg-slate-100 p-2 shadow-out transition-all ${
+										isOpen ? 'visible opacity-100' : 'invisible opacity-0'
+									}`}
+								>
+									<ul className='flex flex-col gap-2'>
+										<li>
+											<NavLink
+												to={`/profile/${_id}`}
+												className='flex items-center gap-2 rounded-lg p-2 hover:bg-slate-300'
+											>
+												<StyledIcon icon={CgProfile} />
+												<span className='inline-block'>See profile</span>
+											</NavLink>
+										</li>
+										<li className='flex items-center gap-2 rounded-lg p-2 hover:bg-slate-300'>
+											<StyledIcon icon={BiMoon} />
+											<span>Display</span>
+										</li>
+										<li>
+											<button
+												onClick={() => {
+													dispatchApp(resetUser());
+													dispatchApp(deleteUserInfo());
+												}}
+												className='flex w-full items-center gap-2 rounded-lg p-2 hover:bg-slate-300'
+											>
+												<StyledIcon icon={BiLogOut} />
+												<span>Logout</span>
+											</button>
+										</li>
+									</ul>
+								</div>
 							</li>
 						</ul>
 					</div>
