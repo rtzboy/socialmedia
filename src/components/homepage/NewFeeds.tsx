@@ -1,41 +1,41 @@
-import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../app/hooks';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { setUserPosts } from '../../features/post/user-posts-slice';
 import { getNewFeeds } from '../../lib/api/posts/post.api';
-import { UserCommentContext } from '../../lib/contexts/UserCommentContext';
-import { UserFeeds } from '../../types/user.model';
 import SkeletonPost from '../skeletons/SkeletonPost';
-import RowFeeds from './RowFeeds';
+import UserPost from './UserPost';
 
 const NewFeeds = () => {
-	const token = useAppSelector(state => state.user.token);
 	const { following } = useAppSelector(state => state.userGlobalInfo);
-
-	const [feeds, setFeeds] = useState<Array<UserFeeds>>();
+	const userPosts = useAppSelector(state => state.userPosts);
+	const token = useAppSelector(state => state.user.token);
+	const dispatchApp = useAppDispatch();
 
 	const callUserFeeds = async () => {
 		const { success, feeds } = await getNewFeeds(token);
 		if (success) {
-			setFeeds(feeds);
+			dispatchApp(setUserPosts(feeds));
 		} else {
-			setFeeds(feeds);
+			dispatchApp(setUserPosts(null));
 		}
 	};
 
 	useEffect(() => {
+		// TODO: this should be added?
+		// if (userPosts !== null) return;
 		callUserFeeds();
 	}, []);
 
-	if (feeds === undefined) return <SkeletonPost />;
+	// TODO: when userPosts is []
+	if (userPosts === null) return <SkeletonPost />;
 	if (!following.length) return <DivMessages children='Explore, follow friends' />;
 
 	return (
 		<div className='flex flex-col gap-4'>
-			<UserCommentContext.Provider value={{ setFeeds, feeds }}>
-				{!feeds.length && <DivMessages children='Nothing To Show...' />}
-				{feeds.map(feed => (
-					<RowFeeds key={feed._id} postInfo={feed} feeds={feeds} setFeeds={setFeeds} />
-				))}
-			</UserCommentContext.Provider>
+			{!userPosts?.length && <DivMessages children='Nothing To Show...' />}
+			{userPosts?.map(post => (
+				<UserPost key={post._id} postInfo={post} />
+			))}
 		</div>
 	);
 };

@@ -98,8 +98,7 @@ const ProfileFeeds = ({ userPosts, dispatchPost }: Props) => {
 						setContentPost(
 							<PostCommentsForm
 								closeModal={() => setContentPost(undefined)}
-								currentPost={userPosts}
-								likeStatus={likeStatus}
+								idUserPost={userPosts._id}
 							/>
 						)
 					}

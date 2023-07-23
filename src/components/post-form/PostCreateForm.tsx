@@ -2,7 +2,8 @@ import { useRef, useState } from 'react';
 import { BsCheck2 } from 'react-icons/bs';
 import { FiLoader } from 'react-icons/fi';
 import { HiXMark } from 'react-icons/hi2';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { createUserPost } from '../../features/post/user-posts-slice';
 import { makePost } from '../../lib/api/posts/post.api';
 import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 import PickerEmojis from '../PickerEmojis';
@@ -17,6 +18,7 @@ type PostCreateFormProps = {
 const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 	const { token, username } = useAppSelector(state => state.user);
 	const { profilePic } = useAppSelector(state => state.userGlobalInfo);
+	const dispatchApp = useAppDispatch();
 	const { dispatchUserProfile } = useUserPostsContext();
 	const [postState, setPostState] = useState({
 		content: '',
@@ -42,6 +44,7 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 				setPostState(prevState => ({ ...prevState, check: false }));
 				closeModal();
 			}, 1500);
+			if (!dispatchUserProfile) return dispatchApp(createUserPost(newPost));
 			dispatchUserProfile({ type: 'CREATE_POST', payload: newPost });
 		} else {
 			setPostState(prevState => ({ ...prevState, loading: false, msgPost: message }));
@@ -87,7 +90,7 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 				/>
 			</div>
 			<div>
-				{/* TODO: error create leftside */}
+				{/* TODO: error create textcontant */}
 				<PickerEmojis
 					setContWithEmoji={emojiObj => {
 						setPostState({
