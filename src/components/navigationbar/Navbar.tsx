@@ -3,6 +3,7 @@ import { BiLogOut, BiMoon } from 'react-icons/bi';
 import { CgProfile } from 'react-icons/cg';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { mainlogo } from '../../assets';
 import { resetUser } from '../../features/user/user-slice';
 import { deleteUserInfo } from '../../features/user/userInfo-slice';
 import useContainNode from '../../lib/hooks/useContainNode';
@@ -24,8 +25,13 @@ const Navbar = () => {
 				<div className='mx-auto flex h-full w-full max-w-7xl items-center justify-between px-4'>
 					<div>
 						<ul className='flex items-center gap-4'>
-							<li>
-								<NavLink to='/home'>InterAct</NavLink>
+							<li className='flex items-center gap-2'>
+								<NavLink to='/home'>
+									<img src={mainlogo} alt='mainlogo' className='w-10' />
+								</NavLink>
+								<span className='cursor-default text-lg font-semibold text-blue-500'>
+									SocialPhere
+								</span>
 							</li>
 							<li className='relative'>
 								<BoxSearch />
