@@ -58,7 +58,7 @@ const Navbar = () => {
 									}`}
 								>
 									<ul className='flex flex-col gap-2'>
-										<li>
+										<li onClick={() => setIsOpen(false)}>
 											<NavLink
 												to={`/profile/${_id}`}
 												className='flex items-center gap-2 rounded-lg p-2 hover:bg-slate-300'
