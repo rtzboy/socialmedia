@@ -3,6 +3,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { HiOutlineUserCircle, HiXMark } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { updatePicHeader } from '../../features/user/user-header-slice';
+import { updateProfPicture } from '../../features/user/user-profile-slice';
 import httpAxiosService from '../../lib/helpers/axiosService';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
@@ -53,6 +54,7 @@ const UpdateProfilePic = ({ closeModal }: Props) => {
 		const response = await httpAxiosService(token, formImg).post('/userpriv/upload', formdata);
 		if (response.status === 200) {
 			dispatchApp(updatePicHeader(response.data.urlImg));
+			dispatchApp(updateProfPicture(response.data.urlImg));
 			setImgFile(undefined);
 			setIsSubmiting(false);
 		}

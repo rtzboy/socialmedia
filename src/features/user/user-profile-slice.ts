@@ -11,6 +11,10 @@ export const userProfileSlice = createSlice({
 		setGeneralInfo: (_, action: PayloadAction<GeneralUserInfo>) => {
 			return action.payload;
 		},
+		updateProfPicture: (state, action) => {
+			if (!state) return;
+			state.userProfileInfo.profilePic = action.payload;
+		},
 		infiniteScrollPost: (state, action: PayloadAction<UserPostsShape[]>) => {
 			if (!state) return;
 			state.userProfilePosts = [...state.userProfilePosts, ...action.payload];
@@ -45,7 +49,12 @@ export const userProfileSlice = createSlice({
 	}
 });
 
-export const { setGeneralInfo, addCommentProfPost, toggleLikeProfilePost, infiniteScrollPost } =
-	userProfileSlice.actions;
+export const {
+	setGeneralInfo,
+	addCommentProfPost,
+	updateProfPicture,
+	toggleLikeProfilePost,
+	infiniteScrollPost
+} = userProfileSlice.actions;
 
 export default userProfileSlice.reducer;

@@ -52,7 +52,7 @@ const HeaderProfile = ({ userHeader, postCount, followStatus, privProfile }: Pro
 						<img
 							src={userHeader.profilePic}
 							alt={userHeader.username}
-							className='absolute left-0 top-0 h-[150px] w-[150px] rounded-full object-cover'
+							className='absolute left-0 top-0 h-[150px] w-[150px] rounded-full bg-slate-200 object-cover'
 						/>
 						{privProfile && (
 							<StyledIcon
