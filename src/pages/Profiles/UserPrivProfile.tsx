@@ -73,10 +73,10 @@ const UserPrivProfile = () => {
 		<div className='mx-auto flex max-w-3xl flex-col gap-4 p-4'>
 			<HeaderProfile
 				userHeader={userProfileTest.userProfileInfo}
-				postCount={userProfileTest.userProfilePosts.length}
+				postCount={userProfileTest.totalCount}
 				privProfile
 			/>
-			<CreatePost />
+			<CreatePost makeFrom='Profile' />
 			<div className='flex items-start gap-4'>
 				<div className='w-[40%] rounded-lg bg-slate-100 p-4'>
 					<div className='text-lg font-semibold'>About</div>

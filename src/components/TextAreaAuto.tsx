@@ -1,8 +1,7 @@
-import { ChangeEvent, Dispatch, MouseEvent, RefObject, SetStateAction, useEffect } from 'react';
+import { ChangeEvent, RefObject, useEffect } from 'react';
 
 type TextAreaAutoProps = {
 	setContentTxt: (str: string) => void;
-	setSelectText?: Dispatch<SetStateAction<{ start: number; end: number }>>;
 	contentTxt: string;
 	textareaRef: RefObject<HTMLTextAreaElement>;
 	className?: string;
@@ -12,23 +11,14 @@ type TextAreaAutoProps = {
 
 const TextAreaAuto = ({
 	setContentTxt,
-	setSelectText,
 	contentTxt,
 	textareaRef,
 	className,
 	placeholder,
 	stateAdd
 }: TextAreaAutoProps) => {
-	// const refTextArea = useRef<HTMLTextAreaElement>(null);
-
 	const handleChangeTextArea = (evt: ChangeEvent<HTMLTextAreaElement>) =>
 		setContentTxt(evt.target?.value);
-
-	const handlerClickTextArea = (evt: MouseEvent<HTMLTextAreaElement, globalThis.MouseEvent>) => {
-		const { selectionStart, selectionEnd } = evt.currentTarget;
-		if (!setSelectText) return;
-		setSelectText({ start: selectionStart, end: selectionEnd });
-	};
 
 	useEffect(() => {
 		if (stateAdd) textareaRef.current?.focus();
@@ -46,7 +36,6 @@ const TextAreaAuto = ({
 			className={`w-full resize-none outline-none ${className || ''}`}
 			placeholder={placeholder}
 			onChange={handleChangeTextArea}
-			onClick={handlerClickTextArea}
 		></textarea>
 	);
 };

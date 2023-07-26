@@ -1,8 +1,9 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { HiXMark } from 'react-icons/hi2';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { updateProfPost } from '../../features/user/user-profile-slice';
 import { editPost } from '../../lib/api/posts/post.api';
-import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 import { UserPostsShape } from '../../types/posts.model';
 import PickerEmojis from '../PickerEmojis';
 import TextAreaAuto from '../TextAreaAuto';
@@ -16,10 +17,10 @@ type PostEditFormProps = {
 };
 
 const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
-	const { dispatchUserProfile, token } = useUserPostsContext();
+	const { token } = useAppSelector(state => state.userAuth);
+	const dispatchApp = useAppDispatch();
 	const [value, setValue] = useState(currentPost.content);
 	const [isSaving, setIsSaving] = useState(false);
-	const [selectText, setSelectText] = useState({ start: 0, end: 0 });
 	const refTextArea = useRef<HTMLTextAreaElement>(null);
 
 	let isDisabled = value === currentPost.content;
@@ -29,10 +30,7 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 		setIsSaving(true);
 		const success = await editPost(token, removeExtraSpaces(value), currentPost._id);
 		if (success) {
-			dispatchUserProfile({
-				type: 'EDIT_POST',
-				payload: { id: currentPost._id, content: removeExtraSpaces(value) }
-			});
+			dispatchApp(updateProfPost({ idPost: currentPost._id, content: removeExtraSpaces(value) }));
 			setIsSaving(false);
 			closeModal();
 		}
@@ -79,20 +77,12 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 					setContentTxt={val => setValue(val)}
 					className='bg-transparent'
 					textareaRef={refTextArea}
-					setSelectText={setSelectText}
 				/>
 			</div>
 			<div>
-				{/* TODO: error inserting leftside */}
 				<PickerEmojis
 					bottom
-					setContWithEmoji={emojiObj =>
-						setValue(
-							value.slice(0, selectText.start) +
-								` ${emojiObj.emoji} ` +
-								value.slice(selectText.end!)
-						)
-					}
+					setContWithEmoji={emojiObj => setValue(value + ' ' + emojiObj.emoji)}
 				/>
 			</div>
 			<Button

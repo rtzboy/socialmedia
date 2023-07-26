@@ -4,8 +4,8 @@ import { FiLoader } from 'react-icons/fi';
 import { HiXMark } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { createUserPost } from '../../features/post/user-posts-slice';
+import { createProfPost } from '../../features/user/user-profile-slice';
 import { makePost } from '../../lib/api/posts/post.api';
-import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
 import PickerEmojis from '../PickerEmojis';
 import TextAreaAuto from '../TextAreaAuto';
 import Button from '../form/Button';
@@ -13,20 +13,19 @@ import StyledIcon from '../icons/StyledIcon';
 
 type PostCreateFormProps = {
 	closeModal: () => void;
+	makeFrom: 'Home' | 'Profile';
 };
 
-const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
+const PostCreateForm = ({ closeModal, makeFrom }: PostCreateFormProps) => {
 	const { token, username } = useAppSelector(state => state.userAuth);
 	const { profilePic } = useAppSelector(state => state.userHeader);
 	const dispatchApp = useAppDispatch();
-	const { dispatchUserProfile } = useUserPostsContext();
 	const [postState, setPostState] = useState({
 		content: '',
 		loading: false,
 		check: false,
 		msgPost: ''
 	});
-	const [selectText, setSelectText] = useState({ start: 0, end: 0 });
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
 	const handleSubmitCreate = async (evt: React.FormEvent<HTMLFormElement>) => {
@@ -42,8 +41,8 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 				content: '',
 				msgPost: ''
 			}));
-			if (!dispatchUserProfile) return dispatchApp(createUserPost(newPost));
-			dispatchUserProfile({ type: 'CREATE_POST', payload: newPost });
+			if (makeFrom === 'Home') dispatchApp(createUserPost(newPost));
+			if (makeFrom === 'Profile') dispatchApp(createProfPost(newPost));
 			closeModal();
 		} else {
 			setPostState(prevState => ({ ...prevState, loading: false, msgPost: message }));
@@ -77,21 +76,16 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 					contentTxt={postState.content}
 					setContentTxt={val => setPostState({ ...postState, content: val })}
 					textareaRef={textAreaRef}
-					setSelectText={setSelectText}
 					className='bg-transparent text-lg'
 					stateAdd
 				/>
 			</div>
 			<div>
-				{/* TODO: error create textcontant */}
 				<PickerEmojis
 					setContWithEmoji={emojiObj => {
 						setPostState({
 							...postState,
-							content:
-								postState.content.slice(0, selectText.start) +
-								` ${emojiObj.emoji} ` +
-								postState.content.slice(selectText.end!)
+							content: postState.content + ' ' + emojiObj.emoji + ' '
 						});
 					}}
 				/>
@@ -111,7 +105,7 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 					/>
 				)}
 				{postState.check && (
-					<StyledIcon icon={BsCheck2} size='1.5rem' stroke='stroke-1' className='text-green-300' />
+					<StyledIcon icon={BsCheck2} size='1.5rem' stroke='stroke-1' className='text-slate-400' />
 				)}
 				<span>Post</span>
 			</Button>

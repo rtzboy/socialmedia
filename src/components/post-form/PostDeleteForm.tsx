@@ -1,8 +1,8 @@
 import { FormEvent } from 'react';
 import { HiXMark } from 'react-icons/hi2';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { deleteProfPost } from '../../features/user/user-profile-slice';
 import { deletePost } from '../../lib/api/posts/post.api';
-import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
-
 import { UserPostsShape } from '../../types/posts.model';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
@@ -13,12 +13,13 @@ type PostDeleteFormProps = {
 };
 
 const PostDeleteForm = ({ closeModal, currentPost }: PostDeleteFormProps) => {
-	const { dispatchUserProfile, token } = useUserPostsContext();
+	const { token } = useAppSelector(state => state.userAuth);
+	const dispatchApp = useAppDispatch();
 
 	const handleDeletePost = async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		const result = await deletePost(token, currentPost._id);
-		if (result) dispatchUserProfile({ type: 'DELETE_POST', payload: currentPost._id });
+		if (result) dispatchApp(deleteProfPost(currentPost._id));
 		closeModal();
 	};
 

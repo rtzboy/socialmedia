@@ -11,6 +11,22 @@ export const userProfileSlice = createSlice({
 		setGeneralInfo: (_, action: PayloadAction<GeneralUserInfo>) => {
 			return action.payload;
 		},
+		createProfPost: (state, action: PayloadAction<UserPostsShape>) => {
+			if (!state) return;
+			state.userProfilePosts = [action.payload, ...state.userProfilePosts];
+		},
+		updateProfPost: (state, action) => {
+			if (!state) return;
+			let idxPost = state.userProfilePosts.findIndex(({ _id }) => _id === action.payload.idPost);
+			state.userProfilePosts[idxPost] = {
+				...state.userProfilePosts[idxPost],
+				content: action.payload.content
+			};
+		},
+		deleteProfPost: (state, action) => {
+			if (!state) return;
+			state.userProfilePosts = state.userProfilePosts.filter(({ _id }) => _id !== action.payload);
+		},
 		updateProfPicture: (state, action) => {
 			if (!state) return;
 			state.userProfileInfo.profilePic = action.payload;
@@ -52,6 +68,9 @@ export const userProfileSlice = createSlice({
 export const {
 	setGeneralInfo,
 	addCommentProfPost,
+	createProfPost,
+	updateProfPost,
+	deleteProfPost,
 	updateProfPicture,
 	toggleLikeProfilePost,
 	infiniteScrollPost

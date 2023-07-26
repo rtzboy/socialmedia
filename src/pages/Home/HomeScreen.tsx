@@ -5,7 +5,7 @@ const HomeScreen = () => {
 	return (
 		<>
 			<div className='mx-auto flex max-w-xl flex-col gap-4 p-4'>
-				<CreatePost />
+				<CreatePost makeFrom='Home' />
 				<NewFeeds />
 			</div>
 		</>
