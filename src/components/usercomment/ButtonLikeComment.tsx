@@ -15,11 +15,11 @@ const ButtonLikeComment = ({
 	showContentOnModal
 }: Props) => {
 	return (
-		<div className='flex'>
+		<div className='flex select-none'>
 			<button
 				disabled={bottonDisable}
 				onClick={toggleLike}
-				className={`flex flex-grow cursor-pointer select-none items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-[.95] ${
+				className={`flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-[.95] ${
 					likeStatus ? 'text-blue-600' : ''
 				}`}
 			>
