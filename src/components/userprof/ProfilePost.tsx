@@ -86,7 +86,7 @@ const ProfilePost = forwardRef<HTMLElement, TProps>(({ userPosts }: TProps, ref)
 					)
 				}
 			/>
-			{allowOpts && <CommentBox idPost={userPosts._id} />}
+			{allowOpts && <CommentBox idPost={userPosts._id} insertedFrom='ProfilePost' />}
 		</div>
 	);
 

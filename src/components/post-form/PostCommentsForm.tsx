@@ -105,7 +105,7 @@ const PostCommentsForm = ({ closeModal, idUserPost, renderBy }: CommentsForm) =>
 				</div>
 			</div>
 			<div className='w-full bg-slate-100'>
-				<CommentBox maxHeight='max-h-[350px]' idPost={idUserPost} />
+				<CommentBox maxHeight='max-h-[350px]' idPost={idUserPost} insertedFrom={renderBy} />
 			</div>
 		</div>
 	);

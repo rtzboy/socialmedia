@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { UserPostsShape } from '../../types/posts.model';
+import { UserPostsComment, UserPostsShape } from '../../types/posts.model';
 import { GeneralUserInfo } from '../../types/user.model';
 
 type InitGeneralInfo = GeneralUserInfo | null;
@@ -14,6 +14,17 @@ export const userProfileSlice = createSlice({
 		infiniteScrollPost: (state, action: PayloadAction<UserPostsShape[]>) => {
 			if (!state) return;
 			state.userProfilePosts = [...state.userProfilePosts, ...action.payload];
+		},
+		addCommentProfPost: (
+			state,
+			action: PayloadAction<{ userComment: UserPostsComment; idPost: string }>
+		) => {
+			if (!state) return;
+			const idxPost = state.userProfilePosts.findIndex(({ _id }) => _id === action.payload.idPost);
+			state.userProfilePosts[idxPost].comments = [
+				action.payload.userComment,
+				...state.userProfilePosts[idxPost].comments
+			];
 		},
 		toggleLikeProfilePost: (
 			state,
@@ -34,7 +45,7 @@ export const userProfileSlice = createSlice({
 	}
 });
 
-export const { setGeneralInfo, toggleLikeProfilePost, infiniteScrollPost } =
+export const { setGeneralInfo, addCommentProfPost, toggleLikeProfilePost, infiniteScrollPost } =
 	userProfileSlice.actions;
 
 export default userProfileSlice.reducer;
