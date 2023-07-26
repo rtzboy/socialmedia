@@ -8,12 +8,9 @@ type Props = {
 	showContentOnModal?: () => void;
 };
 
-const ButtonLikeComment = ({
-	likeStatus,
-	bottonDisable,
-	toggleLike,
-	showContentOnModal
-}: Props) => {
+const ButtonLikeComment = (props: Props) => {
+	const { likeStatus, bottonDisable, toggleLike, showContentOnModal } = props;
+
 	return (
 		<div className='flex select-none'>
 			<button

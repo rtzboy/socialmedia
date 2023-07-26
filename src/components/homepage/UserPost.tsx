@@ -75,6 +75,7 @@ const UserPost = ({ postInfo }: RowFeedsType) => {
 						<PostCommentsForm
 							closeModal={() => setContentPost(undefined)}
 							idUserPost={postInfo._id}
+							renderBy='UserPost'
 						/>
 					)
 				}

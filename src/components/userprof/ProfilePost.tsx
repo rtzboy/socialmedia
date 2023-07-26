@@ -9,6 +9,7 @@ import Dropdown from '../Dropdown';
 import LikeAndComments from '../homepage/LikeAndComments';
 import PostContent from '../homepage/PostContent';
 import Modal from '../modals/Modal';
+import PostCommentsForm from '../post-form/PostCommentsForm';
 import ButtonLikeComment from '../usercomment/ButtonLikeComment';
 import CommentBox from '../usercomment/CommentBox';
 
@@ -75,6 +76,15 @@ const ProfilePost = forwardRef<HTMLElement, TProps>(({ userPosts }: TProps, ref)
 				bottonDisable={likeDisable}
 				likeStatus={likeStatus}
 				toggleLike={() => handleLikeToggle()}
+				showContentOnModal={() =>
+					setContentPost(
+						<PostCommentsForm
+							closeModal={() => setContentPost(undefined)}
+							idUserPost={userPosts._id}
+							renderBy='ProfilePost'
+						/>
+					)
+				}
 			/>
 			{allowOpts && <CommentBox idPost={userPosts._id} />}
 		</div>

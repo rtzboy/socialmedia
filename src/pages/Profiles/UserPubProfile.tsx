@@ -3,7 +3,6 @@ import { useAppSelector } from '../../app/hooks';
 import { DivMessages } from '../../components/homepage/NewFeeds';
 import SkeletonPost from '../../components/skeletons/SkeletonPost';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
-import ProfileFeeds from '../../components/userprof/ProfileFeeds';
 import userProfileReducer, { INITIAL_PROFILE } from '../../lib/reducers/userProfileReducer';
 
 type Props = {
@@ -48,9 +47,9 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 					) : !userProfile.posts.length ? (
 						<DivMessages children='Nothing to show...!' />
 					) : null}
-					{userProfile.posts.map(post => (
+					{/* {userProfile.posts.map(post => (
 						<ProfileFeeds key={post._id} userPosts={post} />
-					))}
+					))} */}
 				</div>
 			</div>
 		</div>

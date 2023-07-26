@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { HiXMark } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleLikeUserPost } from '../../features/post/user-posts-slice';
+import { toggleLikeProfilePost } from '../../features/user/user-profile-slice';
 import { updatelikeCount } from '../../lib/api/posts/post.api';
 import LikeAndComments from '../homepage/LikeAndComments';
 import PostContent from '../homepage/PostContent';
@@ -14,25 +15,41 @@ import UserComment from '../usercomment/UserComment';
 type CommentsForm = {
 	closeModal: () => void;
 	idUserPost: string;
+	renderBy: 'UserPost' | 'ProfilePost';
 };
 
-const PostCommentsForm = ({ closeModal, idUserPost }: CommentsForm) => {
-	// TODO: only works by calling on "UserPost"
+const PostCommentsForm = ({ closeModal, idUserPost, renderBy }: CommentsForm) => {
 	const { id, token } = useAppSelector(state => state.userAuth);
 	const userPost = useAppSelector(state => state.userPosts);
+	const userPostProfile = useAppSelector(state => state.userProfile);
 	const [likeDisable, setLikeDisable] = useState(false);
 	const dispatchApp = useAppDispatch();
 
-	if (userPost === null) return;
-	let indexPost = userPost.findIndex(({ _id }) => _id === idUserPost);
-	const currentUserPost = userPost[indexPost || 0];
+	let currentUserPost;
+	let indexPost;
+
+	if (renderBy === 'UserPost') {
+		if (!userPost) return;
+		indexPost = userPost.findIndex(({ _id }) => _id === idUserPost);
+		currentUserPost = userPost[indexPost || 0];
+	}
+	if (renderBy === 'ProfilePost') {
+		if (!userPostProfile) return;
+		indexPost = userPostProfile.userProfilePosts.findIndex(({ _id }) => _id === idUserPost);
+		currentUserPost = userPostProfile.userProfilePosts[indexPost || 0];
+	}
+
+	if (!currentUserPost) return;
 	let likeState = currentUserPost.likes.includes(id);
 
 	const handleLikeToggle = async () => {
 		setLikeDisable(true);
 		const res = await updatelikeCount(token, idUserPost, likeState);
 		if (res) {
-			dispatchApp(toggleLikeUserPost({ idPost: idUserPost, likeState, userId: id }));
+			if (renderBy === 'UserPost')
+				dispatchApp(toggleLikeUserPost({ idPost: idUserPost, likeState, userId: id }));
+			if (renderBy === 'ProfilePost')
+				dispatchApp(toggleLikeProfilePost({ idPost: idUserPost, likeState, userId: id }));
 			setTimeout(() => {
 				setLikeDisable(false);
 			}, 500);
