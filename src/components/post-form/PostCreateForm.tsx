@@ -16,8 +16,8 @@ type PostCreateFormProps = {
 };
 
 const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
-	const { token, username } = useAppSelector(state => state.user);
-	const { profilePic } = useAppSelector(state => state.userGlobalInfo);
+	const { token, username } = useAppSelector(state => state.userAuth);
+	const { profilePic } = useAppSelector(state => state.userHeader);
 	const dispatchApp = useAppDispatch();
 	const { dispatchUserProfile } = useUserPostsContext();
 	const [postState, setPostState] = useState({
@@ -29,7 +29,9 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 	const [selectText, setSelectText] = useState({ start: 0, end: 0 });
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-	const makingPost = async () => {
+	const handleSubmitCreate = async (evt: React.FormEvent<HTMLFormElement>) => {
+		evt.preventDefault();
+		setPostState(prevState => ({ ...prevState, loading: true }));
 		let filterText = removeExtraSpaces(postState.content);
 		const { newPost, message, success } = await makePost(filterText, token);
 		if (success && newPost !== null) {
@@ -40,26 +42,17 @@ const PostCreateForm = ({ closeModal }: PostCreateFormProps) => {
 				content: '',
 				msgPost: ''
 			}));
-			setTimeout(() => {
-				setPostState(prevState => ({ ...prevState, check: false }));
-				closeModal();
-			}, 1500);
 			if (!dispatchUserProfile) return dispatchApp(createUserPost(newPost));
 			dispatchUserProfile({ type: 'CREATE_POST', payload: newPost });
+			closeModal();
 		} else {
 			setPostState(prevState => ({ ...prevState, loading: false, msgPost: message }));
 		}
 	};
 
-	const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-		evt.preventDefault();
-		setPostState(prevState => ({ ...prevState, loading: true }));
-		makingPost();
-	};
-
 	return (
 		<form
-			onSubmit={handleSubmit}
+			onSubmit={handleSubmitCreate}
 			className='relative flex flex-col gap-2 rounded-lg bg-slate-100 p-4'
 		>
 			<div className='text-center text-lg font-semibold'>Create post</div>

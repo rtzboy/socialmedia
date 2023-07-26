@@ -3,7 +3,7 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import { HiXMark } from 'react-icons/hi2';
 import { editPost } from '../../lib/api/posts/post.api';
 import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
-import { UserFeeds } from '../../types/user.model';
+import { UserPostsShape } from '../../types/posts.model';
 import PickerEmojis from '../PickerEmojis';
 import TextAreaAuto from '../TextAreaAuto';
 import Button from '../form/Button';
@@ -12,7 +12,7 @@ import { removeExtraSpaces } from './PostCreateForm';
 
 type PostEditFormProps = {
 	closeModal: () => void;
-	currentPost: UserFeeds;
+	currentPost: UserPostsShape;
 };
 
 const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {

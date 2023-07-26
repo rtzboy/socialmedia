@@ -2,21 +2,21 @@ import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { PrivateRoutes, PublicRoutes } from './constants/routes';
-import { createUserInfo } from './features/user/userInfo-slice';
+import { createUserHeader } from './features/user/user-header-slice';
 import { AuthGuard } from './guards/auth.guard';
-import { userInformation } from './lib/api/user/user.api';
+import { callUserHeader } from './lib/api/user/user.api';
 import HomeScreen from './pages/Home/HomeScreen';
 import WelcomeScreen from './pages/Home/WelcomeScreen';
 import UserProfile from './pages/Profiles/UserProfile';
 
 const App = () => {
-	const { token, id } = useAppSelector(state => state.user);
+	const { token, id } = useAppSelector(state => state.userAuth);
 	const dispatchApp = useAppDispatch();
 
 	const setUserInfoGlobal = async () => {
-		const { result, error: err } = await userInformation(token, id);
-		if (result !== null) {
-			dispatchApp(createUserInfo(result.userInfo));
+		const { userHeader, error: err } = await callUserHeader(token, id);
+		if (userHeader !== null) {
+			dispatchApp(createUserHeader(userHeader));
 		} else {
 			console.log(err);
 		}

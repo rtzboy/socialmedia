@@ -1,4 +1,4 @@
-import { UserFeeds } from '../../../types/user.model';
+import { UserPostsShape } from '../../../types/posts.model';
 import httpAxiosService from '../../helpers/axiosService';
 
 const makePost = async (postStr: string, token: string) => {
@@ -7,7 +7,7 @@ const makePost = async (postStr: string, token: string) => {
 			content: postStr
 		});
 		if (response.status === 200) {
-			const newPost: UserFeeds = {
+			const newPost: UserPostsShape = {
 				_id: response.data.success._id,
 				content: response.data.success.content,
 				author: response.data.success.author,

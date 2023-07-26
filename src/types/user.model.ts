@@ -1,4 +1,19 @@
-export interface UserPrivateInfo {
+import { UserPostsShape } from './posts.model';
+
+export interface UserAuthInfo {
+	id: string;
+	username: string;
+	email: string;
+	token: string;
+}
+
+export interface GeneralUserInfo {
+	userProfileInfo: BasicUserInfo;
+	userProfilePosts: UserPostsShape[];
+	totalCount: number;
+}
+
+export interface BasicUserInfo {
 	_id: string;
 	username: string;
 	profilePic: string;
@@ -7,13 +22,7 @@ export interface UserPrivateInfo {
 	following: Array<string>;
 }
 
-export interface UserInfo {
-	id: string;
-	username: string;
-	email: string;
-	token: string;
-}
-
+// TODO: remove / refactor below
 export interface UserProfileType {
 	userInfo: {
 		_id: string;

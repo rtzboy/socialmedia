@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userPostsReducer from '../features/post/user-posts-slice';
-import userReducer from '../features/user/user-slice';
-import userInfoReducer from '../features/user/userInfo-slice';
+import userAuthReducer from '../features/user/user-auth-slice';
+import userHeaderReducer from '../features/user/user-header-slice';
+import userProfileReducer from '../features/user/user-profile-slice';
 
 export const store = configureStore({
 	reducer: {
-		user: userReducer,
-		userGlobalInfo: userInfoReducer,
-		userPosts: userPostsReducer
+		userAuth: userAuthReducer,
+		userHeader: userHeaderReducer,
+		userPosts: userPostsReducer,
+		userProfile: userProfileReducer
 	}
 });
 

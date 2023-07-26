@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Button from '../../components/form/Button';
 import InputText from '../../components/form/InputText';
 import { PrivateRoutes } from '../../constants/routes';
-import { createUser } from '../../features/user/user-slice';
+import { createUserAuth } from '../../features/user/user-auth-slice';
 import { loginCall } from '../../lib/auth/api-auth';
 import useLogSignUp from '../../lib/hooks/useLogSignUp';
 
@@ -19,7 +19,7 @@ type LoginTypeProps = {
 };
 
 const Login = ({ setSignStatus }: LoginTypeProps) => {
-	const user = useAppSelector(state => state.user);
+	const user = useAppSelector(state => state.userAuth);
 	const dispatchApp = useAppDispatch();
 	const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const Login = ({ setSignStatus }: LoginTypeProps) => {
 			errorLogSign(error);
 			return;
 		}
-		dispatchApp(createUser({ id, username, email, token }));
+		dispatchApp(createUserAuth({ id, username, email, token }));
 		navigate(`/${PrivateRoutes.Home}`);
 		resetLogSign();
 	};

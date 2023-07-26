@@ -3,23 +3,23 @@ import { FiCamera } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { landscapeTest } from '../../assets';
-import { followState } from '../../features/user/userInfo-slice';
+import { followState } from '../../features/user/user-header-slice';
 import { userFollow } from '../../lib/api/user/user.api';
-import { UserPrivateInfo } from '../../types/user.model';
+import { BasicUserInfo } from '../../types/user.model';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
 import Modal from '../modals/Modal';
 import UpdateProfilePic from './UpdateProfilePic';
 
 type Props = {
-	userHeader: UserPrivateInfo;
+	userHeader: BasicUserInfo;
 	postCount: number;
 	followStatus?: boolean;
 	privProfile?: boolean;
 };
 
 const HeaderProfile = ({ userHeader, postCount, followStatus, privProfile }: Props) => {
-	const { token } = useAppSelector(state => state.user);
+	const { token } = useAppSelector(state => state.userAuth);
 	const dispatchApp = useAppDispatch();
 	const [disabled, setDisabled] = useState(false);
 	const [contentModal, setContentModal] = useState<JSX.Element | undefined>();

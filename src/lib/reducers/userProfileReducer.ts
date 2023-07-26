@@ -1,4 +1,5 @@
-import { UserFeeds, UserProfileType } from '../../types/user.model';
+import { UserPostsShape } from '../../types/posts.model';
+import { UserProfileType } from '../../types/user.model';
 
 export const INITIAL_PROFILE = {
 	userInfo: {
@@ -70,7 +71,7 @@ interface UserSuccessInfo {
 
 interface UserCreatePost {
 	type: 'CREATE_POST';
-	payload: UserFeeds;
+	payload: UserPostsShape;
 }
 
 interface UserEditPost {

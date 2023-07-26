@@ -1,10 +1,10 @@
 import httpAxiosService from '../../helpers/axiosService';
 
-const userInformation = async (token: string, idParam?: string) => {
+const callUserHeader = async (token: string, idParam?: string) => {
 	try {
-		const response = await httpAxiosService(token).get(`/userpriv/profile/${idParam}`);
+		const response = await httpAxiosService(token).get(`/userpriv/header/${idParam}`);
 		if (response.status === 200) {
-			return { result: response.data.result, error: '' };
+			return { userHeader: response.data.userHeader, error: '' };
 		}
 		// check axios error result
 		return { result: null, error: 'error' };
@@ -39,4 +39,4 @@ const userFollow = async (token: string, idParam: string, followStatus: boolean)
 	}
 };
 
-export { userFollow, userInformation, userSearch };
+export { callUserHeader, userFollow, userSearch };

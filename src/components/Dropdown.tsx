@@ -3,11 +3,11 @@ import { HiOutlineEye, HiOutlinePencil } from 'react-icons/hi';
 import { HiXMark } from 'react-icons/hi2';
 import useDropdown from '../lib/hooks/useDropdown';
 import useModal from '../lib/hooks/useModal';
-import { UserFeeds } from '../types/user.model';
+import { UserPostsShape } from '../types/posts.model';
 import StyledIcon from './icons/StyledIcon';
 import Modal from './modals/Modal';
 
-type DropdownType = { postInfo: UserFeeds };
+type DropdownType = { postInfo: UserPostsShape };
 
 const Dropdown = ({ postInfo }: DropdownType) => {
 	const { dropDown, dropDownRef, openDropDown, closeDropDown } = useDropdown();

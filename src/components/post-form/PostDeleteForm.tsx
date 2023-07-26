@@ -2,13 +2,14 @@ import { FormEvent } from 'react';
 import { HiXMark } from 'react-icons/hi2';
 import { deletePost } from '../../lib/api/posts/post.api';
 import { useUserPostsContext } from '../../lib/contexts/userPosts/UserPostsContext';
-import { UserFeeds } from '../../types/user.model';
+
+import { UserPostsShape } from '../../types/posts.model';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
 
 type PostDeleteFormProps = {
 	closeModal: () => void;
-	currentPost: UserFeeds;
+	currentPost: UserPostsShape;
 };
 
 const PostDeleteForm = ({ closeModal, currentPost }: PostDeleteFormProps) => {

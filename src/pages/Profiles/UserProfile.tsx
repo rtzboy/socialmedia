@@ -4,13 +4,12 @@ import UserPrivProfile from './UserPrivProfile';
 import UserPubProfile from './UserPubProfile';
 
 const UserProfile = () => {
-	const { id, token } = useAppSelector(state => state.user);
+	const { id, token } = useAppSelector(state => state.userAuth);
 	const { idUserParam } = useParams();
-	return id === idUserParam ? (
-		<UserPrivProfile />
-	) : (
-		<UserPubProfile idUrl={idUserParam} token={token} />
-	);
+
+	const ShowProfile = id === idUserParam ? UserPrivProfile : UserPubProfile;
+
+	return <ShowProfile token={token} idUrl={idUserParam} />;
 };
 
 export default UserProfile;

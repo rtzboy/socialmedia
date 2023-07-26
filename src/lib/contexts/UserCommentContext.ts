@@ -1,9 +1,9 @@
 import { Dispatch, createContext, useContext } from 'react';
-import { UserFeeds } from '../../types/user.model';
+import { UserPostsShape } from '../../types/posts.model';
 
 interface UserCommentContextValue {
-	setFeeds?: Dispatch<React.SetStateAction<UserFeeds[] | undefined>>;
-	feeds?: UserFeeds[] | undefined;
+	setFeeds?: Dispatch<React.SetStateAction<UserPostsShape[] | undefined>>;
+	feeds?: UserPostsShape[] | undefined;
 }
 
 export const UserCommentContext = createContext<UserCommentContextValue>(

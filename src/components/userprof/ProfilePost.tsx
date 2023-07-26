@@ -16,7 +16,7 @@ type TProps = {
 	userPosts: UserPostsShape;
 };
 
-const ProfileFeeds = forwardRef<HTMLElement, TProps>(({ userPosts }: TProps, ref) => {
+const ProfilePost = forwardRef<HTMLElement, TProps>(({ userPosts }: TProps, ref) => {
 	const { id, token } = useAppSelector(state => state.userAuth);
 	const [contentPost, setContentPost] = useState<JSX.Element | undefined>();
 	const [likeDisable, setLikeDisable] = useState(false);
@@ -76,33 +76,6 @@ const ProfileFeeds = forwardRef<HTMLElement, TProps>(({ userPosts }: TProps, ref
 				likeStatus={likeStatus}
 				toggleLike={() => handleLikeToggle()}
 			/>
-			{/* <div className='flex'>
-				<button
-					disabled={likeDisable}
-					onClick={() => handleLikeToggle()}
-					className={`flex flex-grow cursor-pointer select-none items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-[.95] ${
-						likeStatus ? 'text-blue-600' : ''
-					}`}
-				>
-					{likeStatus ? <StyledIcon icon={AiFillLike} /> : <StyledIcon icon={AiOutlineLike} />}
-					<span>Like</span>
-				</button>
-				<span
-					onClick={() =>
-						setContentPost(
-							<PostCommentsForm
-								closeModal={() => setContentPost(undefined)}
-								idUserPost={userPosts._id}
-							/>
-						)
-					}
-					className='flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200'
-				>
-					<StyledIcon icon={AiOutlineComment} />
-					<span>Comment</span>
-				</span>
-				ButtonLikeComment
-			</div> */}
 			{allowOpts && <CommentBox idPost={userPosts._id} />}
 		</div>
 	);
@@ -118,4 +91,4 @@ const ProfileFeeds = forwardRef<HTMLElement, TProps>(({ userPosts }: TProps, ref
 	return content;
 });
 
-export default ProfileFeeds;
+export default ProfilePost;

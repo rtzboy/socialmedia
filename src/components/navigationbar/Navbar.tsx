@@ -4,15 +4,14 @@ import { CgProfile } from 'react-icons/cg';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { mainlogo } from '../../assets';
-import { resetUser } from '../../features/user/user-slice';
-import { deleteUserInfo } from '../../features/user/userInfo-slice';
+import { resetUserAuth } from '../../features/user/user-auth-slice';
+import { deleteUserHeader } from '../../features/user/user-header-slice';
 import useContainNode from '../../lib/hooks/useContainNode';
 import StyledIcon from '../icons/StyledIcon';
 import BoxSearch from './BoxSearch';
 
 const Navbar = () => {
-	// const { username, id } = useAppSelector(state => state.user);
-	const { _id, username, profilePic } = useAppSelector(state => state.userGlobalInfo);
+	const { _id, username, profilePic } = useAppSelector(state => state.userHeader);
 	const dispatchApp = useAppDispatch();
 	const [isOpen, setIsOpen] = useState(false);
 	const liContainerRef = useRef<HTMLLIElement>(null);
@@ -25,13 +24,11 @@ const Navbar = () => {
 				<div className='mx-auto flex h-full w-full max-w-7xl items-center justify-between px-4'>
 					<div>
 						<ul className='flex items-center gap-4'>
-							<li className='flex items-center gap-2'>
-								<NavLink to='/home'>
+							<li>
+								<NavLink to='/home' className='flex items-center gap-2'>
 									<img src={mainlogo} alt='mainlogo' className='w-10' />
+									<span className='text-lg font-semibold text-blue-500'>SocialPhere</span>
 								</NavLink>
-								<span className='cursor-default text-lg font-semibold text-blue-500'>
-									SocialPhere
-								</span>
 							</li>
 							<li className='relative'>
 								<BoxSearch />
@@ -74,8 +71,8 @@ const Navbar = () => {
 										<li>
 											<button
 												onClick={() => {
-													dispatchApp(resetUser());
-													dispatchApp(deleteUserInfo());
+													dispatchApp(resetUserAuth());
+													dispatchApp(deleteUserHeader());
 												}}
 												className='flex w-full items-center gap-2 rounded-lg p-2 hover:bg-slate-300'
 											>

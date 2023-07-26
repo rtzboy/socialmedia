@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleLikeUserPost } from '../../features/post/user-posts-slice';
 import { updatelikeCount } from '../../lib/api/posts/post.api';
-import { UserFeeds } from '../../types/user.model';
+import { UserPostsShape } from '../../types/posts.model';
 import Wrapper from '../Wrapper';
 import Modal from '../modals/Modal';
 import PostCommentsForm from '../post-form/PostCommentsForm';
@@ -13,11 +13,11 @@ import LikeAndComments from './LikeAndComments';
 import PostContent from './PostContent';
 
 export interface RowFeedsType {
-	postInfo: UserFeeds;
+	postInfo: UserPostsShape;
 }
 
 const UserPost = ({ postInfo }: RowFeedsType) => {
-	const { id, token } = useAppSelector(state => state.user);
+	const { id, token } = useAppSelector(state => state.userAuth);
 	const [contentPost, setContentPost] = useState<JSX.Element | undefined>();
 	const likeStatus = postInfo.likes.includes(id);
 	const [likeDisable, setLikeDisable] = useState(false);

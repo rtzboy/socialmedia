@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { UserPrivateInfo } from '../../types/user.model';
+import { BasicUserInfo } from '../../types/user.model';
 
-const privateInfo: UserPrivateInfo = {
+const userHeader: BasicUserInfo = {
 	_id: '',
 	username: '',
 	profilePic: '',
@@ -10,14 +10,14 @@ const privateInfo: UserPrivateInfo = {
 	following: []
 };
 
-const userPrivateSlice = createSlice({
-	name: 'userInformation',
-	initialState: privateInfo,
+const userHeaderSlice = createSlice({
+	name: 'userheader',
+	initialState: userHeader,
 	reducers: {
-		createUserInfo: (_, action: PayloadAction<UserPrivateInfo>) => {
+		createUserHeader: (_, action: PayloadAction<BasicUserInfo>) => {
 			return action.payload;
 		},
-		updateProPic: (state, action) => {
+		updatePicHeader: (state, action) => {
 			state.profilePic = action.payload;
 		},
 		followState: (state, action: PayloadAction<{ _id: string }>) => {
@@ -31,13 +31,13 @@ const userPrivateSlice = createSlice({
 			}
 			state.following = followStatus ? followingFilter : followingCopy;
 		},
-		deleteUserInfo: () => {
-			return privateInfo;
+		deleteUserHeader: () => {
+			return userHeader;
 		}
 	}
 });
 
-export const { createUserInfo, updateProPic, deleteUserInfo, followState } =
-	userPrivateSlice.actions;
+export const { createUserHeader, updatePicHeader, followState, deleteUserHeader } =
+	userHeaderSlice.actions;
 
-export default userPrivateSlice.reducer;
+export default userHeaderSlice.reducer;

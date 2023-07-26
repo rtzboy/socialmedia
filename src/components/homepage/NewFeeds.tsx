@@ -6,9 +6,9 @@ import SkeletonPost from '../skeletons/SkeletonPost';
 import UserPost from './UserPost';
 
 const NewFeeds = () => {
-	const { following } = useAppSelector(state => state.userGlobalInfo);
+	const { following } = useAppSelector(state => state.userHeader);
 	const userPosts = useAppSelector(state => state.userPosts);
-	const token = useAppSelector(state => state.user.token);
+	const token = useAppSelector(state => state.userAuth.token);
 	const dispatchApp = useAppDispatch();
 
 	const callUserFeeds = async () => {

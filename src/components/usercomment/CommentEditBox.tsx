@@ -11,7 +11,7 @@ type CommentEditBoxProps = {
 };
 
 const CommentEditBox = ({ maxHeight, commentText }: CommentEditBoxProps) => {
-	const { profilePic } = useAppSelector(state => state.userGlobalInfo);
+	const { profilePic } = useAppSelector(state => state.userHeader);
 	const [textComment, setTextComment] = useState(commentText || '');
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 

@@ -13,7 +13,7 @@ import InputRadioBtn from '../../components/form/InputRadioBtn';
 import InputText from '../../components/form/InputText';
 import StyledIcon from '../../components/icons/StyledIcon';
 import { PrivateRoutes } from '../../constants/routes';
-import { createUser } from '../../features/user/user-slice';
+import { createUserAuth } from '../../features/user/user-auth-slice';
 import { signupCall } from '../../lib/auth/api-auth';
 import useLogSignUp from '../../lib/hooks/useLogSignUp';
 
@@ -52,7 +52,7 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 			errorLogSign(error);
 			return;
 		}
-		dispatchApp(createUser({ id, username, email, token }));
+		dispatchApp(createUserAuth({ id, username, email, token }));
 		navigate(`/${PrivateRoutes.Home}`);
 		resetLogSign();
 	};

@@ -9,7 +9,7 @@ import LoadIcon from '../icons/LoadIcon';
 import StyledIcon from '../icons/StyledIcon';
 
 const BoxSearch = () => {
-	const { id, token } = useAppSelector(state => state.user);
+	const { id, token } = useAppSelector(state => state.userAuth);
 	const [searchUsers, dispatchSearch] = useReducer(searchUsersReducer, INITIAL_SEARCH_QUERY);
 	const [openSearch, setOpenSearch] = useState(false);
 

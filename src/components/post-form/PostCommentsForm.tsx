@@ -18,7 +18,7 @@ type CommentsForm = {
 
 const PostCommentsForm = ({ closeModal, idUserPost }: CommentsForm) => {
 	// TODO: only works by calling on "UserPost"
-	const { id, token } = useAppSelector(state => state.user);
+	const { id, token } = useAppSelector(state => state.userAuth);
 	const userPost = useAppSelector(state => state.userPosts);
 	const [likeDisable, setLikeDisable] = useState(false);
 	const dispatchApp = useAppDispatch();

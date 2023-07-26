@@ -4,7 +4,6 @@ import { DivMessages } from '../../components/homepage/NewFeeds';
 import SkeletonPost from '../../components/skeletons/SkeletonPost';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
 import ProfileFeeds from '../../components/userprof/ProfileFeeds';
-import { userInformation } from '../../lib/api/user/user.api';
 import userProfileReducer, { INITIAL_PROFILE } from '../../lib/reducers/userProfileReducer';
 
 type Props = {
@@ -13,19 +12,19 @@ type Props = {
 };
 
 const UserPubProfile = ({ idUrl, token }: Props) => {
-	const { _id, following } = useAppSelector(state => state.userGlobalInfo);
+	const { _id, following } = useAppSelector(state => state.userHeader);
 	let followStatus = following.includes(idUrl || _id);
 
 	const [userProfile, dispatchPubProfile] = useReducer(userProfileReducer, INITIAL_PROFILE);
 
 	const callUserProfile = async (token: string, idUserParam?: string) => {
-		const { result, error } = await userInformation(token, idUserParam);
-		if (result !== null) {
-			dispatchPubProfile({ type: 'SUCCESS_INFO', payload: result });
-		} else {
-			// TODO: notification message
-			console.log(error);
-		}
+		// const { result, error } = await userInformation(token, idUserParam);
+		// if (result !== null) {
+		// dispatchPubProfile({ type: 'SUCCESS_INFO', payload: result });
+		// } else {
+		// TODO: notification message
+		// console.log(error);
+		// }
 	};
 
 	useEffect(() => {
@@ -50,7 +49,7 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 						<DivMessages children='Nothing to show...!' />
 					) : null}
 					{userProfile.posts.map(post => (
-						<ProfileFeeds key={post._id} userPosts={post} dispatchPost={dispatchPubProfile} />
+						<ProfileFeeds key={post._id} userPosts={post} />
 					))}
 				</div>
 			</div>

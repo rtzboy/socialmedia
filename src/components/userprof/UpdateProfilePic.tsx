@@ -2,7 +2,7 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { HiOutlineUserCircle, HiXMark } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { updateProPic } from '../../features/user/userInfo-slice';
+import { updatePicHeader } from '../../features/user/user-header-slice';
 import httpAxiosService from '../../lib/helpers/axiosService';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
@@ -21,7 +21,7 @@ type PreviewType = {
 };
 
 const UpdateProfilePic = ({ closeModal }: Props) => {
-	const { token } = useAppSelector(state => state.user);
+	const { token } = useAppSelector(state => state.userAuth);
 	const dispatchApp = useAppDispatch();
 	const [preview, setPreview] = useState<PreviewType | null>(null);
 	const [imgFile, setImgFile] = useState<File>();
@@ -52,7 +52,7 @@ const UpdateProfilePic = ({ closeModal }: Props) => {
 		let formImg = true;
 		const response = await httpAxiosService(token, formImg).post('/userpriv/upload', formdata);
 		if (response.status === 200) {
-			dispatchApp(updateProPic(response.data.urlImg));
+			dispatchApp(updatePicHeader(response.data.urlImg));
 			setImgFile(undefined);
 			setIsSubmiting(false);
 		}

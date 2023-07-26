@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { insertCommentToPost } from '../../features/post/user-posts-slice';
 import httpAxiosService from '../../lib/helpers/axiosService';
 import useContainNode from '../../lib/hooks/useContainNode';
-import { UserFeedsComment } from '../../types/user.model';
+import { UserPostsComment } from '../../types/posts.model';
 import PickerEmojis from '../PickerEmojis';
 import TextAreaAuto from '../TextAreaAuto';
 import StyledIcon from '../icons/StyledIcon';
@@ -14,7 +14,7 @@ type CommentBoxProps = {
 	idPost?: string;
 };
 
-const initCommentForm = (profilePic: string, _id: string, username: string): UserFeedsComment => ({
+const initCommentForm = (profilePic: string, _id: string, username: string): UserPostsComment => ({
 	_id: '',
 	user: {
 		_id,
@@ -28,8 +28,8 @@ const initCommentForm = (profilePic: string, _id: string, username: string): Use
 
 const CommentBox = ({ maxHeight, idPost }: CommentBoxProps) => {
 	// TODO: works only from calling <PostCommentsForm />
-	const { profilePic, _id, username } = useAppSelector(state => state.userGlobalInfo);
-	const { token } = useAppSelector(state => state.user);
+	const { profilePic, _id, username } = useAppSelector(state => state.userHeader);
+	const { token } = useAppSelector(state => state.userAuth);
 	const initComment = initCommentForm(profilePic, _id, username);
 	const [userComment, setUserComment] = useState(initComment);
 	const [openTest, setOpenTest] = useState(false);

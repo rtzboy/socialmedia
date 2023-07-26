@@ -3,14 +3,14 @@ import { useRef, useState } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { useAppSelector } from '../../app/hooks';
 import useContainNode from '../../lib/hooks/useContainNode';
-import { UserFeedsComment } from '../../types/user.model';
+import { UserPostsComment } from '../../types/posts.model';
 import StyledIcon from '../icons/StyledIcon';
 import CommentEditBox from './CommentEditBox';
 import PrivateOpts from './PrivateOpts';
 import PublicOpts from './PublicOpts';
 
-const UserComment = ({ comment, user, createdAt }: UserFeedsComment) => {
-	const { _id: idUserLocal } = useAppSelector(state => state.userGlobalInfo);
+const UserComment = ({ comment, user, createdAt }: UserPostsComment) => {
+	const { _id: idUserLocal } = useAppSelector(state => state.userHeader);
 	const [openOptsComment, setOpenOptsComment] = useState(false);
 	const divRef = useRef<HTMLDivElement>(null);
 	const [isEditing, setIsEditing] = useState(false);
