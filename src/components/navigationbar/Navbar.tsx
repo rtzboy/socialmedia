@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+
 import { BiLogOut, BiMoon } from 'react-icons/bi';
 import { CgProfile } from 'react-icons/cg';
 import { NavLink } from 'react-router-dom';
@@ -64,7 +65,7 @@ const Navbar = () => {
 												<span className='inline-block'>See profile</span>
 											</NavLink>
 										</li>
-										<li className='flex items-center gap-2 rounded-lg p-2 hover:bg-slate-300'>
+										<li className='flex cursor-default items-center gap-2 rounded-lg p-2 hover:bg-slate-300'>
 											<StyledIcon icon={BiMoon} />
 											<span>Display</span>
 										</li>

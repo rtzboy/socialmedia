@@ -1,4 +1,5 @@
 import { FormEvent } from 'react';
+import toast from 'react-hot-toast';
 import { HiXMark } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { deleteProfPost } from '../../features/user/user-profile-slice';
@@ -19,7 +20,12 @@ const PostDeleteForm = ({ closeModal, currentPost }: PostDeleteFormProps) => {
 	const handleDeletePost = async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		const result = await deletePost(token, currentPost._id);
-		if (result) dispatchApp(deleteProfPost(currentPost._id));
+		if (result) {
+			dispatchApp(deleteProfPost(currentPost._id));
+			toast.success('Successfully removed!', { duration: 3500 });
+		} else {
+			toast.error("Couldn't remove!", { duration: 3500 });
+		}
 		closeModal();
 	};
 

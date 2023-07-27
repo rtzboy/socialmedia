@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { BsCheck2 } from 'react-icons/bs';
 import { FiLoader } from 'react-icons/fi';
 import { HiXMark } from 'react-icons/hi2';
@@ -34,6 +35,7 @@ const PostCreateForm = ({ closeModal, makeFrom }: PostCreateFormProps) => {
 		let filterText = removeExtraSpaces(postState.content);
 		const { newPost, message, success } = await makePost(filterText, token);
 		if (success && newPost !== null) {
+			toast.success('Successfully inserted!', { duration: 3000 });
 			setPostState(prevState => ({
 				...prevState,
 				loading: false,
@@ -43,10 +45,11 @@ const PostCreateForm = ({ closeModal, makeFrom }: PostCreateFormProps) => {
 			}));
 			if (makeFrom === 'Home') dispatchApp(createUserPost(newPost));
 			if (makeFrom === 'Profile') dispatchApp(createProfPost(newPost));
-			closeModal();
 		} else {
 			setPostState(prevState => ({ ...prevState, loading: false, msgPost: message }));
+			toast.error("Couldn't insert!", { duration: 3000 });
 		}
+		closeModal();
 	};
 
 	return (
