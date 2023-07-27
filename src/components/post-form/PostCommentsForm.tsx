@@ -1,5 +1,6 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { HiXMark } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleLikeUserPost } from '../../features/post/user-posts-slice';
@@ -54,8 +55,10 @@ const PostCommentsForm = ({ closeModal, idUserPost, renderBy }: CommentsForm) =>
 				setLikeDisable(false);
 			}, 500);
 		} else {
-			// TODO: notification?
-			console.log('Error');
+			setTimeout(() => {
+				setLikeDisable(false);
+			}, 400);
+			toast.error('Something wrong happened!', { duration: 3500 });
 		}
 	};
 
