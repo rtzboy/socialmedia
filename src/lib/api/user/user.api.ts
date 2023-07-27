@@ -13,6 +13,19 @@ const callUserHeader = async (token: string, idParam?: string) => {
 	}
 };
 
+const callUpdatePic = async (token: string, formImg: boolean, formdata: FormData) => {
+	try {
+		const response = await httpAxiosService(token, formImg).post('/userpriv/upload', formdata);
+
+		if (response.status !== 200) {
+			return { error: true };
+		}
+		return { imgUrl: response.data.urlImg, error: false };
+	} catch (error) {
+		return { error: true };
+	}
+};
+
 const userSearch = async (token: string, searchUser: string) => {
 	try {
 		const response = await httpAxiosService(token).get(`/userpriv/search?username=${searchUser}`);
@@ -39,4 +52,4 @@ const userFollow = async (token: string, idParam: string, followStatus: boolean)
 	}
 };
 
-export { callUserHeader, userFollow, userSearch };
+export { callUpdatePic, callUserHeader, userFollow, userSearch };

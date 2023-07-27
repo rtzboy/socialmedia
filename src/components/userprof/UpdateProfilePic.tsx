@@ -1,10 +1,11 @@
 import { ChangeEvent, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { HiOutlineUserCircle, HiXMark } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { updatePicHeader } from '../../features/user/user-header-slice';
 import { updateProfPicture } from '../../features/user/user-profile-slice';
-import httpAxiosService from '../../lib/helpers/axiosService';
+import { callUpdatePic } from '../../lib/api/user/user.api';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
 
@@ -51,13 +52,17 @@ const UpdateProfilePic = ({ closeModal }: Props) => {
 		const formdata = new FormData();
 		formdata.append('file', imgFile);
 		let formImg = true;
-		const response = await httpAxiosService(token, formImg).post('/userpriv/upload', formdata);
-		if (response.status === 200) {
-			dispatchApp(updatePicHeader(response.data.urlImg));
-			dispatchApp(updateProfPicture(response.data.urlImg));
+		const { error, imgUrl } = await callUpdatePic(token, formImg, formdata);
+		if (!error && imgUrl) {
+			toast.success('Profile picture updated successfully', { duration: 3500 });
+			dispatchApp(updatePicHeader(imgUrl));
+			dispatchApp(updateProfPicture(imgUrl));
 			setImgFile(undefined);
 			setIsSubmiting(false);
+		} else {
+			toast.error("Couldn't update profile picture!", { duration: 3500 });
 		}
+		closeModal();
 	};
 
 	let showMessage = msgAndName(preview);

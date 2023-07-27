@@ -1,5 +1,6 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 import { forwardRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleLikeProfilePost } from '../../features/user/user-profile-slice';
@@ -39,8 +40,10 @@ const ProfilePost = forwardRef<HTMLElement, TProps>(({ userPosts }: TProps, ref)
 				setLikeDisable(false);
 			}, 400);
 		} else {
-			// TODO: notification?
-			console.log('Error');
+			toast.error('Something wrong happened!', { duration: 3500 });
+			setTimeout(() => {
+				setLikeDisable(false);
+			}, 300);
 		}
 	};
 
