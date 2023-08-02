@@ -1,11 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { BasicUserInfo } from '../../types/user.model';
+import { HeaderInfo } from '../../types/user.model';
 
-const userHeader: BasicUserInfo = {
+const userHeader: HeaderInfo = {
 	_id: '',
 	username: '',
 	profilePic: '',
-	gender: '',
 	followers: [],
 	following: []
 };
@@ -14,7 +13,7 @@ const userHeaderSlice = createSlice({
 	name: 'userheader',
 	initialState: userHeader,
 	reducers: {
-		createUserHeader: (_, action: PayloadAction<BasicUserInfo>) => {
+		createUserHeader: (_, action: PayloadAction<HeaderInfo>) => {
 			return action.payload;
 		},
 		updatePicHeader: (state, action) => {

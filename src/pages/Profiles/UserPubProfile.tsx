@@ -24,13 +24,12 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 	const observer = useRef<IntersectionObserver | null>(null);
 	const lastPostElemRef = useCallback(
 		(post: HTMLElement) => {
-			if (!userPublicProfile) return;
 			if (isLoading) return;
 			if (observer.current) observer.current.disconnect();
 			observer.current = new IntersectionObserver(entries => {
 				if (
 					entries[0].isIntersecting &&
-					Math.ceil(userPublicProfile.totalCount / POST_PER_SCROLL) !== page
+					Math.ceil(userPublicProfile!.totalCount / POST_PER_SCROLL) !== page
 				) {
 					setPage(prevPage => prevPage + 1);
 				}
@@ -40,6 +39,7 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 		[isLoading]
 	);
 
+	// TODO: move call to an api file
 	const callUserProfile = async (token: string, idUserParam?: string) => {
 		setIsLoading(true);
 		const { data, status } = await httpAxiosService(token).get(

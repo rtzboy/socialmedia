@@ -5,14 +5,14 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { landscapeTest } from '../../assets';
 import { followState } from '../../features/user/user-header-slice';
 import { userFollow } from '../../lib/api/user/user.api';
-import { BasicUserInfo } from '../../types/user.model';
+import { HeaderInfo } from '../../types/user.model';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
 import Modal from '../modals/Modal';
 import UpdateProfilePic from './UpdateProfilePic';
 
 type Props = {
-	userHeader: BasicUserInfo;
+	userHeader: HeaderInfo;
 	postCount: number;
 	followStatus?: boolean;
 	privProfile?: boolean;
