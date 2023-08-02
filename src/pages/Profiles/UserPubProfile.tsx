@@ -1,9 +1,11 @@
-import { useEffect, useReducer } from 'react';
-import { useAppSelector } from '../../app/hooks';
-import { DivMessages } from '../../components/homepage/NewFeeds';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import SkeletonPost from '../../components/skeletons/SkeletonPost';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
-import userProfileReducer, { INITIAL_PROFILE } from '../../lib/reducers/userProfileReducer';
+import ProfilePost from '../../components/userprof/ProfilePost';
+import { POST_PER_SCROLL } from '../../constants/string_helpers';
+import { infiniteScrollPost, setGeneralInfo } from '../../features/user/user-profile-slice';
+import httpAxiosService from '../../lib/helpers/axiosService';
 
 type Props = {
 	idUrl?: string;
@@ -12,29 +14,64 @@ type Props = {
 
 const UserPubProfile = ({ idUrl, token }: Props) => {
 	const { _id, following } = useAppSelector(state => state.userHeader);
+	const userPublicProfile = useAppSelector(state => state.userProfile);
 	let followStatus = following.includes(idUrl || _id);
+	const [isLoading, setIsLoading] = useState(false);
+	const [page, setPage] = useState(1);
+	const dispatchApp = useAppDispatch();
 
-	const [userProfile, dispatchPubProfile] = useReducer(userProfileReducer, INITIAL_PROFILE);
+	// TODO: improve Math.ceil...
+	const observer = useRef<IntersectionObserver | null>(null);
+	const lastPostElemRef = useCallback(
+		(post: HTMLElement) => {
+			if (!userPublicProfile) return;
+			if (isLoading) return;
+			if (observer.current) observer.current.disconnect();
+			observer.current = new IntersectionObserver(entries => {
+				if (
+					entries[0].isIntersecting &&
+					Math.ceil(userPublicProfile.totalCount / POST_PER_SCROLL) !== page
+				) {
+					setPage(prevPage => prevPage + 1);
+				}
+			});
+			if (post) observer.current.observe(post);
+		},
+		[isLoading]
+	);
 
 	const callUserProfile = async (token: string, idUserParam?: string) => {
-		// const { result, error } = await userInformation(token, idUserParam);
-		// if (result !== null) {
-		// dispatchPubProfile({ type: 'SUCCESS_INFO', payload: result });
-		// } else {
-		// TODO: notification message
-		// console.log(error);
-		// }
+		setIsLoading(true);
+		const { data, status } = await httpAxiosService(token).get(
+			`/userpriv/pagprofile/${idUserParam}?pagination=${page}`
+		);
+		if (status === 200) {
+			setIsLoading(false);
+			if (page === 1) {
+				dispatchApp(setGeneralInfo(data.result));
+			} else {
+				dispatchApp(infiniteScrollPost(data.result.userProfilePosts));
+			}
+		}
 	};
-
 	useEffect(() => {
 		callUserProfile(token, idUrl);
-	}, [idUrl]);
+	}, [idUrl, page]);
+
+	if (!userPublicProfile) return <div>Loading</div>;
+
+	const contentProfilePost = userPublicProfile?.userProfilePosts.map((profilePost, idx) => {
+		if (userPublicProfile.userProfilePosts.length === idx + 1) {
+			return <ProfilePost ref={lastPostElemRef} key={profilePost._id} userPosts={profilePost} />;
+		}
+		return <ProfilePost key={profilePost._id} userPosts={profilePost} />;
+	});
 
 	return (
 		<div className='mx-auto flex max-w-3xl flex-col gap-4 p-4'>
 			<HeaderProfile
-				userHeader={userProfile.userInfo}
-				postCount={userProfile.posts.length}
+				userHeader={userPublicProfile?.userProfileInfo}
+				postCount={userPublicProfile?.totalCount}
 				followStatus={followStatus}
 			/>
 			<div className='flex items-start gap-4'>
@@ -42,14 +79,8 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 					<div className='text-lg font-semibold'>About</div>
 				</div>
 				<div className='flex w-[60%] flex-col gap-4'>
-					{!userProfile.userInfo.username ? (
-						<SkeletonPost />
-					) : !userProfile.posts.length ? (
-						<DivMessages children='Nothing to show...!' />
-					) : null}
-					{/* {userProfile.posts.map(post => (
-						<ProfileFeeds key={post._id} userPosts={post} />
-					))} */}
+					{contentProfilePost}
+					{isLoading && <SkeletonPost />}
 				</div>
 			</div>
 		</div>

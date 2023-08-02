@@ -6,13 +6,11 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { toggleLikeUserPost } from '../../features/post/user-posts-slice';
 import { updatelikeCount } from '../../lib/api/posts/post.api';
 import { UserPostsShape } from '../../types/posts.model';
-import Wrapper from '../Wrapper';
 import Modal from '../modals/Modal';
 import PostCommentsForm from '../post-form/PostCommentsForm';
 import ButtonLikeComment from '../usercomment/ButtonLikeComment';
 import LikeAndComments from './LikeAndComments';
 import PostContent from './PostContent';
-
 export interface RowFeedsType {
 	postInfo: UserPostsShape;
 }
@@ -43,48 +41,50 @@ const UserPost = ({ postInfo }: RowFeedsType) => {
 	};
 
 	return (
-		<div className='flex flex-col gap-2'>
-			<Modal>{contentPost}</Modal>
-			<div className='relative flex items-center gap-4'>
-				<img
-					src={postInfo.author.profilePic}
-					alt={postInfo.author.username}
-					className='h-11 w-11 rounded-full object-cover'
-				/>
-				<div className='flex flex-col'>
-					<span className='font-semibold'>
-						<NavLink to={`/profile/${postInfo.author._id}`}>{postInfo.author.username}</NavLink>
-					</span>
-					<span className='text-sm italic text-slate-700'>
-						{formatDistanceToNowStrict(new Date(postInfo.createdAt))}
-						{!isEdited && <span> &#x2027; Edited</span>}
-					</span>
+		<div className='rounded-lg bg-slate-100 p-4'>
+			<div className='flex flex-col gap-2'>
+				<Modal>{contentPost}</Modal>
+				<div className='relative flex items-center gap-4'>
+					<img
+						src={postInfo.author.profilePic}
+						alt={postInfo.author.username}
+						className='h-11 w-11 rounded-full object-cover'
+					/>
+					<div className='flex flex-col'>
+						<span className='font-semibold'>
+							<NavLink to={`/profile/${postInfo.author._id}`}>{postInfo.author.username}</NavLink>
+						</span>
+						<span className='text-sm italic text-slate-700'>
+							{formatDistanceToNowStrict(new Date(postInfo.createdAt))}
+							{!isEdited && <span> &#x2027; Edited</span>}
+						</span>
+					</div>
 				</div>
+				<div className='flex items-center whitespace-pre-wrap'>
+					<PostContent content={postInfo.content} />
+				</div>
+				<LikeAndComments
+					likeStatus={likeStatus}
+					likeCount={postInfo.likeCount}
+					commentCount={postInfo.comments.length}
+				/>
+				<ButtonLikeComment
+					bottonDisable={likeDisable}
+					likeStatus={likeStatus}
+					toggleLike={() => handleLikeToggle()}
+					showContentOnModal={() =>
+						setContentPost(
+							<PostCommentsForm
+								closeModal={() => setContentPost(undefined)}
+								idUserPost={postInfo._id}
+								renderBy='UserPost'
+							/>
+						)
+					}
+				/>
 			</div>
-			<div className='flex items-center whitespace-pre-wrap'>
-				<PostContent content={postInfo.content} />
-			</div>
-			<LikeAndComments
-				likeStatus={likeStatus}
-				likeCount={postInfo.likeCount}
-				commentCount={postInfo.comments.length}
-			/>
-			<ButtonLikeComment
-				bottonDisable={likeDisable}
-				likeStatus={likeStatus}
-				toggleLike={() => handleLikeToggle()}
-				showContentOnModal={() =>
-					setContentPost(
-						<PostCommentsForm
-							closeModal={() => setContentPost(undefined)}
-							idUserPost={postInfo._id}
-							renderBy='UserPost'
-						/>
-					)
-				}
-			/>
 		</div>
 	);
 };
 
-export default Wrapper(UserPost);
+export default UserPost;
