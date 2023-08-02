@@ -4,10 +4,9 @@ import CreatePost from '../../components/homepage/CreatePost';
 import SkeletonPost from '../../components/skeletons/SkeletonPost';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
 import ProfilePost from '../../components/userprof/ProfilePost';
+import { POST_PER_SCROLL } from '../../constants/string_helpers';
 import { infiniteScrollPost, setGeneralInfo } from '../../features/user/user-profile-slice';
 import httpAxiosService from '../../lib/helpers/axiosService';
-
-const POST_PER_SCROLL: number = 4;
 
 const UserPrivProfile = () => {
 	const { token, id } = useAppSelector(state => state.userAuth);
@@ -20,13 +19,13 @@ const UserPrivProfile = () => {
 	const observer = useRef<IntersectionObserver | null>(null);
 	const lastPostElemRef = useCallback(
 		(post: HTMLElement) => {
-			if (!userProfileTest) return;
+			// if (!userProfileTest) return;
 			if (isLoading) return;
 			if (observer.current) observer.current.disconnect();
 			observer.current = new IntersectionObserver(entries => {
 				if (
 					entries[0].isIntersecting &&
-					Math.ceil(userProfileTest.totalCount / POST_PER_SCROLL) !== page
+					Math.ceil(userProfileTest!.totalCount / POST_PER_SCROLL) !== page
 				) {
 					setPage(prevPage => prevPage + 1);
 				}
