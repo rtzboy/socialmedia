@@ -52,4 +52,34 @@ const userFollow = async (token: string, idParam: string, followStatus: boolean)
 	}
 };
 
-export { callUpdatePic, callUserHeader, userFollow, userSearch };
+const availableUsername = async (token: string, username: string) => {
+	try {
+		const res = await httpAxiosService(token).get(`/userpriv/checkusername?username=${username}`);
+		if (res.status === 200) {
+			if (res.data.isValid) {
+				return { valid: res.data.isValid, error: '' };
+			}
+			return { valid: res.data.isValid, error: '' };
+		}
+		return { error: 'Something went wrong!' };
+	} catch (error) {
+		return { error: 'Something went wrong!' };
+	}
+};
+
+const updateDetails = async (token: string, username: string, bio: string) => {
+	try {
+		const response = await httpAxiosService(token).patch('/userpriv/updatedetails', {
+			username,
+			bio
+		});
+		if (response.status === 200) {
+			return { success: true, error: '' };
+		}
+		return { success: false, error: 'Something went wrong!' };
+	} catch (error: any) {
+		return { error: error.response.data.error };
+	}
+};
+
+export { availableUsername, callUpdatePic, callUserHeader, updateDetails, userFollow, userSearch };

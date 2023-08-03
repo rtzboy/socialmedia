@@ -27,6 +27,10 @@ export const userProfileSlice = createSlice({
 			if (!state) return;
 			state.userProfilePosts = state.userProfilePosts.filter(({ _id }) => _id !== action.payload);
 		},
+		updateProfDetails: (state, action) => {
+			state!.userProfileInfo.username = action.payload.username;
+			state!.userProfileInfo.bio = action.payload.bio;
+		},
 		updateProfPicture: (state, action) => {
 			if (!state) return;
 			state.userProfileInfo.profilePic = action.payload;
@@ -72,6 +76,7 @@ export const {
 	updateProfPost,
 	deleteProfPost,
 	updateProfPicture,
+	updateProfDetails,
 	toggleLikeProfilePost,
 	infiniteScrollPost
 } = userProfileSlice.actions;

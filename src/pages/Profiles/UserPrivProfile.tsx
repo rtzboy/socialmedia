@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import CreatePost from '../../components/homepage/CreatePost';
 import SkeletonPost from '../../components/skeletons/SkeletonPost';
+import AboutProfile from '../../components/userprof/AboutProfile';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
 import ProfilePost from '../../components/userprof/ProfilePost';
 import { POST_PER_SCROLL } from '../../constants/string_helpers';
@@ -10,7 +11,7 @@ import httpAxiosService from '../../lib/helpers/axiosService';
 
 const UserPrivProfile = () => {
 	const { token, id } = useAppSelector(state => state.userAuth);
-	const userProfileTest = useAppSelector(state => state.userProfile);
+	const information = useAppSelector(state => state.userProfile);
 	const dispatchApp = useAppDispatch();
 	const [isLoading, setIsLoading] = useState(false);
 	const [page, setPage] = useState(1);
@@ -25,7 +26,7 @@ const UserPrivProfile = () => {
 			observer.current = new IntersectionObserver(entries => {
 				if (
 					entries[0].isIntersecting &&
-					Math.ceil(userProfileTest!.totalCount / POST_PER_SCROLL) !== page
+					Math.ceil(information!.totalCount / POST_PER_SCROLL) !== page
 				) {
 					setPage(prevPage => prevPage + 1);
 				}
@@ -54,15 +55,15 @@ const UserPrivProfile = () => {
 		callPrivatePosts(token, id);
 	}, [page]);
 
-	if (userProfileTest === null)
+	if (information === null)
 		return (
 			<div className='mx-auto flex max-w-3xl flex-col gap-4 p-4'>
 				<SkeletonPost />
 			</div>
 		);
 
-	const contentProfilePost = userProfileTest?.userProfilePosts.map((profilePost, idx) => {
-		if (userProfileTest.userProfilePosts.length === idx + 1) {
+	const contentProfilePost = information?.userProfilePosts.map((profilePost, idx) => {
+		if (information.userProfilePosts.length === idx + 1) {
 			return <ProfilePost ref={lastPostElemRef} key={profilePost._id} userPosts={profilePost} />;
 		}
 		return <ProfilePost key={profilePost._id} userPosts={profilePost} />;
@@ -71,14 +72,14 @@ const UserPrivProfile = () => {
 	return (
 		<div className='mx-auto flex max-w-3xl flex-col gap-4 p-4'>
 			<HeaderProfile
-				userHeader={userProfileTest.userProfileInfo}
-				postCount={userProfileTest.totalCount}
+				userHeader={information.userProfileInfo}
+				postCount={information.totalCount}
 				privProfile
 			/>
 			<CreatePost makeFrom='Profile' />
 			<div className='flex items-start gap-4'>
 				<div className='w-[40%] rounded-lg bg-slate-100 p-4'>
-					<div className='text-lg font-semibold'>About</div>
+					<AboutProfile data={information.userProfileInfo} priv />
 				</div>
 				<div className='flex w-[60%] flex-col gap-4'>
 					{contentProfilePost}

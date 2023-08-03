@@ -16,6 +16,9 @@ const userHeaderSlice = createSlice({
 		createUserHeader: (_, action: PayloadAction<HeaderInfo>) => {
 			return action.payload;
 		},
+		updateUserHeader: (state, action) => {
+			state.username = action.payload;
+		},
 		updatePicHeader: (state, action) => {
 			state.profilePic = action.payload;
 		},
@@ -36,7 +39,12 @@ const userHeaderSlice = createSlice({
 	}
 });
 
-export const { createUserHeader, updatePicHeader, followState, deleteUserHeader } =
-	userHeaderSlice.actions;
+export const {
+	createUserHeader,
+	updateUserHeader,
+	updatePicHeader,
+	followState,
+	deleteUserHeader
+} = userHeaderSlice.actions;
 
 export default userHeaderSlice.reducer;

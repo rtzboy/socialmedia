@@ -24,4 +24,5 @@ export interface HeaderInfo {
 export interface ProfileInfo extends HeaderInfo {
 	gender: string;
 	bio: string;
+	createdAt: string;
 }

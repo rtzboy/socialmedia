@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import SkeletonPost from '../../components/skeletons/SkeletonPost';
+import AboutProfile from '../../components/userprof/AboutProfile';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
 import ProfilePost from '../../components/userprof/ProfilePost';
 import { POST_PER_SCROLL } from '../../constants/string_helpers';
@@ -76,7 +77,7 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 			/>
 			<div className='flex items-start gap-4'>
 				<div className='w-[40%] rounded-lg bg-slate-100 p-4'>
-					<div className='text-lg font-semibold'>About</div>
+					<AboutProfile data={userPublicProfile.userProfileInfo} />
 				</div>
 				<div className='flex w-[60%] flex-col gap-4'>
 					{contentProfilePost}
