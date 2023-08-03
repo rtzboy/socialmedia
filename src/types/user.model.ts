@@ -2,7 +2,6 @@ import { UserPostsShape } from './posts.model';
 
 export interface UserAuthInfo {
 	id: string;
-	username: string;
 	email: string;
 	token: string;
 }

@@ -18,6 +18,7 @@ const App = () => {
 		if (userHeader !== null) {
 			dispatchApp(createUserHeader(userHeader));
 		} else {
+			// TODO: clear auth local past "x remember days"
 			console.log(err);
 		}
 	};

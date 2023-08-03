@@ -5,9 +5,9 @@ import httpAxiosService from '../helpers/axiosService';
 const loginCall = async (userForm: LoginType) => {
 	try {
 		const response = await httpAxiosService().post('/users/login', userForm);
-		const { success, id, email, token, username } = response.data;
+		const { success, id, email, token } = response.data;
 		if (response.status === 200) {
-			return { success, id, email, token, username };
+			return { success, id, email, token };
 		}
 		return { success: false, error: 'Something went wrong!' };
 	} catch (error: any) {
@@ -18,9 +18,9 @@ const loginCall = async (userForm: LoginType) => {
 const signupCall = async (userForm: SignupType) => {
 	try {
 		const response = await httpAxiosService().post('/users/signup', userForm);
-		const { success, id, email, token, username } = response.data;
+		const { success, id, email, token } = response.data;
 		if (response.status === 200) {
-			return { success, id, email, token, username };
+			return { success, id, email, token };
 		}
 		return { success: false, error: 'Something went wrong!' };
 	} catch (error: any) {

@@ -4,7 +4,6 @@ import { UserAuthInfo } from '../../types/user.model';
 
 const initAuthState: UserAuthInfo = {
 	id: '',
-	username: '',
 	email: '',
 	token: ''
 };

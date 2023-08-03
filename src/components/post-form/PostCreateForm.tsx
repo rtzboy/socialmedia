@@ -18,8 +18,8 @@ type PostCreateFormProps = {
 };
 
 const PostCreateForm = ({ closeModal, makeFrom }: PostCreateFormProps) => {
-	const { token, username } = useAppSelector(state => state.userAuth);
-	const { profilePic } = useAppSelector(state => state.userHeader);
+	const { token } = useAppSelector(state => state.userAuth);
+	const { profilePic, username } = useAppSelector(state => state.userHeader);
 	const dispatchApp = useAppDispatch();
 	const [postState, setPostState] = useState({
 		content: '',

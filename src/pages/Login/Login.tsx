@@ -33,12 +33,12 @@ const Login = ({ setSignStatus }: LoginTypeProps) => {
 	const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		loadingLogSign();
-		const { success, id, email, error, token, username } = await loginCall(formData);
+		const { success, id, email, error, token } = await loginCall(formData);
 		if (!success) {
 			errorLogSign(error);
 			return;
 		}
-		dispatchApp(createUserAuth({ id, username, email, token }));
+		dispatchApp(createUserAuth({ id, email, token }));
 		navigate(`/${PrivateRoutes.Home}`);
 		resetLogSign();
 	};
