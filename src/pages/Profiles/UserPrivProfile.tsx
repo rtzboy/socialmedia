@@ -78,7 +78,7 @@ const UserPrivProfile = () => {
 			/>
 			<CreatePost makeFrom='Profile' />
 			<div className='flex items-start gap-4'>
-				<div className='w-[40%] rounded-lg bg-slate-100 p-4'>
+				<div className='w-[40%] rounded-lg bg-slate-100 p-4 dark:bg-black-400 dark:text-white'>
 					<AboutProfile data={information.userProfileInfo} priv />
 				</div>
 				<div className='flex w-[60%] flex-col gap-4'>

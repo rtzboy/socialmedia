@@ -41,7 +41,7 @@ const UserPost = ({ postInfo }: RowFeedsType) => {
 	};
 
 	return (
-		<div className='rounded-lg bg-slate-100 p-4'>
+		<div className='rounded-lg bg-slate-100 p-4 dark:bg-black-400 dark:text-white'>
 			<div className='flex flex-col gap-2'>
 				<Modal>{contentPost}</Modal>
 				<div className='relative flex items-center gap-4'>
@@ -54,7 +54,7 @@ const UserPost = ({ postInfo }: RowFeedsType) => {
 						<span className='font-semibold'>
 							<NavLink to={`/profile/${postInfo.author._id}`}>{postInfo.author.username}</NavLink>
 						</span>
-						<span className='text-sm italic text-slate-700'>
+						<span className='text-sm italic text-slate-700 dark:text-gray-400'>
 							{formatDistanceToNowStrict(new Date(postInfo.createdAt))}
 							{!isEdited && <span> &#x2027; Edited</span>}
 						</span>

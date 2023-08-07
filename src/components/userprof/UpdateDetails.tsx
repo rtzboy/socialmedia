@@ -53,13 +53,13 @@ const UpdateDetails = ({ closeModal, textBio }: Props) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className='relative flex flex-col gap-4 rounded-lg bg-slate-100 p-4'
+			className='relative flex flex-col gap-4 rounded-lg bg-slate-100 p-4 dark:bg-black-400 dark:text-white'
 		>
 			<StyledIcon
 				icon={HiXMark}
 				onClick={closeModal}
 				size='1.5rem'
-				className='absolute right-3 top-3 cursor-pointer rounded-full bg-slate-200 p-1 hover:bg-slate-300'
+				className='icons-opt absolute right-3 top-3 cursor-pointer rounded-full p-1 hover:bg-slate-300'
 			/>
 			<div className='text-center text-lg font-semibold'>Edit details</div>
 			<div className='relative'>
@@ -75,7 +75,7 @@ const UpdateDetails = ({ closeModal, textBio }: Props) => {
 						}
 						type='text'
 						value={checkUsername.value}
-						className='w-full rounded-lg bg-slate-200 px-2 py-1 outline-none'
+						className='w-full rounded-lg bg-slate-200 px-2 py-1 outline-none dark:bg-black-300'
 					/>
 					{iconState}
 				</div>
@@ -88,7 +88,7 @@ const UpdateDetails = ({ closeModal, textBio }: Props) => {
 			<div>
 				Bio
 				<TextAreaAuto
-					className='max-h-32 rounded-lg bg-slate-200 px-2 py-1'
+					className='max-h-32 rounded-lg bg-slate-200 px-2 py-1 dark:bg-black-300'
 					contentTxt={bio}
 					setContentTxt={str => {
 						let limit = str.length;
@@ -99,12 +99,15 @@ const UpdateDetails = ({ closeModal, textBio }: Props) => {
 				/>
 			</div>
 			<div className='flex justify-center gap-4'>
-				<Button className='flex-1 bg-slate-300' onClick={closeModal}>
+				<Button
+					className='flex-1 hover:bg-slate-300 dark:hover:bg-emerald-950'
+					onClick={closeModal}
+				>
 					Cancel
 				</Button>
 				<Button
 					disabled={isAllOkay || isSubmiting}
-					className='flex-1 bg-blue-500 text-white disabled:opacity-50'
+					className='flex-1 bg-blue-500 text-white disabled:opacity-50 dark:bg-emerald-300 dark:text-black-600'
 				>
 					Save Updates
 				</Button>

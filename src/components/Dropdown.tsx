@@ -19,26 +19,20 @@ const Dropdown = ({ postInfo }: DropdownType) => {
 			<StyledIcon
 				onClick={openDropDown}
 				icon={BsThreeDotsVertical}
-				className='absolute -right-2 -top-1 cursor-pointer rounded-full p-1 text-slate-600 hover:bg-slate-300'
+				className='icons-opt absolute -right-2 -top-1 cursor-pointer rounded-full p-1 text-slate-600 hover:bg-slate-300'
 			/>
 			<div
 				onClick={closeDropDown}
-				className={`absolute bottom-4 right-4 overflow-hidden rounded-lg bg-slate-100 shadow-out transition-all duration-300 ${
+				className={`absolute bottom-4 right-4 overflow-hidden rounded-lg bg-slate-100 shadow-out transition-all duration-300 dark:bg-black-300 dark:shadow-black-600 ${
 					dropDown ? 'h-32 w-36 p-2' : 'h-0 w-0'
 				}`}
 			>
 				<ul className='flex h-full flex-col justify-between gap-1'>
-					<li
-						onClick={openEditModal}
-						className='flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'
-					>
+					<li onClick={openEditModal} className='post-opt'>
 						<StyledIcon icon={HiOutlinePencil} stroke='stroke-1' />
 						<span>Edit</span>
 					</li>
-					<li
-						onClick={openDeleteModal}
-						className='flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300'
-					>
+					<li onClick={openDeleteModal} className='post-opt'>
 						<StyledIcon icon={HiXMark} />
 						<span>Delete</span>
 					</li>

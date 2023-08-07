@@ -63,12 +63,12 @@ const PostCommentsForm = ({ closeModal, idUserPost, renderBy }: CommentsForm) =>
 	};
 
 	return (
-		<div className='relative flex h-[90vh] flex-col gap-2 rounded-lg bg-slate-100 p-4'>
+		<div className='relative flex h-[90vh] flex-col gap-2 rounded-lg bg-slate-100 p-4 dark:bg-black-400 dark:text-white '>
 			<StyledIcon
 				icon={HiXMark}
 				onClick={closeModal}
 				size='1.5rem'
-				className='absolute right-3 top-3 cursor-pointer rounded-full bg-slate-200 p-1 hover:bg-slate-300'
+				className='icons-opt absolute right-3 top-3 cursor-pointer rounded-full p-1 hover:bg-slate-300'
 			/>
 			<div className='text-center text-lg font-semibold'>{`${currentUserPost.author.username}'s Post`}</div>
 			<div className='relative flex items-center gap-4'>
@@ -81,7 +81,7 @@ const PostCommentsForm = ({ closeModal, idUserPost, renderBy }: CommentsForm) =>
 					<span className='font-semibold'>
 						<span>{currentUserPost.author.username}</span>
 					</span>
-					<span className='text-sm italic text-slate-700'>
+					<span className='text-sm italic text-slate-700 dark:text-gray-400'>
 						{formatDistanceToNowStrict(new Date(currentUserPost.createdAt))}
 					</span>
 				</div>

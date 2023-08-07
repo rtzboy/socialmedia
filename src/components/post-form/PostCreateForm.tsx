@@ -55,14 +55,14 @@ const PostCreateForm = ({ closeModal, makeFrom }: PostCreateFormProps) => {
 	return (
 		<form
 			onSubmit={handleSubmitCreate}
-			className='relative flex flex-col gap-2 rounded-lg bg-slate-100 p-4'
+			className='relative flex flex-col gap-2 rounded-lg bg-slate-100 p-4 dark:bg-black-400 dark:text-white'
 		>
 			<div className='text-center text-lg font-semibold'>Create post</div>
 			<StyledIcon
 				icon={HiXMark}
 				onClick={closeModal}
 				size='1.5rem'
-				className='absolute right-3 top-3 cursor-pointer rounded-full bg-slate-200 p-1 hover:bg-slate-300'
+				className='absolute right-3 top-3 cursor-pointer rounded-full bg-slate-200 p-1 hover:bg-slate-300 dark:bg-black-300 dark:hover:bg-emerald-950'
 			/>
 			<hr />
 			<div className='relative flex items-center gap-4'>
@@ -97,7 +97,7 @@ const PostCreateForm = ({ closeModal, makeFrom }: PostCreateFormProps) => {
 			<Button
 				disabled={postState.loading || !postState.content}
 				type='submit'
-				className='flex items-center justify-center gap-2 bg-sky-600 font-semibold text-white disabled:bg-slate-400'
+				className='flex items-center justify-center gap-2 bg-blue-600 font-semibold text-white dark:bg-emerald-300 dark:text-black-600 dark:disabled:bg-black-300'
 			>
 				{postState.loading && (
 					<StyledIcon

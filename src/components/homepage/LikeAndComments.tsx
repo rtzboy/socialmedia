@@ -14,7 +14,7 @@ const LikeAndComments = ({ likeCount, commentCount, likeStatus }: Props) => {
 		<div className='flex select-none items-center justify-between gap-1'>
 			{!!likeCount ? (
 				<div className='relative flex items-center gap-1'>
-					<StyledIcon icon={AiFillLike} size='1rem' className='text-blue-500' />
+					<StyledIcon icon={AiFillLike} size='1rem' className='text-blue-500 dark:text-[#21db9d]' />
 					<LikeCount count={likeCount} likeStatus={likeStatus} />
 				</div>
 			) : (

@@ -30,7 +30,7 @@ const Slider = ({ arrImages }: SlideProps) => {
 	}, [showImg, arrImages.length]);
 
 	return (
-		<div className='relative'>
+		<div className='relative dark:text-white'>
 			{arrImages.map(arrElm => (
 				<div
 					className={`transition-all duration-[2000ms] ${
@@ -51,7 +51,7 @@ const Slider = ({ arrImages }: SlideProps) => {
 						}}
 					/>
 					<div className='mt-8 text-center transition-all duration-1000'>
-						<h2 className='text-lg font-semibold'>{arrElm.title}</h2>
+						<h2 className='text-lg font-semibold dark:text-emerald-300'>{arrElm.title}</h2>
 						<p className='mt-2'>{arrElm.description}</p>
 					</div>
 				</div>

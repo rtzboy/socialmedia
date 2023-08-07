@@ -47,14 +47,14 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 	return (
 		<form
 			onSubmit={handleEditPost}
-			className='relative flex flex-col gap-2 rounded-lg bg-slate-100 p-4'
+			className='relative flex flex-col gap-2 rounded-lg bg-slate-100 p-4 dark:bg-black-400 dark:text-white'
 		>
 			<div className='text-center text-lg font-semibold'>Edit post</div>
 			<StyledIcon
 				icon={HiXMark}
 				onClick={closeModal}
 				size='1.5rem'
-				className='absolute right-3 top-3 cursor-pointer rounded-full bg-slate-200 p-1 hover:bg-slate-300'
+				className='icons-opt absolute right-3 top-3 cursor-pointer rounded-full p-1 hover:bg-slate-300'
 			/>
 			<div className='relative flex items-center gap-4'>
 				<img
@@ -66,7 +66,7 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 					<span className='font-semibold'>
 						<span>{currentPost.author.username}</span>
 					</span>
-					<span className='text-sm italic text-slate-700'>
+					<span className='text-sm italic text-slate-700 dark:text-gray-400'>
 						{formatDistanceToNowStrict(new Date(currentPost.createdAt))}
 					</span>
 				</div>
@@ -87,7 +87,7 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 			</div>
 			<Button
 				disabled={!value || isSaving || isDisabled}
-				className='bg-blue-500 font-semibold text-white disabled:opacity-50'
+				className='bg-blue-500 font-semibold text-white disabled:opacity-50 dark:bg-emerald-300 dark:text-black-600'
 			>
 				Save
 			</Button>

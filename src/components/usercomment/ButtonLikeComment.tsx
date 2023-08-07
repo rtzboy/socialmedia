@@ -16,20 +16,20 @@ const ButtonLikeComment = (props: Props) => {
 			<button
 				disabled={bottonDisable}
 				onClick={toggleLike}
-				className={`flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-[.95] ${
-					likeStatus ? 'text-blue-600' : ''
+				className={`flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-[.95] dark:hover:bg-emerald-950 ${
+					likeStatus ? 'text-blue-600 dark:text-emerald-300' : ''
 				}`}
 			>
 				{likeStatus ? <StyledIcon icon={AiFillLike} /> : <StyledIcon icon={AiOutlineLike} />}
 				<span>Like</span>
 			</button>
-			<span
+			<button
 				onClick={showContentOnModal}
-				className='flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200'
+				className='flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 dark:hover:bg-emerald-950'
 			>
 				<StyledIcon icon={AiOutlineComment} />
 				<span>Comment</span>
-			</span>
+			</button>
 		</div>
 	);
 };

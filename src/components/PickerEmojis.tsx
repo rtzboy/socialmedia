@@ -34,7 +34,7 @@ const PickerEmojis = ({ setContWithEmoji, top, bottom, left, right }: PickerEmoj
 				onClick={() => setOpenChooseEmoji(!openChooseEmoji)}
 				icon={BsEmojiSmile}
 				size='1.1rem'
-				className='flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-1 text-slate-800 hover:bg-slate-200'
+				className='flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-1 text-slate-800 hover:bg-slate-200 dark:text-emerald-300 dark:hover:bg-emerald-950'
 			/>
 			<span
 				className={`absolute ${top ? 'top-8' : ''} ${bottom ? 'bottom-8' : ''} ${

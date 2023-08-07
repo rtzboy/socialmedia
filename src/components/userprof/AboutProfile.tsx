@@ -22,7 +22,7 @@ const AboutProfile = ({ priv, data }: AboutProfileProps) => {
 			{priv ? (
 				<StyledIcon
 					icon={HiOutlinePencil}
-					className='absolute right-1 top-1 cursor-pointer select-none rounded-full p-1 hover:bg-slate-300'
+					className='icons-opt absolute right-1 top-1 cursor-pointer select-none rounded-full p-1 hover:bg-slate-300'
 					onClick={() =>
 						setContentModal(
 							<UpdateDetails textBio={bio} closeModal={() => setContentModal(undefined)} />

@@ -51,14 +51,14 @@ const Login = ({ setSignStatus }: LoginTypeProps) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className='flex w-full max-w-md flex-col gap-12 bg-white p-8 md:p-12'
+			className='flex w-full max-w-md flex-col gap-12 bg-white p-8 dark:bg-black-400 dark:text-white md:p-12'
 		>
 			<h2 className='text-2xl font-semibold'>
 				<span className='underline underline-offset-4'>Lo</span>gin
 			</h2>
 			<div className='relative flex flex-col gap-12'>
 				<div className='relative'>
-					<span className='absolute left-2 top-1/2 -translate-y-1/2'>
+					<span className='absolute left-2 top-1/2 -translate-y-1/2 text-blue-500 dark:text-emerald-300'>
 						<HiOutlineMail size='1.4rem' strokeWidth={1.5} />
 					</span>
 					<InputText
@@ -67,11 +67,11 @@ const Login = ({ setSignStatus }: LoginTypeProps) => {
 						type='email'
 						label='email'
 						placeholder='Email'
-						className='focus:border-b-blue-500'
+						className='bg-transparent focus:border-b-blue-500 dark:focus:border-b-emerald-300'
 					/>
 				</div>
 				<div className='relative'>
-					<span className='absolute left-2 top-1/2 -translate-y-1/2'>
+					<span className='absolute left-2 top-1/2 -translate-y-1/2 text-blue-500 dark:text-emerald-300'>
 						<HiOutlineKey size='1.4rem' strokeWidth={1.5} />
 					</span>
 					<span
@@ -90,7 +90,7 @@ const Login = ({ setSignStatus }: LoginTypeProps) => {
 						type={isVisible ? 'text' : 'password'}
 						label='password'
 						placeholder='Password'
-						className='focus:border-b-blue-500'
+						className='bg-transparent focus:border-b-blue-500 dark:focus:border-b-emerald-300'
 					/>
 				</div>
 				{!!logSignUp.error && (
@@ -103,7 +103,7 @@ const Login = ({ setSignStatus }: LoginTypeProps) => {
 				<Button
 					disabled={logSignUp.loading}
 					type='submit'
-					className='w-full bg-blue-500 text-white disabled:opacity-50'
+					className='w-full bg-blue-500 font-semibold text-white disabled:opacity-50 dark:bg-emerald-300 dark:text-black-600'
 				>
 					Login
 				</Button>
@@ -111,7 +111,7 @@ const Login = ({ setSignStatus }: LoginTypeProps) => {
 					<span className='text-sm'>
 						Dont have an account?{' '}
 						<span
-							className='cursor-pointer text-blue-500'
+							className='cursor-pointer text-blue-500 dark:text-emerald-300'
 							onClick={() => setSignStatus(prevState => !prevState)}
 						>
 							Signup

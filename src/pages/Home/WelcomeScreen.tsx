@@ -9,11 +9,11 @@ const WelcomeScreen = () => {
 	const [signStatus, setSignStatus] = useState(false);
 
 	return (
-		<section className='h-screen w-full bg-blue-100 p-4'>
+		<section className='h-screen w-full bg-blue-100 p-4 dark:bg-black-600'>
 			<div className='mx-auto w-full max-w-7xl grid-cols-2 lg:grid lg:h-full'>
 				<div className='relative flex items-center justify-center'>
 					<div className='absolute'>
-						<BlobShape className='w-[350px] md:w-[650px]' />
+						<BlobShape className='w-[350px] text-[#eff6ff] dark:text-black-400 md:w-[650px]' />
 					</div>
 					<div className='h-[400px] w-[400px]'>
 						<Slider arrImages={arrImages} />

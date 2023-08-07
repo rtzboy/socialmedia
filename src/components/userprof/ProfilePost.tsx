@@ -12,7 +12,6 @@ import PostContent from '../homepage/PostContent';
 import Modal from '../modals/Modal';
 import PostCommentsForm from '../post-form/PostCommentsForm';
 import ButtonLikeComment from '../usercomment/ButtonLikeComment';
-import CommentBox from '../usercomment/CommentBox';
 
 type TProps = {
 	userPosts: UserPostsShape;
@@ -60,7 +59,7 @@ const ProfilePost = forwardRef<HTMLElement, TProps>(({ userPosts }: TProps, ref)
 					<span className='font-semibold'>
 						<NavLink to={`/profile/${userPosts.author._id}`}>{userPosts.author.username}</NavLink>
 					</span>
-					<span className='text-sm italic text-slate-700'>
+					<span className='text-sm italic text-slate-700 dark:text-gray-400'>
 						{formatDistanceToNowStrict(new Date(userPosts.createdAt))}
 						{!isEdited && <span> &#x2027; Edited</span>}
 					</span>
@@ -89,16 +88,18 @@ const ProfilePost = forwardRef<HTMLElement, TProps>(({ userPosts }: TProps, ref)
 					)
 				}
 			/>
-			{allowOpts && <CommentBox idPost={userPosts._id} insertedFrom='ProfilePost' />}
+			{/* {allowOpts && <CommentBox idPost={userPosts._id} insertedFrom='ProfilePost' />} */}
 		</div>
 	);
 
 	const content = ref ? (
-		<article ref={ref} className='rounded-lg bg-slate-100 p-4'>
+		<article ref={ref} className='rounded-lg bg-slate-100 p-4 dark:bg-black-400 dark:text-white'>
 			{profilePost}
 		</article>
 	) : (
-		<article className='rounded-lg bg-slate-100 p-4'>{profilePost}</article>
+		<article className='rounded-lg bg-slate-100 p-4 dark:bg-black-400 dark:text-white'>
+			{profilePost}
+		</article>
 	);
 
 	return content;

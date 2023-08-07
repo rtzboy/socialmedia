@@ -58,14 +58,14 @@ const CommentBox = ({ maxHeight, idPost, insertedFrom }: CommentBoxProps) => {
 	};
 
 	return (
-		<div className='flex gap-2'>
+		<div className='flex gap-2 dark:bg-black-400'>
 			<div>
 				<img src={profilePic} alt='' className='h-8 w-8 rounded-full object-cover' />
 			</div>
 			<div
 				ref={divRef}
 				onClick={() => setShowBtns(true)}
-				className='flex-1 rounded-xl border bg-white'
+				className='flex-1 rounded-xl border bg-white dark:border-none dark:bg-black-300'
 			>
 				<TextAreaAuto
 					textareaRef={textAreaRef}
@@ -93,7 +93,7 @@ const CommentBox = ({ maxHeight, idPost, insertedFrom }: CommentBoxProps) => {
 						}}
 						icon={AiOutlineSend}
 						size='1.2rem'
-						className='flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-slate-800 hover:bg-slate-200'
+						className='icons-opt flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-slate-800 hover:bg-slate-200'
 					/>
 				</div>
 			</div>

@@ -36,7 +36,7 @@ const HeaderProfile = ({ userHeader, postCount, followStatus, privProfile }: Pro
 	};
 
 	return (
-		<div className='relative overflow-hidden rounded-lg bg-slate-100'>
+		<div className='relative overflow-hidden rounded-lg bg-slate-100 dark:bg-black-400 dark:text-white'>
 			<Modal>{contentModal}</Modal>
 			<div
 				style={{
@@ -62,7 +62,7 @@ const HeaderProfile = ({ userHeader, postCount, followStatus, privProfile }: Pro
 									)
 								}
 								icon={FiCamera}
-								className='absolute bottom-1 right-1 cursor-pointer rounded-full bg-slate-200 p-2'
+								className='icons-opt absolute bottom-1 right-1 cursor-pointer rounded-full bg-slate-200 p-2 shadow-out dark:bg-black-400 dark:shadow-black-600'
 								stroke='stroke-[1.5]'
 							/>
 						)}

@@ -60,14 +60,14 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 	return (
 		<form
 			onSubmit={handleSignupSubmit}
-			className='flex w-full max-w-md flex-col gap-8 bg-white p-8 md:p-12'
+			className='flex w-full max-w-md flex-col gap-8 bg-white p-8 dark:bg-black-400 dark:text-white md:p-12'
 		>
 			<h2 className='text-2xl font-semibold'>
 				<span className='underline underline-offset-4'>Si</span>gnup
 			</h2>
 			<div className='relative flex flex-col gap-8'>
 				<div className='relative'>
-					<span className='absolute left-2 top-1/2 -translate-y-1/2'>
+					<span className='absolute left-2 top-1/2 -translate-y-1/2 text-blue-500 dark:text-emerald-300'>
 						<HiOutlineUserCircle size='1.4rem' strokeWidth={1.5} />
 					</span>
 					<InputText
@@ -76,11 +76,11 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 						type='text'
 						label='username'
 						placeholder='Username'
-						className='focus:border-b-blue-500'
+						className='bg-transparent focus:border-b-blue-500 dark:focus:border-b-emerald-300'
 					/>
 				</div>
 				<div className='relative'>
-					<span className='absolute left-2 top-1/2 -translate-y-1/2'>
+					<span className='absolute left-2 top-1/2 -translate-y-1/2 text-blue-500 dark:text-emerald-300'>
 						<HiOutlineMail size='1.4rem' strokeWidth={1.5} />
 					</span>
 					<InputText
@@ -89,14 +89,14 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 						type='email'
 						label='email'
 						placeholder='Email'
-						className='focus:border-b-blue-500'
+						className='bg-transparent focus:border-b-blue-500 dark:focus:border-b-emerald-300'
 					/>
 				</div>
 				<div className='relative'>
 					<StyledIcon
 						icon={HiOutlineKey}
 						size='1.4rem'
-						className='absolute left-2 top-1/2 -translate-y-1/2'
+						className='absolute left-2 top-1/2 -translate-y-1/2 text-blue-500 dark:text-emerald-300'
 						stroke='stroke-[1.5]'
 					/>
 					<span
@@ -115,12 +115,12 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 						type={isVisible ? 'text' : 'password'}
 						label='password'
 						placeholder='Password'
-						className='focus:border-b-blue-500'
+						className='bg-transparent focus:border-b-blue-500 dark:focus:border-b-emerald-300'
 					/>
 				</div>
 				<div>
 					<div className='relative flex justify-between pt-2'>
-						<span className='absolute -top-4 text-[15px] font-semibold text-black'>Gender</span>
+						<span className='text-black absolute -top-4 text-[15px] font-semibold'>Gender</span>
 						<InputRadioBtn
 							onChange={evt => {
 								setGender(evt.target.value);
@@ -153,7 +153,7 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 								type='text'
 								name='custom-gender'
 								placeholder='Gender'
-								className='focus: w-full border-b-2 border-b-gray-300 px-2 py-1 outline-none transition-all focus:border-b-blue-500'
+								className='w-full border-b-2 border-b-gray-300 bg-transparent px-2 py-1 outline-none transition-all focus:border-b-blue-500 dark:focus:border-b-emerald-300'
 							/>
 						</div>
 					)}
@@ -168,7 +168,7 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 				<Button
 					disabled={logSignUp.loading}
 					type='submit'
-					className='w-full bg-blue-500 text-white disabled:opacity-50'
+					className='w-full bg-blue-500 text-white disabled:opacity-50 dark:bg-emerald-300 dark:text-black-600'
 				>
 					Signup
 				</Button>
@@ -176,7 +176,7 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 					<span className='text-sm'>
 						Already have an account?{' '}
 						<span
-							className='cursor-pointer text-blue-500'
+							className='cursor-pointer text-blue-500 dark:text-emerald-300'
 							onClick={() => setSignStatus(prevState => !prevState)}
 						>
 							Login

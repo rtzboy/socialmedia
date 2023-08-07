@@ -2,9 +2,11 @@ import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { PrivateRoutes, PublicRoutes } from './constants/routes';
-import { createUserHeader } from './features/user/user-header-slice';
+import { resetUserAuth } from './features/user/user-auth-slice';
+import { createUserHeader, deleteUserHeader } from './features/user/user-header-slice';
 import { AuthGuard } from './guards/auth.guard';
 import { callUserHeader } from './lib/api/user/user.api';
+import useThemeDisplay from './lib/hooks/useDisplayTheme';
 import HomeScreen from './pages/Home/HomeScreen';
 import WelcomeScreen from './pages/Home/WelcomeScreen';
 import UserProfile from './pages/Profiles/UserProfile';
@@ -12,14 +14,16 @@ import UserProfile from './pages/Profiles/UserProfile';
 const App = () => {
 	const { token, id } = useAppSelector(state => state.userAuth);
 	const dispatchApp = useAppDispatch();
+	useThemeDisplay();
 
 	const setUserInfoGlobal = async () => {
-		const { userHeader, error: err } = await callUserHeader(token, id);
-		if (userHeader !== null) {
+		const { userHeader, error } = await callUserHeader(token, id);
+		if (userHeader) {
 			dispatchApp(createUserHeader(userHeader));
-		} else {
-			// TODO: clear auth local past "x remember days"
-			console.log(err);
+		}
+		if (error === 'Request is not authorized') {
+			dispatchApp(resetUserAuth());
+			dispatchApp(deleteUserHeader());
 		}
 	};
 

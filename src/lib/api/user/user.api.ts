@@ -8,8 +8,9 @@ const callUserHeader = async (token: string, idParam?: string) => {
 		}
 		// check axios error result
 		return { result: null, error: 'error' };
-	} catch (error) {
-		return { result: null, error: 'Something went wrong' };
+	} catch (error: any) {
+		console.log(error.response.data);
+		return { result: null, error: error.response.data.error };
 	}
 };
 

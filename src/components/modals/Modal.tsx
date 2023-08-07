@@ -16,7 +16,7 @@ const Modal = ({ children }: ModalType) => {
 	if (!children) return null;
 
 	return createPortal(
-		<div className='fixed inset-0 z-[9999] flex h-screen w-screen items-center justify-center bg-slate-900/50'>
+		<div className='fixed inset-0 z-[9999] flex h-screen w-screen items-center justify-center bg-slate-900/50 dark:bg-black-600/70'>
 			<div className='w-full max-w-xl'>{children}</div>
 		</div>,
 		document.querySelector<HTMLDivElement>('#modal')!

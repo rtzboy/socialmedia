@@ -3,24 +3,44 @@
 @tailwind utilities;
 
 body {
-	@apply bg-slate-300;
+	@apply bg-slate-300 transition-all duration-300 dark:bg-black-600;
+}
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+@layer components {
+	.post-opt {
+		@apply flex cursor-pointer items-center gap-2 rounded-lg py-1 pl-2 text-center transition-all duration-300 hover:bg-slate-300 dark:hover:bg-emerald-950;
+	}
+
+	.icons-opt {
+		@apply dark:text-white dark:hover:bg-emerald-950;
+	}
 }
 
 .EmojiPickerReact li.epr-emoji-category > .epr-emoji-category-label {
 	@apply text-sm font-normal;
+	@apply dark:bg-[#1c1c1c];
 }
 
-.EmojiPickerReact {
+.EmojiPickerReact.epr-main {
 	--epr-emoji-size: 25px;
 	--epr-horizontal-padding: 1px;
 	--epr-header-padding: 5px var(--epr-horizontal-padding);
 	--epr-category-label-height: 20px;
-	--epr-text-color: #475569;
+	@apply dark:border-black-300 dark:bg-[#1c1c1c];
+}
+
+.EmojiPickerReact button.epr-emoji .epr-emoji-img {
+	@apply dark:hover:bg-black-300;
 }
 
 .skeleton {
-	background: #eee;
-	background: linear-gradient(110deg, #e2e8f0 8%, #f5f5f5 18%, #e2e8f0 33%);
+	@apply bg-gradient-to-r from-slate-100 from-[8%] via-slate-300 via-[18%] to-slate-200 to-[33%] dark:from-black-400 dark:via-black-300 dark:to-black-300;
 	background-size: 200% 100%;
 	animation: 1.5s shine linear infinite;
 }
@@ -44,10 +64,4 @@ body {
 	@apply bg-slate-500;
 	@apply rounded-xl;
 	@apply border-4 border-slate-400;
-}
-
-@layer base {
-	html {
-		scroll-behavior: smooth;
-	}
 }

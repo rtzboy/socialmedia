@@ -20,7 +20,7 @@ const UserComment = ({ comment, user, createdAt }: UserPostsComment) => {
 	useContainNode(divRef.current, openOptsComment, setOpenOptsComment);
 
 	return (
-		<div className=''>
+		<div>
 			{isEditing ? (
 				<div>
 					<CommentEditBox maxHeight='max-h-[400px]' commentText={comment} />
@@ -43,9 +43,11 @@ const UserComment = ({ comment, user, createdAt }: UserPostsComment) => {
 					/>
 					<div className='min-w-[170px] max-w-[460px]'>
 						<div className='flex items-center gap-2'>
-							<div className='flex w-full flex-col rounded-xl bg-slate-200 px-3 py-1'>
+							<div className='flex w-full flex-col rounded-xl bg-slate-200 px-3 py-1 dark:bg-black-300 dark:text-white'>
 								<span className='font-semibold'>{user.username}</span>
-								<span className='break-words leading-5 text-slate-900'>{comment}</span>
+								<span className='break-words leading-5 text-slate-900 dark:text-white'>
+									{comment}
+								</span>
 							</div>
 							<div ref={divRef} className='relative select-none'>
 								<StyledIcon
@@ -63,10 +65,10 @@ const UserComment = ({ comment, user, createdAt }: UserPostsComment) => {
 								</div>
 							</div>
 						</div>
-						<div className='flex gap-4 px-3 text-xs font-semibold text-slate-600'>
+						<div className='flex gap-4 px-3 text-xs font-semibold text-slate-600 dark:text-gray-300'>
 							<span className='cursor-pointer hover:underline'>Like</span>
 							<span className='cursor-pointer hover:underline'>Reply</span>
-							<span className='font-normal text-slate-700'>
+							<span className='font-normal text-slate-700 dark:text-gray-300'>
 								{formatDistanceToNowStrict(new Date(createdAt))}
 							</span>
 						</div>
