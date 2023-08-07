@@ -1,11 +1,15 @@
 import { formatDistanceToNowStrict } from 'date-fns';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiXMark } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { toggleLikeUserPost } from '../../features/post/user-posts-slice';
-import { toggleLikeProfilePost } from '../../features/user/user-profile-slice';
+import { toggleLikeUserPost, updateSinglePost } from '../../features/post/user-posts-slice';
+import {
+	toggleLikeProfilePost,
+	updateProfSinglePost
+} from '../../features/user/user-profile-slice';
 import { updatelikeCount } from '../../lib/api/posts/post.api';
+import httpAxiosService from '../../lib/helpers/axiosService';
 import LikeAndComments from '../homepage/LikeAndComments';
 import PostContent from '../homepage/PostContent';
 import StyledIcon from '../icons/StyledIcon';
@@ -59,6 +63,25 @@ const PostCommentsForm = ({ closeModal, idUserPost, renderBy }: CommentsForm) =>
 				setLikeDisable(false);
 			}, 400);
 			toast.error('Something wrong happened!', { duration: 3500 });
+		}
+	};
+
+	useEffect(() => {
+		handleCallUpdatePost();
+	}, []);
+
+	const handleCallUpdatePost = async () => {
+		try {
+			const result = await httpAxiosService(token).get(`/posts/post/${idUserPost}`);
+			if (result.status === 200) {
+				const { likes, likeCount, comments } = result.data.findPost;
+				if (renderBy === 'UserPost')
+					dispatchApp(updateSinglePost({ idPost: idUserPost, likes, likeCount, comments }));
+				if (renderBy === 'ProfilePost')
+					dispatchApp(updateProfSinglePost({ idPost: idUserPost, likes, likeCount, comments }));
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 

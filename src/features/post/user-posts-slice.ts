@@ -36,11 +36,22 @@ export const userPostsSlice = createSlice({
 				state[idxPost].likes.push(action.payload.userId);
 				state[idxPost].likeCount++;
 			}
+		},
+		updateSinglePost: (state, action) => {
+			let indxPost = state!.findIndex(({ _id }) => _id === action.payload.idPost);
+			state![indxPost].likeCount = action.payload.likeCount;
+			state![indxPost].likes = action.payload.likes;
+			state![indxPost].comments = action.payload.comments;
 		}
 	}
 });
 
-export const { setUserPosts, createUserPost, toggleLikeUserPost, insertCommentToPost } =
-	userPostsSlice.actions;
+export const {
+	setUserPosts,
+	createUserPost,
+	toggleLikeUserPost,
+	insertCommentToPost,
+	updateSinglePost
+} = userPostsSlice.actions;
 
 export default userPostsSlice.reducer;

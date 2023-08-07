@@ -50,6 +50,12 @@ export const userProfileSlice = createSlice({
 				...state.userProfilePosts[idxPost].comments
 			];
 		},
+		updateProfSinglePost: (state, action) => {
+			let indxPost = state!.userProfilePosts.findIndex(({ _id }) => _id === action.payload.idPost);
+			state!.userProfilePosts[indxPost].likeCount = action.payload.likeCount;
+			state!.userProfilePosts[indxPost].likes = action.payload.likes;
+			state!.userProfilePosts[indxPost].comments = action.payload.comments;
+		},
 		toggleLikeProfilePost: (
 			state,
 			action: PayloadAction<{ idPost: string; likeState: boolean; userId: string }>
@@ -78,6 +84,7 @@ export const {
 	updateProfPicture,
 	updateProfDetails,
 	toggleLikeProfilePost,
+	updateProfSinglePost,
 	infiniteScrollPost
 } = userProfileSlice.actions;
 
