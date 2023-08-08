@@ -1,5 +1,6 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 import { FormEvent, useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { HiXMark } from 'react-icons/hi2';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { updateProfPost } from '../../features/user/user-profile-slice';
@@ -31,6 +32,7 @@ const PostEditForm = ({ closeModal, currentPost }: PostEditFormProps) => {
 		const success = await editPost(token, removeExtraSpaces(value), currentPost._id);
 		if (success) {
 			dispatchApp(updateProfPost({ idPost: currentPost._id, content: removeExtraSpaces(value) }));
+			toast.success('Successfully edited!', { duration: 3500 });
 			setIsSaving(false);
 			closeModal();
 		}
