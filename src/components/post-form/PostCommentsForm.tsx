@@ -126,7 +126,12 @@ const PostCommentsForm = ({ closeModal, idUserPost, renderBy }: CommentsForm) =>
 			<div className='invisible h-full overflow-auto transition-all hover:visible focus:visible'>
 				<div className='visible relative flex flex-col gap-2'>
 					{currentUserPost.comments.map(comment => (
-						<UserComment key={comment._id} {...comment} />
+						<UserComment
+							key={comment._id}
+							commentDetails={comment}
+							idPost={idUserPost}
+							deletedFrom={renderBy}
+						/>
 					))}
 				</div>
 			</div>

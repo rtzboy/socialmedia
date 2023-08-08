@@ -71,6 +71,12 @@ export const userProfileSlice = createSlice({
 				state.userProfilePosts[idxPost].likes.push(action.payload.userId);
 				state.userProfilePosts[idxPost].likeCount++;
 			}
+		},
+		rmvCommentProfPost: (state, action) => {
+			let indxPost = state!.userProfilePosts.findIndex(({ _id }) => _id === action.payload.idPost);
+			state!.userProfilePosts[indxPost].comments = state!.userProfilePosts[
+				indxPost
+			].comments.filter(({ _id }) => _id !== action.payload.idComment);
 		}
 	}
 });
@@ -85,6 +91,7 @@ export const {
 	updateProfDetails,
 	toggleLikeProfilePost,
 	updateProfSinglePost,
+	rmvCommentProfPost,
 	infiniteScrollPost
 } = userProfileSlice.actions;
 

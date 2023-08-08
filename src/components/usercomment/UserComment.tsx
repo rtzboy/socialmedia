@@ -9,8 +9,15 @@ import CommentEditBox from './CommentEditBox';
 import PrivateOpts from './PrivateOpts';
 import PublicOpts from './PublicOpts';
 
-const UserComment = ({ comment, user, createdAt }: UserPostsComment) => {
+type UserCommmentType = {
+	commentDetails: UserPostsComment;
+	idPost: string;
+	deletedFrom: string;
+};
+
+const UserComment = ({ commentDetails, idPost, deletedFrom }: UserCommmentType) => {
 	const { _id: idUserLocal } = useAppSelector(state => state.userHeader);
+	const { _id, comment, createdAt, user } = commentDetails;
 	const [openOptsComment, setOpenOptsComment] = useState(false);
 	const divRef = useRef<HTMLDivElement>(null);
 	const [isEditing, setIsEditing] = useState(false);
@@ -23,12 +30,16 @@ const UserComment = ({ comment, user, createdAt }: UserPostsComment) => {
 		<div>
 			{isEditing ? (
 				<div>
-					<CommentEditBox maxHeight='max-h-[400px]' commentText={comment} />
+					<CommentEditBox
+						setIsEditing={setIsEditing}
+						maxHeight='max-h-[400px]'
+						commentText={comment}
+					/>
 					<div className='pl-12 text-xs'>
 						Esc to{' '}
 						<span
 							onClick={() => setIsEditing(false)}
-							className='cursor-pointer text-blue-600 hover:underline'
+							className='cursor-pointer text-blue-600 hover:underline dark:text-emerald-300'
 						>
 							cancel
 						</span>
@@ -53,15 +64,20 @@ const UserComment = ({ comment, user, createdAt }: UserPostsComment) => {
 								<StyledIcon
 									onClick={() => setOpenOptsComment(!openOptsComment)}
 									icon={BsThreeDots}
-									className='block cursor-pointer rounded-full p-[4px] text-slate-600 opacity-0 transition-all duration-300 hover:bg-slate-200 group-hover:opacity-100'
+									className='icons-opt block cursor-pointer rounded-full p-[4px] text-slate-600 opacity-0 transition-all duration-300 hover:bg-slate-200 group-hover:opacity-100'
 								/>
 								<div
 									onClick={() => setOpenOptsComment(false)}
-									className={`absolute right-2 top-8 z-30 h-auto w-[180px] overflow-hidden rounded-lg bg-slate-100 p-1 shadow-out transition-all duration-300 ${
+									className={`absolute right-2 top-8 z-30 h-auto w-[180px] overflow-hidden rounded-lg bg-slate-100 p-1 shadow-out transition-all duration-300 dark:bg-black-400 dark:shadow-black-600 ${
 										openOptsComment ? 'visible opacity-100' : 'invisible opacity-0'
 									}`}
 								>
-									<Opts setIsEditing={setIsEditing} />
+									<Opts
+										setIsEditing={setIsEditing}
+										idComment={_id}
+										idPost={idPost}
+										deletedFrom={deletedFrom}
+									/>
 								</div>
 							</div>
 						</div>

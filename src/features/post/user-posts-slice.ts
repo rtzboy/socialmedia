@@ -37,6 +37,12 @@ export const userPostsSlice = createSlice({
 				state[idxPost].likeCount++;
 			}
 		},
+		rmvCommentOnPost: (state, action) => {
+			let indxPost = state!.findIndex(({ _id }) => _id === action.payload.idPost);
+			state![indxPost].comments = state![indxPost].comments.filter(
+				({ _id }) => _id !== action.payload.idComment
+			);
+		},
 		updateSinglePost: (state, action) => {
 			let indxPost = state!.findIndex(({ _id }) => _id === action.payload.idPost);
 			state![indxPost].likeCount = action.payload.likeCount;
@@ -50,6 +56,7 @@ export const {
 	setUserPosts,
 	createUserPost,
 	toggleLikeUserPost,
+	rmvCommentOnPost,
 	insertCommentToPost,
 	updateSinglePost
 } = userPostsSlice.actions;

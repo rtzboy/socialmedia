@@ -8,9 +8,10 @@ import StyledIcon from '../icons/StyledIcon';
 type CommentEditBoxProps = {
 	maxHeight?: string;
 	commentText?: string;
+	setIsEditing: (param: boolean) => void;
 };
 
-const CommentEditBox = ({ maxHeight, commentText }: CommentEditBoxProps) => {
+const CommentEditBox = ({ maxHeight, commentText, setIsEditing }: CommentEditBoxProps) => {
 	const { profilePic } = useAppSelector(state => state.userHeader);
 	const [textComment, setTextComment] = useState(commentText || '');
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -25,11 +26,16 @@ const CommentEditBox = ({ maxHeight, commentText }: CommentEditBoxProps) => {
 	}, []);
 
 	return (
-		<div className='flex gap-2'>
+		<div
+			onKeyUp={evt => {
+				if (evt.key === 'Escape') setIsEditing(false);
+			}}
+			className='flex gap-2'
+		>
 			<div>
 				<img src={profilePic} alt='' className='h-8 w-8 rounded-full object-cover' />
 			</div>
-			<div className='flex-1 rounded-xl border bg-white'>
+			<div className='flex-1 rounded-xl border bg-white dark:border-none dark:bg-black-300'>
 				<TextAreaAuto
 					textareaRef={textAreaRef}
 					placeholder='Write a comment...'
@@ -44,7 +50,7 @@ const CommentEditBox = ({ maxHeight, commentText }: CommentEditBoxProps) => {
 						onClick={() => console.log(textComment)}
 						icon={AiOutlineSend}
 						size='1.2rem'
-						className='flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-slate-800 hover:bg-slate-200'
+						className='icons-opt flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-slate-800 hover:bg-slate-200'
 					/>
 				</div>
 			</div>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { Toaster } from 'react-hot-toast';
 
 interface ModalType {
 	closeModal?: () => void;
@@ -17,6 +18,7 @@ const Modal = ({ children }: ModalType) => {
 
 	return createPortal(
 		<div className='fixed inset-0 z-[9999] flex h-screen w-screen items-center justify-center bg-slate-900/50 dark:bg-black-600/70'>
+			<Toaster />
 			<div className='w-full max-w-xl'>{children}</div>
 		</div>,
 		document.querySelector<HTMLDivElement>('#modal')!
