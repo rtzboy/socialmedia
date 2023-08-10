@@ -19,8 +19,8 @@ const UserComment = ({ commentDetails, idPost, deletedFrom }: UserCommmentType) 
 	const { _id: idUserLocal } = useAppSelector(state => state.userHeader);
 	const { _id, comment, createdAt, user } = commentDetails;
 	const [openOptsComment, setOpenOptsComment] = useState(false);
-	const divRef = useRef<HTMLDivElement>(null);
 	const [isEditing, setIsEditing] = useState(false);
+	const divRef = useRef<HTMLDivElement>(null);
 
 	const Opts = idUserLocal === user._id ? PrivateOpts : PublicOpts;
 
@@ -34,6 +34,8 @@ const UserComment = ({ commentDetails, idPost, deletedFrom }: UserCommmentType) 
 						setIsEditing={setIsEditing}
 						maxHeight='max-h-[400px]'
 						commentText={comment}
+						idComment={_id}
+						idPost={idPost}
 					/>
 					<div className='pl-12 text-xs'>
 						Esc to{' '}
