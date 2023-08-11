@@ -1,6 +1,5 @@
 import CreatePost from '../../components/homepage/CreatePost';
 import NewFeeds from '../../components/homepage/NewFeeds';
-import FriendList from './FriendList';
 
 const HomeScreen = () => {
 	return (
@@ -9,7 +8,6 @@ const HomeScreen = () => {
 				<CreatePost makeFrom='Home' />
 				<NewFeeds />
 			</div>
-			<FriendList />
 		</section>
 	);
 };
