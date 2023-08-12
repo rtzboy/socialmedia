@@ -6,7 +6,6 @@ const SkeletonChat = () => {
 		<ul className='flex flex-col gap-2 p-4'>
 			<li className='mb-2 flex items-center gap-2'>
 				<StyledIcon
-					onClick={() => {}}
 					icon={BsArrowLeft}
 					className='cursor-pointer rounded-full p-1 hover:bg-slate-200 dark:hover:bg-emerald-950'
 				/>

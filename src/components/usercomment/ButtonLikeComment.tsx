@@ -11,16 +11,16 @@ type Props = {
 const ButtonLikeComment = (props: Props) => {
 	const { likeStatus, bottonDisable, toggleLike, showContentOnModal } = props;
 
+	let isLiked = likeStatus ? 'text-blue-600 dark:text-emerald-300' : '';
+
 	return (
 		<div className='flex select-none'>
 			<button
 				disabled={bottonDisable}
 				onClick={toggleLike}
-				className={`flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-[.95] dark:hover:bg-emerald-950 ${
-					likeStatus ? 'text-blue-600 dark:text-emerald-300' : ''
-				}`}
+				className={`flex flex-grow cursor-pointer items-center justify-center gap-1 rounded-lg py-1 text-center transition-all hover:bg-slate-200 active:scale-[.95] dark:hover:bg-emerald-950 ${isLiked}`}
 			>
-				{likeStatus ? <StyledIcon icon={AiFillLike} /> : <StyledIcon icon={AiOutlineLike} />}
+				<StyledIcon icon={likeStatus ? AiFillLike : AiOutlineLike} />
 				<span>Like</span>
 			</button>
 			<button
