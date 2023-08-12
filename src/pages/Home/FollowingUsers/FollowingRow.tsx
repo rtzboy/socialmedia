@@ -38,9 +38,9 @@ type FollowingUserT = {
 };
 
 const FollowingUser = ({ user, onlineUsers }: FollowingUserT) => {
-	let test = onlineUsers?.some(({ userId }) => userId === user._id);
+	let isActive = onlineUsers?.some(({ userId }) => userId === user._id);
 
-	let activeUser = test ? 'bg-green-400 shadow-green-500' : 'bg-gray-300 shadow-gray-500';
+	let activeUser = isActive ? 'bg-green-400 shadow-green-500' : 'bg-gray-300 shadow-gray-500';
 
 	return (
 		<li className='flex cursor-pointer items-center gap-2 rounded-lg p-2 transition-all hover:bg-slate-300 dark:hover:bg-black-300'>
