@@ -18,7 +18,7 @@ body {
 	}
 
 	.icons-opt {
-		@apply dark:text-white dark:hover:bg-emerald-950;
+		@apply cursor-pointer rounded-full p-0.5 hover:bg-slate-300 dark:text-white dark:hover:bg-emerald-950;
 	}
 }
 

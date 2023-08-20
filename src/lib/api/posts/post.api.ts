@@ -66,9 +66,9 @@ const getNewFeeds = async (token: string) => {
 			return { success: true, feeds: response.data.feeds };
 		}
 		if (response.status === 204) {
-			return { success: false, feeds: null, msg: 'Not following anyone' };
+			return { success: true, feeds: [], msg: 'Not following anyone' };
 		}
-		return { success: false, feeds: null, msg: 'Something wrong happened!' };
+		return { success: false, feeds: [], msg: 'Something wrong happened!' };
 	} catch (err: any) {
 		return { success: false, msg: err.message };
 	}

@@ -42,7 +42,10 @@ const NewFeeds = () => {
 
 export const DivMessages = ({ ...props }) => {
 	return (
-		<div {...props} className='rounded-md bg-slate-100 p-4 italic tracking-wide text-slate-700' />
+		<div
+			{...props}
+			className='rounded-md bg-slate-100 p-4 italic tracking-wide text-slate-700 dark:bg-black-400 dark:text-white'
+		/>
 	);
 };
 

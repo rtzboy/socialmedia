@@ -44,7 +44,6 @@ const CommentEditBox = ({
 				idComment
 			});
 			if (response.status === 200) {
-				console.log(response.data);
 				dispatchApp(updateCommentOnPost({ idPost, idComment, textComment }));
 				setIsEditing(false);
 			}
