@@ -12,6 +12,10 @@ export default {
 					400: '#1c1c1c',
 					600: '#121212'
 				}
+			},
+			transitionProperty: {
+				width: 'width',
+				height: 'height'
 			}
 		}
 	},

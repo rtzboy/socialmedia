@@ -21,12 +21,9 @@ const NewFeeds = () => {
 	};
 
 	useEffect(() => {
-		// TODO: this should be added?
-		// if (userPosts !== null) return;
 		callUserFeeds();
 	}, []);
 
-	// TODO: when userPosts is []
 	if (userPosts === null) return <SkeletonPost />;
 	if (!following.length) return <DivMessages children='Explore, follow friends' />;
 
