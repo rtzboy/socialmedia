@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import SkeletonPost from '../../components/skeletons/SkeletonPost';
+import SkeletonProfile from '../../components/skeletons/SkeletonProfile';
 import AboutProfile from '../../components/userprof/AboutProfile';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
 import ProfilePost from '../../components/userprof/ProfilePost';
 import { POST_PER_SCROLL } from '../../constants/string_helpers';
-import { infiniteScrollPost, setGeneralInfo } from '../../features/user/user-profile-slice';
+import {
+	infiniteScrollPost,
+	resetInfoProfile,
+	setGeneralInfo
+} from '../../features/user/user-profile-slice';
 import httpAxiosService from '../../lib/helpers/axiosService';
 
 type Props = {
@@ -43,6 +48,7 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 	// TODO: move call to an api file
 	const callUserProfile = async (token: string, idUserParam?: string) => {
 		setIsLoading(true);
+		dispatchApp(resetInfoProfile());
 		const { data, status } = await httpAxiosService(token).get(
 			`/userpriv/pagprofile/${idUserParam}?pagination=${page}`
 		);
@@ -59,7 +65,7 @@ const UserPubProfile = ({ idUrl, token }: Props) => {
 		callUserProfile(token, idUrl);
 	}, [idUrl, page]);
 
-	if (!userPublicProfile) return <div>Loading</div>;
+	if (userPublicProfile === null) return <SkeletonProfile />;
 
 	const contentProfilePost = userPublicProfile?.userProfilePosts.map((profilePost, idx) => {
 		if (userPublicProfile.userProfilePosts.length === idx + 1) {

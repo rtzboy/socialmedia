@@ -2,11 +2,16 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import CreatePost from '../../components/homepage/CreatePost';
 import SkeletonPost from '../../components/skeletons/SkeletonPost';
+import SkeletonProfile from '../../components/skeletons/SkeletonProfile';
 import AboutProfile from '../../components/userprof/AboutProfile';
 import HeaderProfile from '../../components/userprof/HeaderProfile';
 import ProfilePost from '../../components/userprof/ProfilePost';
 import { POST_PER_SCROLL } from '../../constants/string_helpers';
-import { infiniteScrollPost, setGeneralInfo } from '../../features/user/user-profile-slice';
+import {
+	infiniteScrollPost,
+	resetInfoProfile,
+	setGeneralInfo
+} from '../../features/user/user-profile-slice';
 import httpAxiosService from '../../lib/helpers/axiosService';
 
 const UserPrivProfile = () => {
@@ -38,6 +43,7 @@ const UserPrivProfile = () => {
 
 	const callPrivatePosts = async (token: string, idUserParam?: string) => {
 		setIsLoading(true);
+		dispatchApp(resetInfoProfile());
 		const { data, status } = await httpAxiosService(token).get(
 			`/userpriv/pagprofile/${idUserParam}?pagination=${page}`
 		);
@@ -55,12 +61,7 @@ const UserPrivProfile = () => {
 		callPrivatePosts(token, id);
 	}, [page]);
 
-	if (information === null)
-		return (
-			<div className='mx-auto flex max-w-3xl flex-col gap-4 p-4'>
-				<SkeletonPost />
-			</div>
-		);
+	if (information === null) return <SkeletonProfile />;
 
 	const contentProfilePost = information?.userProfilePosts.map((profilePost, idx) => {
 		if (information.userProfilePosts.length === idx + 1) {

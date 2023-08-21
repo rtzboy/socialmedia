@@ -8,6 +8,7 @@ export const userProfileSlice = createSlice({
 	name: 'userprofile',
 	initialState: null as InitGeneralInfo,
 	reducers: {
+		resetInfoProfile: () => null,
 		setGeneralInfo: (_, action: PayloadAction<GeneralUserInfo>) => {
 			return action.payload;
 		},
@@ -82,6 +83,7 @@ export const userProfileSlice = createSlice({
 });
 
 export const {
+	resetInfoProfile,
 	setGeneralInfo,
 	addCommentProfPost,
 	createProfPost,
