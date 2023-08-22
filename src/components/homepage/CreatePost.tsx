@@ -25,7 +25,7 @@ const CreatePost = ({ makeFrom }: { makeFrom: 'Home' | 'Profile' }) => {
 					className='relative h-10 flex-1 rounded-2xl bg-white px-4 transition-all hover:cursor-pointer hover:bg-slate-200 dark:bg-black-300'
 				>
 					<span className='absolute top-1/2 -translate-y-1/2 bg-transparent italic text-slate-500 dark:text-white'>
-						Write somenthing...
+						Write something...
 					</span>
 				</span>
 			</div>
