@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { BiLogOut, BiMoon } from 'react-icons/bi';
 import { CgProfile } from 'react-icons/cg';
+import { IoIosNotificationsOutline } from 'react-icons/io';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { mainlogo } from '../../assets';
@@ -20,15 +21,17 @@ const Navbar = () => {
 
 	useContainNode(liContainerRef.current, isOpen, setIsOpen);
 
+	let openOpts = isOpen ? 'visible opacity-100' : 'invisible opacity-0';
+
 	return (
-		<div className='h-[70px] w-full'>
-			<nav className='fixed z-50 h-[70px] w-full bg-slate-100 shadow-lg shadow-slate-300 dark:bg-black-400 dark:shadow-black-600'>
+		<nav className='h-[70px] w-full'>
+			<div className='fixed z-50 h-[70px] w-full bg-slate-100 shadow-lg shadow-slate-300 dark:bg-black-400 dark:shadow-black-600'>
 				<div className='mx-auto flex h-full w-full max-w-7xl items-center justify-between px-4'>
 					<ul className='flex items-center gap-4'>
 						<li>
 							<NavLink to='/home' className='flex items-center gap-2'>
 								<img src={mainlogo} alt='mainlogo' className='w-10' />
-								<span className='text-xl font-semibold tracking-wide text-blue-500 dark:text-emerald-300'>
+								<span className='hidden text-xl font-semibold tracking-wide text-blue-500 dark:text-emerald-300 sm:block'>
 									SocialPhere
 								</span>
 							</NavLink>
@@ -38,6 +41,13 @@ const Navbar = () => {
 						</li>
 					</ul>
 					<ul className='flex items-center gap-4 dark:text-white'>
+						<li>
+							<StyledIcon
+								icon={IoIosNotificationsOutline}
+								className='icons-opt flex h-10 w-10 items-center justify-center'
+								size='1.5rem'
+							/>
+						</li>
 						<li ref={liContainerRef} className='relative'>
 							<div
 								onClick={() => setIsOpen(!isOpen)}
@@ -51,9 +61,7 @@ const Navbar = () => {
 								<span className='inline-block'>{username}</span>
 							</div>
 							<div
-								className={`absolute right-0 top-12 w-[250px] rounded-xl bg-slate-100 p-2 shadow-out transition-all dark:bg-black-400 dark:shadow-black-600 ${
-									isOpen ? 'visible opacity-100' : 'invisible opacity-0'
-								}`}
+								className={`absolute right-0 top-12 w-[250px] rounded-xl bg-slate-100 p-2 shadow-out transition-all dark:bg-black-400 dark:shadow-black-600 ${openOpts}`}
 							>
 								{display ? (
 									<ThemeOpts setDisplay={setDisplay} />
@@ -93,8 +101,9 @@ const Navbar = () => {
 						</li>
 					</ul>
 				</div>
-			</nav>
-		</div>
+			</div>
+		</nav>
 	);
 };
+
 export default Navbar;

@@ -13,8 +13,11 @@ type Props = {
 const ThemeOpts = ({ setDisplay }: Props) => {
 	const { setDarkTheme } = useThemeDisplay();
 
-	const handleDisplayTheme = (evt: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+	const handleDisplayTheme = async (evt: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
 		setDarkTheme(evt.currentTarget.id);
+		setTimeout(() => {
+			setDisplay(false);
+		}, 0);
 	};
 
 	return (
