@@ -93,7 +93,7 @@ const HeaderProfile = ({ userHeader, postCount, followStatus, privProfile }: Pro
 								onClick={() => {
 									handleFollowUpdate();
 								}}
-								className='bg-blue-500 text-white hover:opacity-80 disabled:opacity-50'
+								className='bg-blue-500 text-white hover:opacity-80 disabled:opacity-50 dark:bg-emerald-300 dark:text-black-400'
 							>
 								{followStatus ? 'Unfollow' : 'Follow'}
 							</Button>
