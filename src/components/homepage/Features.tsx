@@ -9,7 +9,7 @@ type Props = {};
 
 const Features = ({}: Props) => {
 	const { _id, username } = useAppSelector(state => state.userHeader);
-	const [isExpand, setIsExpand] = useState(true);
+	const [isExpand, setIsExpand] = useState(false);
 
 	let isOpen = isExpand ? 'w-[150px] opacity-100 pl-1' : 'w-0 opacity-0';
 
