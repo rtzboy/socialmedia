@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { landscapeTest } from '../../assets';
 import { followState } from '../../features/user/user-header-slice';
 import { userFollow } from '../../lib/api/user/user.api';
+import httpAxiosService from '../../lib/helpers/axiosService';
 import { HeaderInfo } from '../../types/user.model';
 import Button from '../form/Button';
 import StyledIcon from '../icons/StyledIcon';
@@ -19,12 +20,13 @@ type Props = {
 };
 
 const HeaderProfile = ({ userHeader, postCount, followStatus, privProfile }: Props) => {
-	const { token } = useAppSelector(state => state.userAuth);
+	const { token, id } = useAppSelector(state => state.userAuth);
 	const dispatchApp = useAppDispatch();
 	const [disabled, setDisabled] = useState(false);
 	const [contentModal, setContentModal] = useState<JSX.Element | undefined>();
 	const { idUserParam } = useParams();
 
+	// TODO: move to api calls
 	const handleFollowUpdate = async () => {
 		if (!idUserParam || followStatus === undefined) return;
 		setDisabled(true);
@@ -32,6 +34,11 @@ const HeaderProfile = ({ userHeader, postCount, followStatus, privProfile }: Pro
 		if (success) {
 			dispatchApp(followState({ _id: userHeader._id }));
 			setDisabled(false);
+			await httpAxiosService(token).patch(`/userpriv/notifications/${userHeader._id}`, {
+				action: 'Follow',
+				actor: id,
+				followStatus
+			});
 		}
 	};
 

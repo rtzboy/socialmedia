@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { BiLogOut, BiMoon } from 'react-icons/bi';
 import { CgProfile } from 'react-icons/cg';
-import { IoIosNotificationsOutline } from 'react-icons/io';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { mainlogo } from '../../assets';
@@ -10,6 +9,7 @@ import { deleteUserHeader } from '../../features/user/user-header-slice';
 import useContainNode from '../../lib/hooks/useContainNode';
 import StyledIcon from '../icons/StyledIcon';
 import BoxSearch from './BoxSearch';
+import Notification from './Notification';
 import ThemeOpts from './ThemeOpts';
 
 const Navbar = () => {
@@ -41,13 +41,7 @@ const Navbar = () => {
 						</li>
 					</ul>
 					<ul className='flex items-center gap-4 dark:text-white'>
-						<li>
-							<StyledIcon
-								icon={IoIosNotificationsOutline}
-								className='icons-opt flex h-10 w-10 items-center justify-center'
-								size='1.5rem'
-							/>
-						</li>
+						<Notification />
 						<li ref={liContainerRef} className='relative'>
 							<div
 								onClick={() => setIsOpen(!isOpen)}
