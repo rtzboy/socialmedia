@@ -2,7 +2,8 @@ import axios, { AxiosInstance } from 'axios';
 
 const httpAxiosService = (authToken?: string, formFile?: boolean): AxiosInstance => {
 	const httpAxiosInstance = axios.create({
-		baseURL: 'http://localhost:4002/api',
+		// baseURL: 'http://localhost:4002/api',
+		baseURL: 'https://spherebackjs.onrender.com/api',
 		timeout: 2500,
 		headers: authToken ? { Authorization: `Bearer ${authToken}` } : {}
 	});
