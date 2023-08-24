@@ -140,7 +140,7 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 						<InputRadioBtn
 							onChange={evt => {
 								setGender(evt.target.value);
-								setFormSignupData({ ...formSignupData, gender: '' });
+								// setFormSignupData({ ...formSignupData, gender: '' });
 							}}
 							idRBtn='Custom'
 							className='rounded-md border-b-2 border-gray-300 px-1'
@@ -151,7 +151,7 @@ const Signup = ({ setSignStatus }: SignupProps) => {
 							<input
 								onChange={handleChangeInputs}
 								type='text'
-								name='custom-gender'
+								name='gender'
 								placeholder='Gender'
 								className='w-full border-b-2 border-b-gray-300 bg-transparent px-2 py-1 outline-none transition-all focus:border-b-blue-500 dark:focus:border-b-emerald-300'
 							/>
