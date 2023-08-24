@@ -7,8 +7,10 @@ import { createUserHeader, deleteUserHeader } from './features/user/user-header-
 import { AuthGuard } from './guards/auth.guard';
 import { callUserHeader } from './lib/api/user/user.api';
 import useThemeDisplay from './lib/hooks/useDisplayTheme';
+import ChatScreen from './pages/Chats/ChatScreen';
 import HomeScreen from './pages/Home/HomeScreen';
 import WelcomeScreen from './pages/Home/WelcomeScreen';
+import PeopleScreen from './pages/People/PeopleScreen';
 import UserProfile from './pages/Profiles/UserProfile';
 
 const App = () => {
@@ -42,6 +44,8 @@ const App = () => {
 				<Route element={<AuthGuard />}>
 					<Route path={`/${PrivateRoutes.Home}`} element={<HomeScreen />} />
 					<Route path={`/${PrivateRoutes.Profile}/:idUserParam`} element={<UserProfile />} />
+					<Route path={`/${PrivateRoutes.People}`} element={<PeopleScreen />} />
+					<Route path={`/${PrivateRoutes.Chats}`} element={<ChatScreen />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
